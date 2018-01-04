@@ -2,8 +2,11 @@
   <library name="Gradle: org.springframework.boot:spring-boot-actuator:1.5.9.RELEASE">
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-actuator/1.5.9.RELEASE/spring-boot-actuator-1.5.9.RELEASE.jar!/" />
+      <root url="jar://D:/JavaEE/gradle/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-actuator/1.5.9.RELEASE/c4aaf71a1298c1bde690fcf75df39036745396c6/spring-boot-actuator-1.5.9.RELEASE.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://D:/JavaEE/gradle/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-actuator/1.5.9.RELEASE/891d5b3e0b0f8876cdffcafad984f5e93b47b4ae/spring-boot-actuator-1.5.9.RELEASE-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>
