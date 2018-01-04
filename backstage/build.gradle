@@ -1,0 +1,16 @@
+apply plugin: 'spring-boot'
+archivesBaseName = "backstage"
+repositories {
+	dependencies{
+		compile project(':api')
+//		compile project(':persistence')
+		compile ('org.springframework.cloud:spring-cloud-starter-feign')
+		compile ('org.springframework.cloud:spring-cloud-starter-hystrix')
+		compile ('org.springframework.boot:spring-boot-starter-actuator')
+	}
+}
+dependencyManagement {
+	imports {
+		mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Dalston.SR4'
+	}
+}

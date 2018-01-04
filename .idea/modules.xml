@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/api/api.iml" filepath="$PROJECT_DIR$/.idea/modules/api/api.iml" group="api" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/api/api_main.iml" filepath="$PROJECT_DIR$/.idea/modules/api/api_main.iml" group="api" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/api/api_test.iml" filepath="$PROJECT_DIR$/.idea/modules/api/api_test.iml" group="api" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/backstage/backstage.iml" filepath="$PROJECT_DIR$/.idea/modules/backstage/backstage.iml" group="backstage" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/backstage/backstage_main.iml" filepath="$PROJECT_DIR$/.idea/modules/backstage/backstage_main.iml" group="backstage" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/backstage/backstage_test.iml" filepath="$PROJECT_DIR$/.idea/modules/backstage/backstage_test.iml" group="backstage" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/eurekaserver/eurekaserver.iml" filepath="$PROJECT_DIR$/.idea/modules/eurekaserver/eurekaserver.iml" group="eurekaserver" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/eurekaserver/eurekaserver_main.iml" filepath="$PROJECT_DIR$/.idea/modules/eurekaserver/eurekaserver_main.iml" group="eurekaserver" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/eurekaserver/eurekaserver_test.iml" filepath="$PROJECT_DIR$/.idea/modules/eurekaserver/eurekaserver_test.iml" group="eurekaserver" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/graducationproject.iml" filepath="$PROJECT_DIR$/.idea/modules/graducationproject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hystrix-dashboard/hystrix-dashboard.iml" filepath="$PROJECT_DIR$/.idea/modules/hystrix-dashboard/hystrix-dashboard.iml" group="hystrix-dashboard" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hystrix-dashboard/hystrix-dashboard_main.iml" filepath="$PROJECT_DIR$/.idea/modules/hystrix-dashboard/hystrix-dashboard_main.iml" group="hystrix-dashboard" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hystrix-dashboard/hystrix-dashboard_test.iml" filepath="$PROJECT_DIR$/.idea/modules/hystrix-dashboard/hystrix-dashboard_test.iml" group="hystrix-dashboard" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hystrix-turbine/hystrix-turbine.iml" filepath="$PROJECT_DIR$/.idea/modules/hystrix-turbine/hystrix-turbine.iml" group="hystrix-turbine" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hystrix-turbine/hystrix-turbine_main.iml" filepath="$PROJECT_DIR$/.idea/modules/hystrix-turbine/hystrix-turbine_main.iml" group="hystrix-turbine" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hystrix-turbine/hystrix-turbine_test.iml" filepath="$PROJECT_DIR$/.idea/modules/hystrix-turbine/hystrix-turbine_test.iml" group="hystrix-turbine" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/persistence/persistence.iml" filepath="$PROJECT_DIR$/.idea/modules/persistence/persistence.iml" group="persistence" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/persistence/persistence_main.iml" filepath="$PROJECT_DIR$/.idea/modules/persistence/persistence_main.iml" group="persistence" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/persistence/persistence_test.iml" filepath="$PROJECT_DIR$/.idea/modules/persistence/persistence_test.iml" group="persistence" />
+    </modules>
+  </component>
+</project>

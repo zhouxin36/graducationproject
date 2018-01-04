@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="api_main" target="1.8" />
+      <module name="api_test" target="1.8" />
+      <module name="backstage_main" target="1.8" />
+      <module name="backstage_test" target="1.8" />
+      <module name="eurekaserver_main" target="1.8" />
+      <module name="eurekaserver_test" target="1.8" />
+      <module name="graduationproject_main" target="1.8" />
+      <module name="graduationproject_test" target="1.8" />
+      <module name="hystrix-dashboard_main" target="1.8" />
+      <module name="hystrix-dashboard_test" target="1.8" />
+      <module name="hystrix-turbine_main" target="1.8" />
+      <module name="hystrix-turbine_test" target="1.8" />
+      <module name="persistence_main" target="1.8" />
+      <module name="persistence_test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

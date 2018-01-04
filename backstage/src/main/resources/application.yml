@@ -1,0 +1,17 @@
+server:
+  port: 8101
+  context-path: /graducation
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://root:123456@peer1:8761/graducation/eureka/, http://root:123456@peer2:8762/graducation/eureka/, http://root:123456@peer3:8763/graducation/eureka/
+  instance:
+    prefer-ip-address: true
+spring:
+  application:
+    name: backstage
+#feign:
+#  hystrix:
+#    enabled: true
+logging:
+  level: debug

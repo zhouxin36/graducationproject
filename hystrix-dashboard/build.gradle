@@ -1,0 +1,13 @@
+apply plugin: 'spring-boot'
+archivesBaseName = "hystrix-dashboard"
+dependencyManagement {
+	imports {
+		mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Dalston.SR4'
+	}
+}
+repositories{
+	dependencies{
+		compile('org.springframework.cloud:spring-cloud-starter-hystrix-dashboard')
+	}
+}
+
