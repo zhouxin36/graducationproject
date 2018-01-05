@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+    <meta charset="UTF-8">
+    <title>验证码Demo</title>
+</head>
+
+<body>
+<div id="jsUrl"></div>
+<div id="verify">
+    <form action='/graducation/verify/verifyCode' id='myform' method='get'>
+        <div id='TCaptcha' style='width:310px;height:54px;' hidden="hidden"></div>
+    </form>
+</div>
+<button onclick="test()">点击</button>
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            url: '/graducation/verify/index',
+            type: 'get',
+            data:{'clientType':2},
+            success: function (data) {
+                var jsUrl = data.data;
+                if(jsUrl != null && jsUrl.length !=0){
+                    var script = $("<script type='text/javascript'>");
+                    script.attr("src",jsUrl);
+                    $("#jsUrl").append(script);
+                }
+            }
+        });
+    });
+
+    //回调函数：验证码页面关闭时回调
+    function cbfn(retJson) {
+        if (retJson.ret == 0) {
+            // 用户验证成功
+            $.ajax({
+                url: "/graducation/verify/verifyCode",
+                type: "POST",
+                data: {"ticket":retJson.ticket},
+                success: function (data) {
+                    if(data == false){
+                        window.location.href= '/graducation/demo.html';
+                    }
+                },
+                error:function () {
+                    window.location.href= '/graducation/demo.html';
+                }
+            })
+        }
+        else {
+            //用户关闭验证码页面，没有验证
+        }
+    }
+    function test() {
+        $("#TCaptcha").attr("hidden",false);
+        var capOption = {callback: cbfn, showHeader: true, themeColor:"aaabbb"};
+        capInit(document.getElementById("TCaptcha"), capOption);
+    }
+</script>
+</body>
+</html>
