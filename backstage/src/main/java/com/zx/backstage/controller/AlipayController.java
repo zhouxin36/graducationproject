@@ -20,7 +20,6 @@ import java.util.Map;
 @Controller
 @RequestMapping("/alipay")
 public class AlipayController {
-
     @PostMapping("/pay")
     public void pay(HttpServletRequest request, HttpServletResponse response) throws Exception{
         //获得初始化的AlipayClient
@@ -69,7 +68,8 @@ public class AlipayController {
             params.put(name, valueStr);
         }
 
-        boolean signVerified = AlipaySignature.rsaCheckV1(params, AlipayConfig.alipay_public_key, AlipayConfig.charset, AlipayConfig.sign_type); //调用SDK验证签名
+        boolean signVerified = AlipaySignature.rsaCheckV1(params, AlipayConfig.alipay_public_key, AlipayConfig.charset, AlipayConfig.sign_type);
+        //调用SDK验证签名
 
         PrintWriter out = response.getWriter();
         //——请在这里编写您的程序（以下代码仅作参考）——
