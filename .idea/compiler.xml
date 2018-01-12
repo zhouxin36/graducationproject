@@ -6,6 +6,8 @@
       <module name="api_test" target="1.8" />
       <module name="backstage_main" target="1.8" />
       <module name="backstage_test" target="1.8" />
+      <module name="config-server_main" target="1.8" />
+      <module name="config-server_test" target="1.8" />
       <module name="eurekaserver_main" target="1.8" />
       <module name="eurekaserver_test" target="1.8" />
       <module name="graduationproject_main" target="1.8" />

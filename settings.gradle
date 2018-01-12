@@ -1,2 +1,2 @@
 rootProject.name = 'graducationproject'
-include('api','persistence','eurekaserver','backstage','hystrix-dashboard','hystrix-turbine')
+include('api','persistence','eurekaserver','backstage','hystrix-dashboard','hystrix-turbine','config-server')

@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/api" />
             <option value="$PROJECT_DIR$/backstage" />
+            <option value="$PROJECT_DIR$/config-server" />
             <option value="$PROJECT_DIR$/eurekaserver" />
             <option value="$PROJECT_DIR$/hystrix-dashboard" />
             <option value="$PROJECT_DIR$/hystrix-turbine" />

@@ -1,0 +1,19 @@
+server:
+  port: 8201
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/zhouxin36/backstage-config.git
+      profile: dev
+      label: master
+  application:
+    name: config-server
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://root:123456@peer1:8761/graducation/eureka/, http://root:123456@peer2:8762/graducation/eureka/, http://root:123456@peer3:8763/graducation/eureka/
+  instance:
+    prefer-ip-address: true
+

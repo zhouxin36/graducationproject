@@ -8,6 +8,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/backstage/backstage.iml" filepath="$PROJECT_DIR$/.idea/modules/backstage/backstage.iml" group="backstage" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/backstage/backstage_main.iml" filepath="$PROJECT_DIR$/.idea/modules/backstage/backstage_main.iml" group="backstage" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/backstage/backstage_test.iml" filepath="$PROJECT_DIR$/.idea/modules/backstage/backstage_test.iml" group="backstage" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/config-server/config-server.iml" filepath="$PROJECT_DIR$/.idea/modules/config-server/config-server.iml" group="config-server" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/config-server/config-server_main.iml" filepath="$PROJECT_DIR$/.idea/modules/config-server/config-server_main.iml" group="config-server" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/config-server/config-server_test.iml" filepath="$PROJECT_DIR$/.idea/modules/config-server/config-server_test.iml" group="config-server" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/eurekaserver/eurekaserver.iml" filepath="$PROJECT_DIR$/.idea/modules/eurekaserver/eurekaserver.iml" group="eurekaserver" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/eurekaserver/eurekaserver_main.iml" filepath="$PROJECT_DIR$/.idea/modules/eurekaserver/eurekaserver_main.iml" group="eurekaserver" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/eurekaserver/eurekaserver_test.iml" filepath="$PROJECT_DIR$/.idea/modules/eurekaserver/eurekaserver_test.iml" group="eurekaserver" />

@@ -7,6 +7,8 @@ server:
   context-path: /graducation
 eureka:
   client:
+    healthcheck:
+      enabled: true
     serviceUrl:
       defaultZone: http://root:123456@peer2:8762/graducation/eureka/,http://root:123456@peer3:8763/graducation/eureka/
 security:
@@ -27,6 +29,8 @@ server:
   context-path: /graducation
 eureka:
   client:
+    healthcheck:
+      enabled: true
     serviceUrl:
       defaultZone: http://root:123456@peer1:8761/graducation/eureka/,http://root:123456@peer3:8763/graducation/eureka/
 security:
@@ -48,6 +52,8 @@ server:
   context-path: /graducation
 eureka:
   client:
+    healthcheck:
+      enabled: true
     serviceUrl:
       defaultZone: http://root:123456@peer1:8761/graducation/eureka/,http://root:123456@peer2:8762/graducation/eureka/
 security:
