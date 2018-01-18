@@ -1,7 +1,7 @@
 package com.zx.persistence.service;
 
-import com.zx.persistence.bean.User;
-import com.zx.persistence.bean.UserExample;
+import com.zx.api.bean.User;
+import com.zx.api.bean.UserExample;
 import io.restassured.RestAssured;
 import org.junit.After;
 import org.junit.Before;
@@ -9,7 +9,6 @@ import org.junit.Test;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
 
 public class UserServiceTest {
 

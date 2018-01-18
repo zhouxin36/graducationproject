@@ -7,8 +7,10 @@ repositories {
 		compile ('org.springframework.cloud:spring-cloud-starter-feign')
 		compile ('org.springframework.cloud:spring-cloud-starter-hystrix')
 		compile ('org.springframework.boot:spring-boot-starter-actuator')
+		compile ('org.springframework.boot:spring-boot-starter-redis:1.4.7.RELEASE')
 		compile ('commons-logging:commons-logging:1.2')
 		compile ('org.springframework.cloud:spring-cloud-starter-config')
+		compile ('com.alipay:sdk-java:20171027120314')
 	}
 }
 dependencyManagement {

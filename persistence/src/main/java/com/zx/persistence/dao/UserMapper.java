@@ -1,9 +1,10 @@
 package com.zx.persistence.dao;
 
-import com.zx.persistence.bean.User;
-import com.zx.persistence.bean.UserExample;
-import java.util.List;
+import com.zx.api.bean.User;
+import com.zx.api.bean.UserExample;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface UserMapper {
     long countByExample(UserExample example);

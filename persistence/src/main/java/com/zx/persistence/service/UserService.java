@@ -1,7 +1,7 @@
 package com.zx.persistence.service;
 
-import com.zx.persistence.bean.User;
-import com.zx.persistence.bean.UserExample;
+import com.zx.api.bean.User;
+import com.zx.api.bean.UserExample;
 import com.zx.persistence.dao.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
