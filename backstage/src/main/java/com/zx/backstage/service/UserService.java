@@ -1,14 +1,11 @@
 package com.zx.backstage.service;
 
+import com.zx.api.bean.EntityAndExample;
 import com.zx.api.bean.User;
 import com.zx.api.bean.UserExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.feign.FeignClient;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -17,22 +14,37 @@ import java.util.List;
 @FeignClient(name = "persistence")
 public interface UserService {
 
+    @PostMapping("/countByExample")
+    long countByExample(UserExample example);
+
+    @PostMapping("/deleteByExample")
+    int deleteByExample(UserExample example);
+
     @PostMapping("/deleteByPrimaryKey")
-    public int deleteByPrimaryKey(@RequestParam("id") Integer id);
+    int deleteByPrimaryKey(@RequestParam("id") String id);
 
-    @PostMapping("/insert")
-    public int insert(User record);
+    @PostMapping(value = "/insert")
+    int insert(User record);
 
-    @PostMapping("/insertSelective")
-    public int insertSelective(User record);
+    @PostMapping(value = "/insertSelective")
+    int insertSelective(User record);
+
+    @PostMapping(value = "/selectByExample")
+    List<User> selectByExample(UserExample example);
 
     @PostMapping("/selectByPrimaryKey")
-    public User selectByPrimaryKey(@RequestParam("id") Integer id);
+    User selectByPrimaryKey(@RequestParam("id") String id);
+
+    @PostMapping("/updateByExampleSelective")
+    int updateByExampleSelective(EntityAndExample<User,UserExample> exampleEntityAndExample);
+
+    @PostMapping("/updateByExample")
+    int updateByExample(EntityAndExample<User,UserExample> exampleEntityAndExample);
 
     @PostMapping("/updateByPrimaryKeySelective")
-    public int updateByPrimaryKeySelective(User record);
+    int updateByPrimaryKeySelective(User record);
 
     @PostMapping("/updateByPrimaryKey")
-    public int updateByPrimaryKey(User record);
+    int updateByPrimaryKey(User record);
 }
 

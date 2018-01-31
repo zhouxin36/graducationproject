@@ -27,3 +27,6 @@ E_URL3:http://root:123456@peer3:8763/graducation/eureka/
 ```
 密钥申请地址 https://console.qcloud.com/capi
 ```
+未完成表：coupon
+
+* 重新生成bean,dao,mapper时，example要有默认构造函数和set函数

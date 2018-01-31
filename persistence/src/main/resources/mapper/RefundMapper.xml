@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.persistence.dao.RefundMapper">
+  <resultMap id="BaseResultMap" type="com.zx.persistence.bean.Refund">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="userId" jdbcType="VARCHAR" property="userid" />
+    <result column="productId" jdbcType="VARCHAR" property="productid" />
+    <result column="forderId" jdbcType="INTEGER" property="forderid" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="reason" jdbcType="INTEGER" property="reason" />
+    <result column="supplement" jdbcType="VARCHAR" property="supplement" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, userId, productId, forderId, type, reason, supplement
+  </sql>
+  <select id="selectByExample" parameterType="com.zx.persistence.bean.RefundExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from refund
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from refund
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from refund
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zx.persistence.bean.RefundExample">
+    delete from refund
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zx.persistence.bean.Refund">
+    insert into refund (id, userId, productId, 
+      forderId, type, reason, 
+      supplement)
+    values (#{id,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{productid,jdbcType=VARCHAR}, 
+      #{forderid,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{reason,jdbcType=INTEGER}, 
+      #{supplement,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zx.persistence.bean.Refund">
+    insert into refund
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="productid != null">
+        productId,
+      </if>
+      <if test="forderid != null">
+        forderId,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="reason != null">
+        reason,
+      </if>
+      <if test="supplement != null">
+        supplement,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="productid != null">
+        #{productid,jdbcType=VARCHAR},
+      </if>
+      <if test="forderid != null">
+        #{forderid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=INTEGER},
+      </if>
+      <if test="supplement != null">
+        #{supplement,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zx.persistence.bean.RefundExample" resultType="java.lang.Long">
+    select count(*) from refund
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update refund
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null">
+        userId = #{record.userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productid != null">
+        productId = #{record.productid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.forderid != null">
+        forderId = #{record.forderid,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.reason != null">
+        reason = #{record.reason,jdbcType=INTEGER},
+      </if>
+      <if test="record.supplement != null">
+        supplement = #{record.supplement,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update refund
+    set id = #{record.id,jdbcType=VARCHAR},
+      userId = #{record.userid,jdbcType=VARCHAR},
+      productId = #{record.productid,jdbcType=VARCHAR},
+      forderId = #{record.forderid,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=INTEGER},
+      reason = #{record.reason,jdbcType=INTEGER},
+      supplement = #{record.supplement,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zx.persistence.bean.Refund">
+    update refund
+    <set>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="productid != null">
+        productId = #{productid,jdbcType=VARCHAR},
+      </if>
+      <if test="forderid != null">
+        forderId = #{forderid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null">
+        reason = #{reason,jdbcType=INTEGER},
+      </if>
+      <if test="supplement != null">
+        supplement = #{supplement,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zx.persistence.bean.Refund">
+    update refund
+    set userId = #{userid,jdbcType=VARCHAR},
+      productId = #{productid,jdbcType=VARCHAR},
+      forderId = #{forderid,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      reason = #{reason,jdbcType=INTEGER},
+      supplement = #{supplement,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

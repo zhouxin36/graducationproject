@@ -1,17 +1,16 @@
 package com.zx.persistence.dao;
 
-import com.zx.api.bean.User;
-import com.zx.api.bean.UserExample;
-import org.apache.ibatis.annotations.Param;
-
+import com.zx.persistence.bean.User;
+import com.zx.persistence.bean.UserExample;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
     long countByExample(UserExample example);
 
     int deleteByExample(UserExample example);
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(String id);
 
     int insert(User record);
 
@@ -19,7 +18,7 @@ public interface UserMapper {
 
     List<User> selectByExample(UserExample example);
 
-    User selectByPrimaryKey(Integer id);
+    User selectByPrimaryKey(String id);
 
     int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);
 

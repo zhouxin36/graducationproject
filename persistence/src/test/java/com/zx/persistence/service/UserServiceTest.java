@@ -25,15 +25,5 @@ public class UserServiceTest {
 
     @Test
     public void updateByExampleSelective() {
-        User user = new User();
-        user.setId(1);
-        user.setAge(22);
-        given()
-                .param("record",user)
-                .param("example",new UserExample())
-                .when()
-                .post("/UserService/updateByExampleSelective")
-                .then()
-                .body("data",is(1));
     }
 }

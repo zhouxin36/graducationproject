@@ -2,17 +2,19 @@ package com.zx.backstage.controller;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.zx.api.dto.ResultDTO;
+import com.zx.api.dto.VerifyDTO;
 import com.zx.backstage.config.ApiResponse;
 import com.zx.backstage.config.CaptchaAPI;
-import com.zx.backstage.dto.ResultDTO;
-import com.zx.backstage.dto.VerifyDTO;
 import com.zx.backstage.utils.HttpUtil;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.SortedMap;
 import java.util.TreeMap;

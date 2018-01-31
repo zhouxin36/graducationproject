@@ -2,10 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zx.persistence.dao.UserMapper">
   <resultMap id="BaseResultMap" type="com.zx.persistence.bean.User">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="reg_time" jdbcType="DATE" property="regTime" />
+    <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
+    <result column="last_ip" jdbcType="VARCHAR" property="lastIp" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="member_level" jdbcType="INTEGER" property="memberLevel" />
+    <result column="account_security" jdbcType="INTEGER" property="accountSecurity" />
+    <result column="isabled" jdbcType="INTEGER" property="isabled" />
+    <result column="account_balance" jdbcType="DECIMAL" property="accountBalance" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,7 +78,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, username, password, age
+    id, nickname, name, password, birthday, sex, phone, email, reg_time, last_time, last_ip, 
+    avatar, member_level, account_security, isabled, account_balance
   </sql>
   <select id="selectByExample" parameterType="com.zx.persistence.bean.UserExample" resultMap="BaseResultMap">
     select
@@ -82,15 +95,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from user
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from user
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.zx.persistence.bean.UserExample">
     delete from user
@@ -99,10 +112,18 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.zx.persistence.bean.User">
-    insert into user (id, username, password, 
-      age)
-    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{age,jdbcType=INTEGER})
+    insert into user (id, nickname, name, 
+      password, birthday, sex, 
+      phone, email, reg_time, 
+      last_time, last_ip, avatar, 
+      member_level, account_security, isabled, 
+      account_balance)
+    values (#{id,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{sex,jdbcType=INTEGER}, 
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{regTime,jdbcType=DATE}, 
+      #{lastTime,jdbcType=TIMESTAMP}, #{lastIp,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
+      #{memberLevel,jdbcType=INTEGER}, #{accountSecurity,jdbcType=INTEGER}, #{isabled,jdbcType=INTEGER}, 
+      #{accountBalance,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.zx.persistence.bean.User">
     insert into user
@@ -110,28 +131,100 @@
       <if test="id != null">
         id,
       </if>
-      <if test="username != null">
-        username,
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="name != null">
+        name,
       </if>
       <if test="password != null">
         password,
       </if>
-      <if test="age != null">
-        age,
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="regTime != null">
+        reg_time,
+      </if>
+      <if test="lastTime != null">
+        last_time,
+      </if>
+      <if test="lastIp != null">
+        last_ip,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="memberLevel != null">
+        member_level,
+      </if>
+      <if test="accountSecurity != null">
+        account_security,
+      </if>
+      <if test="isabled != null">
+        isabled,
+      </if>
+      <if test="accountBalance != null">
+        account_balance,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=VARCHAR},
       </if>
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
       </if>
-      <if test="age != null">
-        #{age,jdbcType=INTEGER},
+      <if test="birthday != null">
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="regTime != null">
+        #{regTime,jdbcType=DATE},
+      </if>
+      <if test="lastTime != null">
+        #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastIp != null">
+        #{lastIp,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="memberLevel != null">
+        #{memberLevel,jdbcType=INTEGER},
+      </if>
+      <if test="accountSecurity != null">
+        #{accountSecurity,jdbcType=INTEGER},
+      </if>
+      <if test="isabled != null">
+        #{isabled,jdbcType=INTEGER},
+      </if>
+      <if test="accountBalance != null">
+        #{accountBalance,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -145,16 +238,52 @@
     update user
     <set>
       <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
+        id = #{record.id,jdbcType=VARCHAR},
       </if>
-      <if test="record.username != null">
-        username = #{record.username,jdbcType=VARCHAR},
+      <if test="record.nickname != null">
+        nickname = #{record.nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.password != null">
         password = #{record.password,jdbcType=VARCHAR},
       </if>
-      <if test="record.age != null">
-        age = #{record.age,jdbcType=INTEGER},
+      <if test="record.birthday != null">
+        birthday = #{record.birthday,jdbcType=DATE},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=INTEGER},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regTime != null">
+        reg_time = #{record.regTime,jdbcType=DATE},
+      </if>
+      <if test="record.lastTime != null">
+        last_time = #{record.lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastIp != null">
+        last_ip = #{record.lastIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avatar != null">
+        avatar = #{record.avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberLevel != null">
+        member_level = #{record.memberLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.accountSecurity != null">
+        account_security = #{record.accountSecurity,jdbcType=INTEGER},
+      </if>
+      <if test="record.isabled != null">
+        isabled = #{record.isabled,jdbcType=INTEGER},
+      </if>
+      <if test="record.accountBalance != null">
+        account_balance = #{record.accountBalance,jdbcType=DECIMAL},
       </if>
     </set>
     <if test="_parameter != null">
@@ -163,10 +292,22 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update user
-    set id = #{record.id,jdbcType=INTEGER},
-      username = #{record.username,jdbcType=VARCHAR},
+    set id = #{record.id,jdbcType=VARCHAR},
+      nickname = #{record.nickname,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
-      age = #{record.age,jdbcType=INTEGER}
+      birthday = #{record.birthday,jdbcType=DATE},
+      sex = #{record.sex,jdbcType=INTEGER},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      reg_time = #{record.regTime,jdbcType=DATE},
+      last_time = #{record.lastTime,jdbcType=TIMESTAMP},
+      last_ip = #{record.lastIp,jdbcType=VARCHAR},
+      avatar = #{record.avatar,jdbcType=VARCHAR},
+      member_level = #{record.memberLevel,jdbcType=INTEGER},
+      account_security = #{record.accountSecurity,jdbcType=INTEGER},
+      isabled = #{record.isabled,jdbcType=INTEGER},
+      account_balance = #{record.accountBalance,jdbcType=DECIMAL}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -174,23 +315,71 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.zx.persistence.bean.User">
     update user
     <set>
-      <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
       </if>
-      <if test="age != null">
-        age = #{age,jdbcType=INTEGER},
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="regTime != null">
+        reg_time = #{regTime,jdbcType=DATE},
+      </if>
+      <if test="lastTime != null">
+        last_time = #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastIp != null">
+        last_ip = #{lastIp,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="memberLevel != null">
+        member_level = #{memberLevel,jdbcType=INTEGER},
+      </if>
+      <if test="accountSecurity != null">
+        account_security = #{accountSecurity,jdbcType=INTEGER},
+      </if>
+      <if test="isabled != null">
+        isabled = #{isabled,jdbcType=INTEGER},
+      </if>
+      <if test="accountBalance != null">
+        account_balance = #{accountBalance,jdbcType=DECIMAL},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zx.persistence.bean.User">
     update user
-    set username = #{username,jdbcType=VARCHAR},
+    set nickname = #{nickname,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      age = #{age,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
+      birthday = #{birthday,jdbcType=DATE},
+      sex = #{sex,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      reg_time = #{regTime,jdbcType=DATE},
+      last_time = #{lastTime,jdbcType=TIMESTAMP},
+      last_ip = #{lastIp,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      member_level = #{memberLevel,jdbcType=INTEGER},
+      account_security = #{accountSecurity,jdbcType=INTEGER},
+      isabled = #{isabled,jdbcType=INTEGER},
+      account_balance = #{accountBalance,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>
