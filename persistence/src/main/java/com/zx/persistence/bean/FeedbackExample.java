@@ -8,6 +8,22 @@ public class FeedbackExample {
 
     protected boolean distinct;
 
+    protected Integer startRow;
+
+    protected Integer pageSize;
+
+    public Integer getStartRow() {
+        return startRow;
+    }
+
+    public void setStartRow(Integer startRow) {
+        this.startRow = startRow;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
     protected List<Criteria> oredCriteria;
 
     public FeedbackExample() {
@@ -244,6 +260,76 @@ public class FeedbackExample {
             return (Criteria) this;
         }
 
+        public Criteria andCommentIsNull() {
+            addCriterion("comment is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentIsNotNull() {
+            addCriterion("comment is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentEqualTo(String value) {
+            addCriterion("comment =", value, "comment");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentNotEqualTo(String value) {
+            addCriterion("comment <>", value, "comment");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentGreaterThan(String value) {
+            addCriterion("comment >", value, "comment");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentGreaterThanOrEqualTo(String value) {
+            addCriterion("comment >=", value, "comment");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentLessThan(String value) {
+            addCriterion("comment <", value, "comment");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentLessThanOrEqualTo(String value) {
+            addCriterion("comment <=", value, "comment");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentLike(String value) {
+            addCriterion("comment like", value, "comment");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentNotLike(String value) {
+            addCriterion("comment not like", value, "comment");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentIn(List<String> values) {
+            addCriterion("comment in", values, "comment");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentNotIn(List<String> values) {
+            addCriterion("comment not in", values, "comment");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentBetween(String value1, String value2) {
+            addCriterion("comment between", value1, value2, "comment");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentNotBetween(String value1, String value2) {
+            addCriterion("comment not between", value1, value2, "comment");
+            return (Criteria) this;
+        }
+
         public Criteria andQqIsNull() {
             addCriterion("qq is null");
             return (Criteria) this;
@@ -369,6 +455,41 @@ public class FeedbackExample {
 
         public String getTypeHandler() {
             return typeHandler;
+        }
+
+        public void setCondition(String condition) {
+            this.condition = condition;
+        }
+
+        public void setValue(Object value) {
+            this.value = value;
+        }
+
+        public void setSecondValue(Object secondValue) {
+            this.secondValue = secondValue;
+        }
+
+        public void setNoValue(boolean noValue) {
+            this.noValue = noValue;
+        }
+
+        public void setSingleValue(boolean singleValue) {
+            this.singleValue = singleValue;
+        }
+
+        public void setBetweenValue(boolean betweenValue) {
+            this.betweenValue = betweenValue;
+        }
+
+        public void setListValue(boolean listValue) {
+            this.listValue = listValue;
+        }
+
+        public void setTypeHandler(String typeHandler) {
+            this.typeHandler = typeHandler;
+        }
+
+        public Criterion() {
         }
 
         protected Criterion(String condition) {

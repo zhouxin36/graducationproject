@@ -38,6 +38,7 @@ public class SafeQuestionExample {
         oredCriteria.add(criteria);
     }
 
+
     public Criteria or() {
         Criteria criteria = createCriteriaInternal();
         oredCriteria.add(criteria);
@@ -429,6 +430,41 @@ public class SafeQuestionExample {
 
         public String getTypeHandler() {
             return typeHandler;
+        }
+
+        public void setCondition(String condition) {
+            this.condition = condition;
+        }
+
+        public void setValue(Object value) {
+            this.value = value;
+        }
+
+        public void setSecondValue(Object secondValue) {
+            this.secondValue = secondValue;
+        }
+
+        public void setNoValue(boolean noValue) {
+            this.noValue = noValue;
+        }
+
+        public void setSingleValue(boolean singleValue) {
+            this.singleValue = singleValue;
+        }
+
+        public void setBetweenValue(boolean betweenValue) {
+            this.betweenValue = betweenValue;
+        }
+
+        public void setListValue(boolean listValue) {
+            this.listValue = listValue;
+        }
+
+        public void setTypeHandler(String typeHandler) {
+            this.typeHandler = typeHandler;
+        }
+
+        public Criterion() {
         }
 
         protected Criterion(String condition) {

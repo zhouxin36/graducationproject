@@ -5,7 +5,7 @@
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="product_id" jdbcType="VARCHAR" property="productId" />
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
-    <result column="add_date" jdbcType="DATE" property="addDate" />
+    <result column="add_date" jdbcType="TIMESTAMP" property="addDate" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -102,7 +102,7 @@
     insert into favorite (id, product_id, user_id, 
       add_date)
     values (#{id,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
-      #{addDate,jdbcType=DATE})
+      #{addDate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.zx.persistence.bean.Favorite">
     insert into favorite
@@ -131,7 +131,7 @@
         #{userId,jdbcType=VARCHAR},
       </if>
       <if test="addDate != null">
-        #{addDate,jdbcType=DATE},
+        #{addDate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -154,7 +154,7 @@
         user_id = #{record.userId,jdbcType=VARCHAR},
       </if>
       <if test="record.addDate != null">
-        add_date = #{record.addDate,jdbcType=DATE},
+        add_date = #{record.addDate,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -166,7 +166,7 @@
     set id = #{record.id,jdbcType=VARCHAR},
       product_id = #{record.productId,jdbcType=VARCHAR},
       user_id = #{record.userId,jdbcType=VARCHAR},
-      add_date = #{record.addDate,jdbcType=DATE}
+      add_date = #{record.addDate,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -181,7 +181,7 @@
         user_id = #{userId,jdbcType=VARCHAR},
       </if>
       <if test="addDate != null">
-        add_date = #{addDate,jdbcType=DATE},
+        add_date = #{addDate,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -190,7 +190,7 @@
     update favorite
     set product_id = #{productId,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=VARCHAR},
-      add_date = #{addDate,jdbcType=DATE}
+      add_date = #{addDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

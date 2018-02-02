@@ -1,9 +1,14 @@
 package com.zx.persistence.bean;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
-public class User {
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+public class User{
     private String id;
 
     private String nickname;
@@ -12,7 +17,9 @@ public class User {
 
     private String password;
 
-    private Date birthday;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime birthday;
 
     private Integer sex;
 
@@ -20,9 +27,13 @@ public class User {
 
     private String email;
 
-    private Date regTime;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime regTime;
 
-    private Date lastTime;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime lastTime;
 
     private String lastIp;
 
@@ -35,28 +46,6 @@ public class User {
     private Integer isabled;
 
     private BigDecimal accountBalance;
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", birthday=" + birthday +
-                ", sex=" + sex +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", regTime=" + regTime +
-                ", lastTime=" + lastTime +
-                ", lastIp='" + lastIp + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", memberLevel=" + memberLevel +
-                ", accountSecurity=" + accountSecurity +
-                ", isabled=" + isabled +
-                ", accountBalance=" + accountBalance +
-                '}';
-    }
 
     public String getId() {
         return id;
@@ -90,11 +79,11 @@ public class User {
         this.password = password;
     }
 
-    public Date getBirthday() {
+    public LocalDateTime getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDateTime birthday) {
         this.birthday = birthday;
     }
 
@@ -122,19 +111,19 @@ public class User {
         this.email = email;
     }
 
-    public Date getRegTime() {
+    public LocalDateTime getRegTime() {
         return regTime;
     }
 
-    public void setRegTime(Date regTime) {
+    public void setRegTime(LocalDateTime regTime) {
         this.regTime = regTime;
     }
 
-    public Date getLastTime() {
+    public LocalDateTime getLastTime() {
         return lastTime;
     }
 
-    public void setLastTime(Date lastTime) {
+    public void setLastTime(LocalDateTime lastTime) {
         this.lastTime = lastTime;
     }
 

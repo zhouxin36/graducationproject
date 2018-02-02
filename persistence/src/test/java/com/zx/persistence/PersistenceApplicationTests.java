@@ -16,6 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.IdGenerator;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @RunWith(SpringRunner.class)
@@ -57,5 +59,28 @@ public class PersistenceApplicationTests {
         UserExample.Criteria criteria = userExample.createCriteria();
         criteria.andNicknameEqualTo("cc");
         logger.info("-------->" + mapper.updateByExampleSelective(user,userExample));
+    }
+
+    @Test
+    public void test2(){
+        User user = new User();
+        user.setName("周鑫");
+        user.setId(MyUtils.getId(user.getName()));
+        user.setPassword("12345");
+        user.setBirthday(LocalDateTime.now());
+        user.setEmail("1561578781@qq.com");
+        user.setIsabled(1);
+        user.setSex(1);
+        user.setRegTime(LocalDateTime.now());
+        user.setNickname("zx");
+        user.setAccountBalance(new BigDecimal(123));
+        user.setPhone("17336030376");
+        mapper.insert(user);
+    }
+
+    @Test
+    public void test3(){
+        User user = mapper.selectByPrimaryKey("3ff39b3fc51157fe7c68083f813da716");
+        System.out.println(user.getBirthday());
     }
 }

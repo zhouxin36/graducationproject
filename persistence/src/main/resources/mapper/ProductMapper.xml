@@ -7,7 +7,7 @@
     <result column="price" jdbcType="DECIMAL" property="price" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="xremark" jdbcType="VARCHAR" property="xremark" />
-    <result column="add_date" jdbcType="DATE" property="addDate" />
+    <result column="add_date" jdbcType="TIMESTAMP" property="addDate" />
     <result column="open" jdbcType="INTEGER" property="open" />
     <result column="category_id" jdbcType="VARCHAR" property="categoryId" />
     <result column="sale" jdbcType="INTEGER" property="sale" />
@@ -91,6 +91,9 @@
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
+    <if test="startRow != null and pageSize != null and pageSize != 0">
+      limit #{startRow},#{pageSize}
+    </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -115,7 +118,7 @@
       month_sale, spec, last_admin_id, 
       last_time)
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
-      #{remark,jdbcType=VARCHAR}, #{xremark,jdbcType=VARCHAR}, #{addDate,jdbcType=DATE}, 
+      #{remark,jdbcType=VARCHAR}, #{xremark,jdbcType=VARCHAR}, #{addDate,jdbcType=TIMESTAMP}, 
       #{open,jdbcType=INTEGER}, #{categoryId,jdbcType=VARCHAR}, #{sale,jdbcType=INTEGER}, 
       #{monthSale,jdbcType=INTEGER}, #{spec,jdbcType=VARCHAR}, #{lastAdminId,jdbcType=VARCHAR}, 
       #{lastTime,jdbcType=TIMESTAMP})
@@ -180,7 +183,7 @@
         #{xremark,jdbcType=VARCHAR},
       </if>
       <if test="addDate != null">
-        #{addDate,jdbcType=DATE},
+        #{addDate,jdbcType=TIMESTAMP},
       </if>
       <if test="open != null">
         #{open,jdbcType=INTEGER},
@@ -230,7 +233,7 @@
         xremark = #{record.xremark,jdbcType=VARCHAR},
       </if>
       <if test="record.addDate != null">
-        add_date = #{record.addDate,jdbcType=DATE},
+        add_date = #{record.addDate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.open != null">
         open = #{record.open,jdbcType=INTEGER},
@@ -265,7 +268,7 @@
       price = #{record.price,jdbcType=DECIMAL},
       remark = #{record.remark,jdbcType=VARCHAR},
       xremark = #{record.xremark,jdbcType=VARCHAR},
-      add_date = #{record.addDate,jdbcType=DATE},
+      add_date = #{record.addDate,jdbcType=TIMESTAMP},
       open = #{record.open,jdbcType=INTEGER},
       category_id = #{record.categoryId,jdbcType=VARCHAR},
       sale = #{record.sale,jdbcType=INTEGER},
@@ -293,7 +296,7 @@
         xremark = #{xremark,jdbcType=VARCHAR},
       </if>
       <if test="addDate != null">
-        add_date = #{addDate,jdbcType=DATE},
+        add_date = #{addDate,jdbcType=TIMESTAMP},
       </if>
       <if test="open != null">
         open = #{open,jdbcType=INTEGER},
@@ -325,7 +328,7 @@
       price = #{price,jdbcType=DECIMAL},
       remark = #{remark,jdbcType=VARCHAR},
       xremark = #{xremark,jdbcType=VARCHAR},
-      add_date = #{addDate,jdbcType=DATE},
+      add_date = #{addDate,jdbcType=TIMESTAMP},
       open = #{open,jdbcType=INTEGER},
       category_id = #{categoryId,jdbcType=VARCHAR},
       sale = #{sale,jdbcType=INTEGER},

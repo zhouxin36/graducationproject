@@ -15,6 +15,24 @@
     </appender>
 
     <logger name="com.zx.persistence.dao.UserMapper" level="DEBUG" />
+    <logger name="com.zx.persistence.dao.AdminMapper" level="DEBUG" />
+    <logger name="com.zx.persistence.dao.CategoryMapper" level="DEBUG" />
+    <logger name="com.zx.persistence.dao.CouponMapper" level="DEBUG" />
+    <logger name="com.zx.persistence.dao.DepositMapper" level="DEBUG" />
+    <logger name="com.zx.persistence.dao.FavoriteMapper" level="DEBUG" />
+    <logger name="com.zx.persistence.dao.FeedbackMapper" level="DEBUG" />
+    <logger name="com.zx.persistence.dao.FootmarkMapper" level="DEBUG" />
+    <logger name="com.zx.persistence.dao.ForderMapper" level="DEBUG" />
+    <logger name="com.zx.persistence.dao.MallActivityMapper" level="DEBUG" />
+    <logger name="com.zx.persistence.dao.PicMapper" level="DEBUG" />
+    <logger name="com.zx.persistence.dao.ProductCommentMapper" level="DEBUG" />
+    <logger name="com.zx.persistence.dao.ProductMapper" level="DEBUG" />
+    <logger name="com.zx.persistence.dao.RefundMapper" level="DEBUG" />
+    <logger name="com.zx.persistence.dao.SafeQuestionMapper" level="DEBUG" />
+    <logger name="com.zx.persistence.dao.SorderMapper" level="DEBUG" />
+    <logger name="com.zx.persistence.dao.UserAddressMapper" level="DEBUG" />
+
+
 
     <root level="info">
         <appender-ref ref="consoleLog" />

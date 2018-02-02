@@ -649,6 +649,41 @@ public class AdminExample {
             return typeHandler;
         }
 
+        public Criterion() {
+        }
+
+        public void setCondition(String condition) {
+            this.condition = condition;
+        }
+
+        public void setValue(Object value) {
+            this.value = value;
+        }
+
+        public void setSecondValue(Object secondValue) {
+            this.secondValue = secondValue;
+        }
+
+        public void setNoValue(boolean noValue) {
+            this.noValue = noValue;
+        }
+
+        public void setSingleValue(boolean singleValue) {
+            this.singleValue = singleValue;
+        }
+
+        public void setBetweenValue(boolean betweenValue) {
+            this.betweenValue = betweenValue;
+        }
+
+        public void setListValue(boolean listValue) {
+            this.listValue = listValue;
+        }
+
+        public void setTypeHandler(String typeHandler) {
+            this.typeHandler = typeHandler;
+        }
+
         protected Criterion(String condition) {
             super();
             this.condition = condition;

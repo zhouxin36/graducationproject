@@ -1,6 +1,11 @@
 package com.zx.api.bean;
 
-import java.util.Date;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
+import java.time.LocalDateTime;
 
 public class ProductComment {
     private String id;
@@ -13,7 +18,9 @@ public class ProductComment {
 
     private String userId;
 
-    private Date commentTime;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime commentTime;
 
     private Integer upvote;
 
@@ -59,11 +66,11 @@ public class ProductComment {
         this.userId = userId;
     }
 
-    public Date getCommentTime() {
+    public LocalDateTime getCommentTime() {
         return commentTime;
     }
 
-    public void setCommentTime(Date commentTime) {
+    public void setCommentTime(LocalDateTime commentTime) {
         this.commentTime = commentTime;
     }
 

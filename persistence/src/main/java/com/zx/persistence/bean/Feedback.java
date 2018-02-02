@@ -5,9 +5,9 @@ public class Feedback {
 
     private String userId;
 
-    private String qq;
-
     private String comment;
+
+    private String qq;
 
     public String getId() {
         return id;
@@ -25,19 +25,19 @@ public class Feedback {
         this.userId = userId;
     }
 
-    public String getQq() {
-        return qq;
-    }
-
-    public void setQq(String qq) {
-        this.qq = qq;
-    }
-
     public String getComment() {
         return comment;
     }
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
     }
 }

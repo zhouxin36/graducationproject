@@ -46,5 +46,8 @@ public interface AdminService {
 
     @PostMapping("/updateByPrimaryKey")
     int updateByPrimaryKey(Admin record);
+
+    @PostMapping("/login")
+    List<Admin> login(@RequestParam("login") String login, @RequestParam("password") String password);
 }
 

@@ -1,6 +1,11 @@
 package com.zx.persistence.bean;
 
-import java.util.Date;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
+import java.time.LocalDateTime;
 
 public class UserAddress {
     private String id;
@@ -17,11 +22,15 @@ public class UserAddress {
 
     private Integer selected;
 
-    private Date addDate;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime addDate;
 
     private String userId;
 
-    private Date lastTime;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime lastTime;
 
     public String getId() {
         return id;
@@ -79,11 +88,11 @@ public class UserAddress {
         this.selected = selected;
     }
 
-    public Date getAddDate() {
+    public LocalDateTime getAddDate() {
         return addDate;
     }
 
-    public void setAddDate(Date addDate) {
+    public void setAddDate(LocalDateTime addDate) {
         this.addDate = addDate;
     }
 
@@ -95,11 +104,11 @@ public class UserAddress {
         this.userId = userId;
     }
 
-    public Date getLastTime() {
+    public LocalDateTime getLastTime() {
         return lastTime;
     }
 
-    public void setLastTime(Date lastTime) {
+    public void setLastTime(LocalDateTime lastTime) {
         this.lastTime = lastTime;
     }
 }

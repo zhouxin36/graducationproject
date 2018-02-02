@@ -7,8 +7,8 @@
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="system" jdbcType="INTEGER" property="system" />
     <result column="last_ip" jdbcType="VARCHAR" property="lastIp" />
-    <result column="last_time" jdbcType="DATE" property="lastTime" />
-    <result column="reg_time" jdbcType="DATE" property="regTime" />
+    <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
+    <result column="reg_time" jdbcType="TIMESTAMP" property="regTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -106,8 +106,8 @@
       system, last_ip, last_time, 
       reg_time)
     values (#{id,jdbcType=VARCHAR}, #{login,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{system,jdbcType=INTEGER}, #{lastIp,jdbcType=VARCHAR}, #{lastTime,jdbcType=DATE}, 
-      #{regTime,jdbcType=DATE})
+      #{system,jdbcType=INTEGER}, #{lastIp,jdbcType=VARCHAR}, #{lastTime,jdbcType=TIMESTAMP},
+      #{regTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.zx.persistence.bean.Admin">
     insert into admin
@@ -151,10 +151,10 @@
         #{lastIp,jdbcType=VARCHAR},
       </if>
       <if test="lastTime != null">
-        #{lastTime,jdbcType=DATE},
+        #{lastTime,jdbcType=TIMESTAMP},
       </if>
       <if test="regTime != null">
-        #{regTime,jdbcType=DATE},
+        #{regTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -183,10 +183,10 @@
         last_ip = #{record.lastIp,jdbcType=VARCHAR},
       </if>
       <if test="record.lastTime != null">
-        last_time = #{record.lastTime,jdbcType=DATE},
+        last_time = #{record.lastTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.regTime != null">
-        reg_time = #{record.regTime,jdbcType=DATE},
+        reg_time = #{record.regTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -200,8 +200,8 @@
       password = #{record.password,jdbcType=VARCHAR},
       system = #{record.system,jdbcType=INTEGER},
       last_ip = #{record.lastIp,jdbcType=VARCHAR},
-      last_time = #{record.lastTime,jdbcType=DATE},
-      reg_time = #{record.regTime,jdbcType=DATE}
+      last_time = #{record.lastTime,jdbcType=TIMESTAMP},
+      reg_time = #{record.regTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -222,10 +222,10 @@
         last_ip = #{lastIp,jdbcType=VARCHAR},
       </if>
       <if test="lastTime != null">
-        last_time = #{lastTime,jdbcType=DATE},
+        last_time = #{lastTime,jdbcType=TIMESTAMP},
       </if>
       <if test="regTime != null">
-        reg_time = #{regTime,jdbcType=DATE},
+        reg_time = #{regTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -236,8 +236,8 @@
       password = #{password,jdbcType=VARCHAR},
       system = #{system,jdbcType=INTEGER},
       last_ip = #{lastIp,jdbcType=VARCHAR},
-      last_time = #{lastTime,jdbcType=DATE},
-      reg_time = #{regTime,jdbcType=DATE}
+      last_time = #{lastTime,jdbcType=TIMESTAMP},
+      reg_time = #{regTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

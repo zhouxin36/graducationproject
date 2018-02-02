@@ -7,7 +7,7 @@ public class Pic {
 
     private String path;
 
-    private Integer productId;
+    private String productId;
 
     public String getId() {
         return id;
@@ -33,11 +33,11 @@ public class Pic {
         this.path = path;
     }
 
-    public Integer getProductId() {
+    public String getProductId() {
         return productId;
     }
 
-    public void setProductId(Integer productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 }

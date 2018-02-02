@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>活动管理页面</title>
+	<meta charset="UTF-8"/>
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" href="./css/font.css">
+<link rel="stylesheet" href="./css/xadmin.css">
+<link rel="stylesheet" href="../static/css/fileinput.min.css">
+<link rel="stylesheet"
+	href="../static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<script type="text/javascript" src="../static/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="./lib/layui/layui.js"
+	charset="utf-8"></script>
+<script type="text/javascript"
+	src="../static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../static/js/fileinput.js"></script>
+<script type="text/javascript" src="./js/xadmin.js"></script>
+</head>
+
+<body>
+	<div class="x-body">
+		<button class="layui-btn" id="add_btn">
+			<i class="layui-icon"></i> 添加
+		</button>
+		<span class="x-right" style="line-height: 40px">共有数据：88 条</span>
+		</xblock>
+		<table class="layui-table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>活动图片</th>
+					<th>活动内容</th>
+					<th>操作</th>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+
+	<!-- 添加模态框 -->
+	<div class="modal fade" id="myModal1" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">添加活动</h4>
+				</div>
+				<div class="modal-body" align="center">
+					<form class="form-horizontal" id="form">
+						<div class="form-group">
+							<label class="col-sm-4 control-label"
+								style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;"><span
+								class="x-red">*</span>活动内容:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="remark"
+									name="remark" placeholder="活动内容">
+							</div>
+
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label"
+								style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;"><span
+								class="x-red">*</span>活动图片:</label>
+							<div class="col-sm-6" id="biaoshiimg">
+								<input type="file" class="form-control" id="file-3"
+									name="file" multiple=true placeholder="活动图片">
+							</div>
+						</div>
+					</form>
+					<div class="layui-form-item" align="center">
+						<label for="L_repass" class="layui-form-label"> </label>
+						<button class="layui-btn" id="add_activity">增加</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+<script type="text/javascript">
+	$(function() {
+		request_list();
+		$("#add_btn").click(
+				function() {
+					//清空模态框数据
+					$("#myModal1").find("input").each(function() {
+						$(this).val("");
+					});
+					
+					var input = $("<input/>");
+					input.attr("type", "file").attr("class", "form-control")
+							.attr("id", "file-3").attr("name", "file").attr(
+									"multiple", true).attr("placeholder",
+									"活动图片")
+					$("#biaoshiimg").empty();
+					$("#biaoshiimg").append(input);
+					$("#file-3").fileinput({
+						showUpload : false,
+						showCaption : false,
+						browseClass : "btn btn-primary btn-lg",
+						fileType : "any",
+					});
+					$("#myModal1").modal("show");
+				});
+
+		$("#add_activity").click(function() {
+			var formData = new FormData($("#form")[0]);
+			$.ajax({
+				url : "../add_activity",
+				type : "post",
+				data : formData,
+				async : false,
+				cache : false,
+				contentType : false,
+				processData : false,
+				success : function(msg) {
+					if (msg.code == 100) {
+						$("#myModal1").modal("hide");
+						request_list();
+						layer.msg('增加成功!', {
+							icon : 1,
+							time : 2000
+						});
+					} else {
+						layer.msg('增加失败!', {
+							icon : 2,
+							time : 2000
+						});
+					}
+				},
+				error : function(msg) {
+					layer.msg('增加失败!', {
+						icon : 2,
+						time : 2000
+					});
+				}
+			});
+		});
+
+		$("#update_admin_password").click(
+				function() {
+					$.ajax({
+						url : "../update_admin_password",
+						type : "post",
+						data : "id=" + $("#id").val() + "&password="
+								+ $("#password1").val(),
+						success : function(msg) {
+							if (msg.code == 100) {
+								$("#myModal2").modal("hide");
+								layer.msg('修改成功!', {
+									icon : 1,
+									time : 2000
+								});
+							} else {
+								layer.msg('修改失败!', {
+									icon : 2,
+									time : 2000
+								});
+							}
+						},
+						error : function(msg) {
+							layer.msg('修改失败!', {
+								icon : 2,
+								time : 2000
+							});
+						}
+					});
+				});
+
+		
+
+	});
+	function request_list() {
+		var tbody = $("tbody");
+		tbody.empty();
+		$.ajax({
+			url : "../activity_list",
+			type : "post",
+			success : function(msg) {
+				if (msg.code == 100) {
+					//类型列表
+					admin_list(msg.map);
+				} else {
+					layer.msg('查找失败!', {
+						icon : 2,
+						time : 2000
+					});
+				}
+			},
+			error : function(msg) {
+				layer.msg('查找失败!', {
+					icon : 2,
+					time : 2000
+				});
+			}
+		});
+	}
+	//时间格式转换
+	function getMyDate(str) {
+		var oDate = new Date(str), oYear = oDate.getFullYear(), oMonth = oDate
+				.getMonth() + 1, oDay = oDate.getDate(), oHour = oDate
+				.getHours(), oMin = oDate.getMinutes(), oSen = oDate
+				.getSeconds(), oTime = oYear + '-' + getzf(oMonth) + '-'
+				+ getzf(oDay) + ' ' + getzf(oHour) + ':' + getzf(oMin) + ':'
+				+ getzf(oSen);//最后拼接时间  
+		return oTime;
+	};
+	//补0操作  
+	function getzf(num) {
+		if (parseInt(num) < 10) {
+			num = '0' + num;
+		}
+		return num;
+	}
+
+	//类型列表
+	function admin_list(msg) {
+		var tbody = $("tbody");
+
+		for (var i = 0; msg.list[i] != null; i++) {
+			var tr = $("<tr></tr>");
+			var td2 = $("<td></td>");
+			td2.append(msg.list[i].id);
+			var td3 = $("<td></td>");
+			var img_img = $("<img/>");
+			img_img.attr("style", "width:100px;height:100px;");
+			$.ajax({
+				url : "../find_img_activity",
+				data : "id=" + msg.list[i].picId,
+				type : "post",
+				async : false,
+				success : function(ms) {
+					if (ms.code == 100) {
+						//类型列表
+						img_img.attr("src", ms.map.p+ms.map.pic.path);
+					} else {
+						
+						img_img.attr("src", ms.map.p+"1.jpg");
+					}
+				},
+				error : function(ms) {
+					layer.msg('查找失败!', {
+						icon : 2,
+						time : 2000
+					});
+				}
+			});
+			td3.append(img_img);
+			var td7 = $("<td></td>");
+			td7.append(msg.list[i].remark);
+
+			var td5 = $("<td></td>");
+
+			var btn_delete = $("<button></button>");
+			btn_delete.addClass("btn btn-danger");
+			btn_delete.attr("type", "button");
+			btn_delete.attr("val", msg.list[i].id);
+			btn_delete.append("删除");
+
+
+			td5.append(btn_delete);
+			tr.append(td2).append(td3).append(td7).append(td5);
+
+			tbody.append(tr);
+		}
+
+		$(".btn-danger").each(function() {
+			$(this).click(function() {
+				//删除
+				del($(this), $(this).attr("val"));
+			});
+		});
+		$(".x-right").text("共有数据:" + i + "条数据");
+		$(".x-right").attr("val", i);
+	}
+
+	function del(ele, id) {
+		layer.confirm('确认要删除吗？', function(index) {
+			$(ele).parent().parent().remove();
+			$.ajax({
+				url : "../activity_delete",
+				data : "id=" + id,
+				type : "post",
+				success : function(msg) {
+					layer.msg('已删除!', {
+						icon : 1,
+						time : 2000
+					});
+					var i = $(".x-right").attr("val") - 1;
+					$(".x-right").attr("val", i);
+					$(".x-right").text("共有数据:" + i + "条数据");
+				},
+				error : function() {
+					layer.msg('删除失败!', {
+						icon : 2,
+						time : 2000
+					});
+				}
+			});
+
+		});
+	}
+</script>
+</html>

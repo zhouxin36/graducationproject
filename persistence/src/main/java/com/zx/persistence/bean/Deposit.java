@@ -1,7 +1,12 @@
 package com.zx.persistence.bean;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Deposit {
     private String id;
@@ -12,7 +17,9 @@ public class Deposit {
 
     private Integer issuccess;
 
-    private Date rechargeDate;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime rechargeDate;
 
     public String getId() {
         return id;
@@ -46,11 +53,11 @@ public class Deposit {
         this.issuccess = issuccess;
     }
 
-    public Date getRechargeDate() {
+    public LocalDateTime getRechargeDate() {
         return rechargeDate;
     }
 
-    public void setRechargeDate(Date rechargeDate) {
+    public void setRechargeDate(LocalDateTime rechargeDate) {
         this.rechargeDate = rechargeDate;
     }
 }

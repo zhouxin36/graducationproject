@@ -11,6 +11,26 @@ public class ProductExample {
 
     protected boolean distinct;
 
+    protected Integer startRow;
+
+    protected Integer pageSize;
+
+    public Integer getStartRow() {
+        return startRow;
+    }
+
+    public void setStartRow(Integer startRow) {
+        this.startRow = startRow;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+
     protected List<Criteria> oredCriteria;
 
     public ProductExample() {
@@ -1038,6 +1058,41 @@ public class ProductExample {
 
         public String getTypeHandler() {
             return typeHandler;
+        }
+
+        public void setCondition(String condition) {
+            this.condition = condition;
+        }
+
+        public void setValue(Object value) {
+            this.value = value;
+        }
+
+        public void setSecondValue(Object secondValue) {
+            this.secondValue = secondValue;
+        }
+
+        public void setNoValue(boolean noValue) {
+            this.noValue = noValue;
+        }
+
+        public void setSingleValue(boolean singleValue) {
+            this.singleValue = singleValue;
+        }
+
+        public void setBetweenValue(boolean betweenValue) {
+            this.betweenValue = betweenValue;
+        }
+
+        public void setListValue(boolean listValue) {
+            this.listValue = listValue;
+        }
+
+        public void setTypeHandler(String typeHandler) {
+            this.typeHandler = typeHandler;
+        }
+
+        public Criterion() {
         }
 
         protected Criterion(String condition) {

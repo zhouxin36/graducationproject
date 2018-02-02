@@ -1,12 +1,19 @@
 package com.zx.persistence.bean;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Forder {
     private String id;
 
-    private Date addDate;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime addDate;
 
     private BigDecimal total;
 
@@ -20,7 +27,9 @@ public class Forder {
 
     private Integer status;
 
-    private Date successTime;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime successTime;
 
     public String getId() {
         return id;
@@ -30,11 +39,11 @@ public class Forder {
         this.id = id;
     }
 
-    public Date getAddDate() {
+    public LocalDateTime getAddDate() {
         return addDate;
     }
 
-    public void setAddDate(Date addDate) {
+    public void setAddDate(LocalDateTime addDate) {
         this.addDate = addDate;
     }
 
@@ -86,11 +95,11 @@ public class Forder {
         this.status = status;
     }
 
-    public Date getSuccessTime() {
+    public LocalDateTime getSuccessTime() {
         return successTime;
     }
 
-    public void setSuccessTime(Date successTime) {
+    public void setSuccessTime(LocalDateTime successTime) {
         this.successTime = successTime;
     }
 }

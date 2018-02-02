@@ -6,7 +6,7 @@
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="recharge_money" jdbcType="DECIMAL" property="rechargeMoney" />
     <result column="issuccess" jdbcType="INTEGER" property="issuccess" />
-    <result column="recharge_date" jdbcType="DATE" property="rechargeDate" />
+    <result column="recharge_date" jdbcType="TIMESTAMP" property="rechargeDate" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -103,7 +103,7 @@
     insert into deposit (id, user_id, recharge_money, 
       issuccess, recharge_date)
     values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{rechargeMoney,jdbcType=DECIMAL}, 
-      #{issuccess,jdbcType=INTEGER}, #{rechargeDate,jdbcType=DATE})
+      #{issuccess,jdbcType=INTEGER}, #{rechargeDate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.zx.persistence.bean.Deposit">
     insert into deposit
@@ -138,7 +138,7 @@
         #{issuccess,jdbcType=INTEGER},
       </if>
       <if test="rechargeDate != null">
-        #{rechargeDate,jdbcType=DATE},
+        #{rechargeDate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -164,7 +164,7 @@
         issuccess = #{record.issuccess,jdbcType=INTEGER},
       </if>
       <if test="record.rechargeDate != null">
-        recharge_date = #{record.rechargeDate,jdbcType=DATE},
+        recharge_date = #{record.rechargeDate,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -177,7 +177,7 @@
       user_id = #{record.userId,jdbcType=VARCHAR},
       recharge_money = #{record.rechargeMoney,jdbcType=DECIMAL},
       issuccess = #{record.issuccess,jdbcType=INTEGER},
-      recharge_date = #{record.rechargeDate,jdbcType=DATE}
+      recharge_date = #{record.rechargeDate,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -195,7 +195,7 @@
         issuccess = #{issuccess,jdbcType=INTEGER},
       </if>
       <if test="rechargeDate != null">
-        recharge_date = #{rechargeDate,jdbcType=DATE},
+        recharge_date = #{rechargeDate,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -205,7 +205,7 @@
     set user_id = #{userId,jdbcType=VARCHAR},
       recharge_money = #{rechargeMoney,jdbcType=DECIMAL},
       issuccess = #{issuccess,jdbcType=INTEGER},
-      recharge_date = #{rechargeDate,jdbcType=DATE}
+      recharge_date = #{rechargeDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -1,7 +1,12 @@
 package com.zx.persistence.bean;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Product {
     private String id;
@@ -14,7 +19,9 @@ public class Product {
 
     private String xremark;
 
-    private Date addDate;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime addDate;
 
     private Integer open;
 
@@ -28,7 +35,9 @@ public class Product {
 
     private String lastAdminId;
 
-    private Date lastTime;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime lastTime;
 
     public String getId() {
         return id;
@@ -70,11 +79,11 @@ public class Product {
         this.xremark = xremark;
     }
 
-    public Date getAddDate() {
+    public LocalDateTime getAddDate() {
         return addDate;
     }
 
-    public void setAddDate(Date addDate) {
+    public void setAddDate(LocalDateTime addDate) {
         this.addDate = addDate;
     }
 
@@ -126,11 +135,11 @@ public class Product {
         this.lastAdminId = lastAdminId;
     }
 
-    public Date getLastTime() {
+    public LocalDateTime getLastTime() {
         return lastTime;
     }
 
-    public void setLastTime(Date lastTime) {
+    public void setLastTime(LocalDateTime lastTime) {
         this.lastTime = lastTime;
     }
 }

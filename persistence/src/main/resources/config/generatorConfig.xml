@@ -10,7 +10,7 @@
 			<property name="suppressAllComments" value="true" />
 			<property name="suppressDate" value="true" />
 		</commentGenerator>
-		<jdbcConnection connectionURL="jdbc:mysql://localhost:3306/db1"
+		<jdbcConnection connectionURL="jdbc:mysql://localhost:3306/db0"
 			driverClass="com.mysql.jdbc.Driver" password="123456" userId="root" />
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="true" />
@@ -21,7 +21,7 @@
 			targetProject="src/main/resources" />
 		<javaClientGenerator targetPackage="com.zx.persistence.dao"
 			targetProject="src/main/java" type="XMLMAPPER" />
-		<table tableName="%">
+		<table tableName="feedback">
 		</table>
 	</context>
 </generatorConfiguration>

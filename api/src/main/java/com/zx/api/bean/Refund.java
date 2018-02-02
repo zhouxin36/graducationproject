@@ -7,7 +7,7 @@ public class Refund {
 
     private String productid;
 
-    private Integer forderid;
+    private String forderid;
 
     private Integer type;
 
@@ -39,11 +39,11 @@ public class Refund {
         this.productid = productid;
     }
 
-    public Integer getForderid() {
+    public String getForderid() {
         return forderid;
     }
 
-    public void setForderid(Integer forderid) {
+    public void setForderid(String forderid) {
         this.forderid = forderid;
     }
 

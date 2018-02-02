@@ -9,7 +9,7 @@
     <result column="post" jdbcType="VARCHAR" property="post" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="selected" jdbcType="INTEGER" property="selected" />
-    <result column="add_date" jdbcType="DATE" property="addDate" />
+    <result column="add_date" jdbcType="TIMESTAMP" property="addDate" />
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
   </resultMap>
@@ -111,7 +111,7 @@
       last_time)
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
       #{remark,jdbcType=VARCHAR}, #{post,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{selected,jdbcType=INTEGER}, #{addDate,jdbcType=DATE}, #{userId,jdbcType=VARCHAR}, 
+      #{selected,jdbcType=INTEGER}, #{addDate,jdbcType=TIMESTAMP}, #{userId,jdbcType=VARCHAR}, 
       #{lastTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.zx.persistence.bean.UserAddress">
@@ -171,7 +171,7 @@
         #{selected,jdbcType=INTEGER},
       </if>
       <if test="addDate != null">
-        #{addDate,jdbcType=DATE},
+        #{addDate,jdbcType=TIMESTAMP},
       </if>
       <if test="userId != null">
         #{userId,jdbcType=VARCHAR},
@@ -212,7 +212,7 @@
         selected = #{record.selected,jdbcType=INTEGER},
       </if>
       <if test="record.addDate != null">
-        add_date = #{record.addDate,jdbcType=DATE},
+        add_date = #{record.addDate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=VARCHAR},
@@ -234,7 +234,7 @@
       post = #{record.post,jdbcType=VARCHAR},
       address = #{record.address,jdbcType=VARCHAR},
       selected = #{record.selected,jdbcType=INTEGER},
-      add_date = #{record.addDate,jdbcType=DATE},
+      add_date = #{record.addDate,jdbcType=TIMESTAMP},
       user_id = #{record.userId,jdbcType=VARCHAR},
       last_time = #{record.lastTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -263,7 +263,7 @@
         selected = #{selected,jdbcType=INTEGER},
       </if>
       <if test="addDate != null">
-        add_date = #{addDate,jdbcType=DATE},
+        add_date = #{addDate,jdbcType=TIMESTAMP},
       </if>
       <if test="userId != null">
         user_id = #{userId,jdbcType=VARCHAR},
@@ -282,7 +282,7 @@
       post = #{post,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
       selected = #{selected,jdbcType=INTEGER},
-      add_date = #{addDate,jdbcType=DATE},
+      add_date = #{addDate,jdbcType=TIMESTAMP},
       user_id = #{userId,jdbcType=VARCHAR},
       last_time = #{lastTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}

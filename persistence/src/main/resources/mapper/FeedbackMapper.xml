@@ -4,10 +4,8 @@
   <resultMap id="BaseResultMap" type="com.zx.persistence.bean.Feedback">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
     <result column="qq" jdbcType="VARCHAR" property="qq" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.zx.persistence.bean.Feedback">
-    <result column="comment" jdbcType="LONGVARCHAR" property="comment" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,27 +66,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, qq
+    id, user_id, comment, qq
   </sql>
-  <sql id="Blob_Column_List">
-    comment
-  </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.zx.persistence.bean.FeedbackExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from feedback
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" parameterType="com.zx.persistence.bean.FeedbackExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -102,12 +81,13 @@
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
+    <if test="startRow != null and pageSize != null and pageSize != 0">
+      limit #{startRow},#{pageSize}
+    </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from feedback
     where id = #{id,jdbcType=VARCHAR}
   </select>
@@ -122,10 +102,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.zx.persistence.bean.Feedback">
-    insert into feedback (id, user_id, qq, 
-      comment)
-    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, 
-      #{comment,jdbcType=LONGVARCHAR})
+    insert into feedback (id, user_id, comment, 
+      qq)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, 
+      #{qq,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zx.persistence.bean.Feedback">
     insert into feedback
@@ -136,11 +116,11 @@
       <if test="userId != null">
         user_id,
       </if>
-      <if test="qq != null">
-        qq,
-      </if>
       <if test="comment != null">
         comment,
+      </if>
+      <if test="qq != null">
+        qq,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -150,11 +130,11 @@
       <if test="userId != null">
         #{userId,jdbcType=VARCHAR},
       </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
       <if test="qq != null">
         #{qq,jdbcType=VARCHAR},
-      </if>
-      <if test="comment != null">
-        #{comment,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -173,23 +153,13 @@
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=VARCHAR},
       </if>
+      <if test="record.comment != null">
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
       <if test="record.qq != null">
         qq = #{record.qq,jdbcType=VARCHAR},
       </if>
-      <if test="record.comment != null">
-        comment = #{record.comment,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update feedback
-    set id = #{record.id,jdbcType=VARCHAR},
-      user_id = #{record.userId,jdbcType=VARCHAR},
-      qq = #{record.qq,jdbcType=VARCHAR},
-      comment = #{record.comment,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -198,6 +168,7 @@
     update feedback
     set id = #{record.id,jdbcType=VARCHAR},
       user_id = #{record.userId,jdbcType=VARCHAR},
+      comment = #{record.comment,jdbcType=VARCHAR},
       qq = #{record.qq,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -209,25 +180,19 @@
       <if test="userId != null">
         user_id = #{userId,jdbcType=VARCHAR},
       </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
       <if test="qq != null">
         qq = #{qq,jdbcType=VARCHAR},
       </if>
-      <if test="comment != null">
-        comment = #{comment,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zx.persistence.bean.Feedback">
-    update feedback
-    set user_id = #{userId,jdbcType=VARCHAR},
-      qq = #{qq,jdbcType=VARCHAR},
-      comment = #{comment,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zx.persistence.bean.Feedback">
     update feedback
     set user_id = #{userId,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=VARCHAR},
       qq = #{qq,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>

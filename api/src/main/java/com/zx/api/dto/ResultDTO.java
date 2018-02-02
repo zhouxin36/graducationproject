@@ -29,6 +29,14 @@ public class ResultDTO<T> {
         return data;
     }
 
+    public void setOK(){
+        this.setCode(HttpStatus.OK.value());
+    }
+
+    public void setError(){
+        this.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+    }
+
     public void setData(T data) {
         this.data = data;
     }

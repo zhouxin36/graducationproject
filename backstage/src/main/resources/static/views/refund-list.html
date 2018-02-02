@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>退款售后页面</title>
+	<meta charset="UTF-8"/>
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" href="./css/font.css">
+<link rel="stylesheet" href="./css/xadmin.css">
+<link rel="stylesheet" href="../static/css/fileinput.min.css">
+<link rel="stylesheet"
+	href="../static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<script type="text/javascript" src="../static/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="./lib/layui/layui.js"
+	charset="utf-8"></script>
+<script type="text/javascript"
+	src="../static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../static/js/fileinput.js"></script>
+<script type="text/javascript" src="./js/xadmin.js"></script>
+</head>
+
+<body>
+	<div class="x-body">
+		<table class="layui-table">
+			<thead>
+				<tr>
+					<th>用户名</th>
+					<th>退款理由</th>
+					<th>退款说明</th>
+					<th>操作</th>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+	<!-- 查看模态框 -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">查看详细订单</h4>
+				</div>
+				<div class="modal-body">
+					<form id="form_forder" class="form-horizontal"></form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+<script type="text/javascript">
+	$(function() {
+		request_list();
+	});
+	function request_list() {
+		var tbody = $("tbody");
+		tbody.empty();
+		$.ajax({
+			url : "../refund_request",
+			type : "post",
+			success : function(msg) {
+				if (msg.code == 100) {
+					//类型列表
+					refund_list(msg.map);
+				} else {
+				}
+			},
+			error : function(msg) {
+				layer.msg('查找失败!', {
+					icon : 2,
+					time : 2000
+				});
+			}
+		});
+	}
+
+	function refund_list(msg) {
+		var tbody = $("tbody");
+		tbody.empty();
+		for (var i = 0; msg.list[i] != null; i++) {
+			var tr = $("<tr></tr>");
+			var td2 = $("<td></td>");
+			$.ajax({
+				url : "../find_userName",
+				data : "id=" + msg.list[i].userid,
+				type : "post",
+				async : false,
+				success : function(ms) {
+					if (ms.code == 100)
+						td2.append(ms.map.username);
+					else
+						td2.append("用户名不存在");
+				},
+				error : function() {
+					layer.msg('查找失败!!', {
+						icon : 2,
+						time : 2000
+					});
+				}
+			});
+
+			var td3 = $("<td></td>");
+			if (msg.list[i].reason == 1)
+				td3.append("不想要了");
+			else if (msg.list[i].reason == 2)
+				td3.append("买错了");
+			else if (msg.list[i].reason == 3)
+				td3.append("没收到货");
+			else if (msg.list[i].reason == 4)
+				td3.append("与说明不符");
+			else
+				td3.append("其他原因");
+
+			var td4 = $("<td></td>");
+			td4.append(msg.list[i].supplement);
+			
+			var btn_look = $("<button></button>");
+			btn_look.addClass("btn btn-success look");
+			btn_look.attr("type", "button");
+			btn_look.attr("val", msg.list[i].forderid);
+			btn_look.append("查看详细订单");
+			
+			var btn_refund = $("<button></button>");
+			btn_refund.addClass("btn btn-warning refund");
+			btn_refund.attr("type", "button");
+			btn_refund.attr("val", msg.list[i].id);
+			btn_refund.append("退款");
+			
+			var td5 = $("<td></td>");
+			td5.append(btn_look).append(btn_refund);
+
+			tr.append(td2).append(td3).append(td4).append(td5);
+			tbody.append(tr);
+		}
+		
+		$(".refund").each(function (){
+			var v = $(this).attr("val");
+			$(this).click(function() {
+				refund($(this), $(this).attr("val"));
+		});
+		
+		$(".look").each(function() {
+			var v = $(this).attr("val");
+			$(this).click(function() {
+				$.ajax({
+					url : "../request_forder",
+					data : "id=" + v,
+					type : "post",
+					success : function(msg) {
+						if (msg.code == 100) {
+							var form = $("#form_forder");
+							form.empty();
+							
+							var div1 = $("<div></div>");
+							div1.addClass("form-group");
+							var la1 = $("<label></label>");
+							la1.addClass("col-sm-4 control-label");
+							la1.attr("style","padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;");
+							la1.append("订单号:");
+							var div1_1 = $("<div></div>");
+							div1_1.addClass("col-sm-6");
+							var input1 = $("<input/>");
+							input1.attr("type","text");
+							input1.addClass("form-control");
+							input1.attr("placeholder","订单号");
+							input1.attr("readonly",true);
+							input1.val(msg.map.forder.id);
+							div1_1.append(input1);
+							div1.append(la1).append(div1_1);
+							form.append(div1);
+							
+							var div2 = $("<div></div>");
+							div2.addClass("form-group");
+							var la2 = $("<label></label>");
+							la2.addClass("col-sm-4 control-label");
+							la2.attr("style","padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;");
+							la2.append("用户名:");
+							var div2_1 = $("<div></div>");
+							div2_1.addClass("col-sm-6");
+							var input2 = $("<input/>");
+							input2.attr("type","text");
+							input2.addClass("form-control");
+							input2.attr("placeholder","用户名");
+							input2.attr("readonly",true);
+							input2.val(msg.map.user.name);
+							div2_1.append(input2);
+							div2.append(la2).append(div2_1);
+							form.append(div2);
+							
+							
+							var div3 = $("<div></div>");
+							div3.addClass("form-group");
+							var la3 = $("<label></label>");
+							la3.addClass("col-sm-4 control-label");
+							la3.attr("style","padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;");
+							la3.append("收货人:");
+							var div3_1 = $("<div></div>");
+							div3_1.addClass("col-sm-6");
+							var input3 = $("<input/>");
+							input3.attr("type","text");
+							input3.addClass("form-control");
+							input3.attr("placeholder","收货人");
+							input3.attr("readonly",true);
+							input3.val(msg.map.userAddress.name);
+							div3_1.append(input3);
+							div3.append(la3).append(div3_1);
+							form.append(div3);
+							
+							
+							var div4 = $("<div></div>");
+							div4.addClass("form-group");
+							var la4 = $("<label></label>");
+							la4.addClass("col-sm-4 control-label");
+							la4.attr("style","padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;");
+							la4.append("收货电话:");
+							var div4_1 = $("<div></div>");
+							div4_1.addClass("col-sm-6");
+							var input4 = $("<input/>");
+							input4.attr("type","text");
+							input4.addClass("form-control");
+							input4.attr("placeholder","收货电话");
+							input4.attr("readonly",true);
+							input4.val(msg.map.userAddress.phone);
+							div4_1.append(input4);
+							div4.append(la4).append(div4_1);
+							form.append(div4);
+							
+							
+							var div5 = $("<div></div>");
+							div5.addClass("form-group");
+							var la5 = $("<label></label>");
+							la5.addClass("col-sm-4 control-label");
+							la5.attr("style","padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;");
+							la5.append("收货地址:");
+							var div5_1 = $("<div></div>");
+							div5_1.addClass("col-sm-6");
+							var input5 = $("<textarea></textarea>");
+							input5.addClass("form-control");
+							input5.attr("placeholder","收货地址");
+							input5.attr("readonly",true);
+							input5.val(msg.map.userAddress.address);
+							div5_1.append(input5);
+							div5.append(la5).append(div5_1);
+							form.append(div5);
+							
+							
+							/* var div6 = $("<div></div>");
+							div6.addClass("form-group");
+							var la6 = $("<label></label>");
+							la6.addClass("col-sm-4 control-label");
+							la6.attr("style","padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;");
+							la6.append("邮政编码:");
+							var div6_1 = $("<div></div>");
+							div6_1.addClass("col-sm-6");
+							var input6 = $("<input/>");
+							input6.attr("type","text");
+							input6.addClass("form-control");
+							input6.attr("placeholder","邮政编码");
+							input6.attr("readonly",true);
+							input6.val(msg.map.userAddress.post);
+							div6_1.append(input6);
+							div6.append(la6).append(div6_1);
+							form.append(div6); */
+							
+							var div7 = $("<div></div>");
+							div7.addClass("form-group");
+							var la7 = $("<label></label>");
+							la7.addClass("col-sm-4 control-label");
+							la7.attr("style","padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;");
+							la7.append("订单状态:");
+							var div7_1 = $("<div></div>");
+							div7_1.addClass("col-sm-6");
+							var input7 = $("<input/>");
+							input7.attr("type","text");
+							input7.addClass("form-control");
+							input7.attr("placeholder","订单状态");
+							input7.attr("readonly",true);
+							if(msg.map.forder.status == 0)
+								input7.val("未支付");
+							else if(msg.map.forder.status == 1)
+								input7.val("待发货");
+							else if(msg.map.forder.status == 2)
+								input7.val("待收货");
+							else if(msg.map.forder.status == 3)
+								input7.val("待评价");
+							else if(msg.map.forder.status == 4)
+								input7.val("已完成");
+							else
+								input7.val("未知状态");
+							div7_1.append(input7);
+							div7.append(la7).append(div7_1);
+							form.append(div7);
+							
+							
+							
+							/* var div8 = $("<div></div>");
+							div8.addClass("form-group");
+							var la8 = $("<label></label>");
+							la8.addClass("col-sm-4 control-label");
+							la8.attr("style","padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;");
+							la8.append("支付方式:");
+							var div8_1 = $("<div></div>");
+							div8_1.addClass("col-sm-6");
+							var input8 = $("<input/>");
+							input8.attr("type","text");
+							input8.addClass("form-control");
+							input8.attr("placeholder","支付方式");
+							input8.attr("readonly",true);
+							if(msg.map.forder.payment == 0)
+								input8.val("银联");
+							else if(msg.map.forder.payment == 1)
+								input8.val("微信支付");
+							else if(msg.map.forder.payment == 2)
+								input8.val("支付宝支付");
+							else
+								input8.val("未知状态");
+							div8_1.append(input8);
+							div8.append(la8).append(div8_1);
+							form.append(div8); */
+							
+							
+							
+							var div9 = $("<div></div>");
+							div9.addClass("form-group");
+							var la9 = $("<label></label>");
+							la9.addClass("col-sm-4 control-label");
+							la9.attr("style","padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;");
+							la9.append("物流方式:");
+							var div9_1 = $("<div></div>");
+							div9_1.addClass("col-sm-6");
+							var input9 = $("<input/>");
+							input9.attr("type","text");
+							input9.addClass("form-control");
+							input9.attr("placeholder","物流方式");
+							input9.attr("readonly",true);
+							if(msg.map.forder.logistics == 0)
+								input9.val("圆通");
+							else if(msg.map.forder.logistics == 1)
+								input9.val("申通");
+							else if(msg.map.forder.logistics == 2)
+								input9.val("韵达");
+							else if(msg.map.forder.logistics == 3)
+								input9.val("中通");
+							else if(msg.map.forder.logistics == 4)
+								input9.val("申通");
+							else
+								input9.val("其他物流");
+							div9_1.append(input9);
+							div9.append(la9).append(div9_1);
+							form.append(div9);
+							
+							var div10 = $("<div></div>");
+							div10.addClass("form-group");
+							var ta = $("<table></table>");
+							ta.addClass("layui-table");
+							var tr1 = $("<tr></tr>");
+							var th1 = $("<th></th>");
+							th1.append("商品号");
+							var th2 = $("<th></th>");
+							th2.append("商品名");
+							var th3 = $("<th></th>");
+							th3.append("商品价格");
+							var th4 = $("<th></th>");
+							th4.append("商品数量");
+							tr1.append(th1).append(th2).append(th3).append(th4);
+							ta.append(tr1);
+							var tbody = $("<tbody></tbody>");
+							for(var i = 0;msg.map.listSorder[i] != null; i++ ){
+								var tr2 = $("<tr></tr>");
+								var td1 = $("<td></td>");
+								td1.append(msg.map.listSorder[i].id);
+								var td2 = $("<td></td>");
+								td2.append(msg.map.listSorder[i].name);
+								var td3 = $("<td></td>");
+								td3.append(msg.map.listSorder[i].price);
+								var td4 = $("<td></td>");
+								td4.append(msg.map.listSorder[i].number);
+								tr2.append(td1).append(td2).append(td3).append(td4);
+								tbody.append(tr2);
+							}
+							ta.append(tbody);
+							div10.append(ta);
+							form.append(div10);
+							
+							var div11 = $("<div></div>");
+							div11.addClass("form-group");
+							var la11 = $("<label></label>");
+							la11.addClass("col-sm-4 control-label");
+							la11.attr("style","padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;");
+							la11.append("总金额:");
+							var div11_1 = $("<div></div>");
+							div11_1.addClass("col-sm-6");
+							var input11 = $("<input/>");
+							input11.attr("type","text");
+							input11.addClass("form-control");
+							input11.attr("placeholder","总金额");
+							input11.attr("readonly",true);
+							input11.val(msg.map.forder.total+"元");
+							div11_1.append(input11);
+							div11.append(la11).append(div11_1);
+							form.append(div11);
+						} else {
+							layer.msg('请求失败!', {
+								icon : 2,
+								time : 2000
+							});
+						}
+					},
+					error : function(msg) {
+						layer.msg('请求失败!', {
+							icon : 2,
+							time : 2000
+						});
+					}
+				});
+				$("#myModal").modal("show");
+			});
+		});
+		});
+	}
+		function refund(ele, id) {
+			layer.confirm('确认要退款吗？', function(index) {
+				$(ele).parent().parent().remove();
+				 $.ajax({
+					url : "../refund",
+					data : "id=" + id,
+					type : "post",
+					success : function(msg) {
+						layer.msg('已退款!', {
+							icon : 1,
+							time : 2000
+						});
+					},
+					error : function() {
+						layer.msg('退款失败!', {
+							icon : 2,
+							time : 2000
+						});
+					}
+				}); 
+
+			});
+		}
+</script>
+</html>

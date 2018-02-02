@@ -324,52 +324,62 @@ public class RefundExample {
             return (Criteria) this;
         }
 
-        public Criteria andForderidEqualTo(Integer value) {
+        public Criteria andForderidEqualTo(String value) {
             addCriterion("forderId =", value, "forderid");
             return (Criteria) this;
         }
 
-        public Criteria andForderidNotEqualTo(Integer value) {
+        public Criteria andForderidNotEqualTo(String value) {
             addCriterion("forderId <>", value, "forderid");
             return (Criteria) this;
         }
 
-        public Criteria andForderidGreaterThan(Integer value) {
+        public Criteria andForderidGreaterThan(String value) {
             addCriterion("forderId >", value, "forderid");
             return (Criteria) this;
         }
 
-        public Criteria andForderidGreaterThanOrEqualTo(Integer value) {
+        public Criteria andForderidGreaterThanOrEqualTo(String value) {
             addCriterion("forderId >=", value, "forderid");
             return (Criteria) this;
         }
 
-        public Criteria andForderidLessThan(Integer value) {
+        public Criteria andForderidLessThan(String value) {
             addCriterion("forderId <", value, "forderid");
             return (Criteria) this;
         }
 
-        public Criteria andForderidLessThanOrEqualTo(Integer value) {
+        public Criteria andForderidLessThanOrEqualTo(String value) {
             addCriterion("forderId <=", value, "forderid");
             return (Criteria) this;
         }
 
-        public Criteria andForderidIn(List<Integer> values) {
+        public Criteria andForderidLike(String value) {
+            addCriterion("forderId like", value, "forderid");
+            return (Criteria) this;
+        }
+
+        public Criteria andForderidNotLike(String value) {
+            addCriterion("forderId not like", value, "forderid");
+            return (Criteria) this;
+        }
+
+        public Criteria andForderidIn(List<String> values) {
             addCriterion("forderId in", values, "forderid");
             return (Criteria) this;
         }
 
-        public Criteria andForderidNotIn(List<Integer> values) {
+        public Criteria andForderidNotIn(List<String> values) {
             addCriterion("forderId not in", values, "forderid");
             return (Criteria) this;
         }
 
-        public Criteria andForderidBetween(Integer value1, Integer value2) {
+        public Criteria andForderidBetween(String value1, String value2) {
             addCriterion("forderId between", value1, value2, "forderid");
             return (Criteria) this;
         }
 
-        public Criteria andForderidNotBetween(Integer value1, Integer value2) {
+        public Criteria andForderidNotBetween(String value1, String value2) {
             addCriterion("forderId not between", value1, value2, "forderid");
             return (Criteria) this;
         }
@@ -653,14 +663,14 @@ public class RefundExample {
             this.typeHandler = typeHandler;
         }
 
-        public Criterion() {
-        }
-
         protected Criterion(String condition) {
             super();
             this.condition = condition;
             this.typeHandler = null;
             this.noValue = true;
+        }
+
+        public Criterion() {
         }
 
         protected Criterion(String condition, Object value, String typeHandler) {

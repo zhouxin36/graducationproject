@@ -3,14 +3,14 @@
 <mapper namespace="com.zx.persistence.dao.ForderMapper">
   <resultMap id="BaseResultMap" type="com.zx.persistence.bean.Forder">
     <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="add_date" jdbcType="DATE" property="addDate" />
+    <result column="add_date" jdbcType="TIMESTAMP" property="addDate" />
     <result column="total" jdbcType="DECIMAL" property="total" />
     <result column="address_id" jdbcType="VARCHAR" property="addressId" />
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="logistics" jdbcType="INTEGER" property="logistics" />
     <result column="payment" jdbcType="INTEGER" property="payment" />
     <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="success_time" jdbcType="DATE" property="successTime" />
+    <result column="success_time" jdbcType="TIMESTAMP" property="successTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -86,6 +86,9 @@
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
+    <if test="startRow != null and pageSize != null and pageSize != 0">
+      limit #{startRow},#{pageSize}
+    </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -108,9 +111,9 @@
       address_id, user_id, logistics, 
       payment, status, success_time
       )
-    values (#{id,jdbcType=VARCHAR}, #{addDate,jdbcType=DATE}, #{total,jdbcType=DECIMAL}, 
+    values (#{id,jdbcType=VARCHAR}, #{addDate,jdbcType=TIMESTAMP}, #{total,jdbcType=DECIMAL}, 
       #{addressId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{logistics,jdbcType=INTEGER}, 
-      #{payment,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{successTime,jdbcType=DATE}
+      #{payment,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{successTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zx.persistence.bean.Forder">
@@ -149,7 +152,7 @@
         #{id,jdbcType=VARCHAR},
       </if>
       <if test="addDate != null">
-        #{addDate,jdbcType=DATE},
+        #{addDate,jdbcType=TIMESTAMP},
       </if>
       <if test="total != null">
         #{total,jdbcType=DECIMAL},
@@ -170,7 +173,7 @@
         #{status,jdbcType=INTEGER},
       </if>
       <if test="successTime != null">
-        #{successTime,jdbcType=DATE},
+        #{successTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -187,7 +190,7 @@
         id = #{record.id,jdbcType=VARCHAR},
       </if>
       <if test="record.addDate != null">
-        add_date = #{record.addDate,jdbcType=DATE},
+        add_date = #{record.addDate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.total != null">
         total = #{record.total,jdbcType=DECIMAL},
@@ -208,7 +211,7 @@
         status = #{record.status,jdbcType=INTEGER},
       </if>
       <if test="record.successTime != null">
-        success_time = #{record.successTime,jdbcType=DATE},
+        success_time = #{record.successTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -218,14 +221,14 @@
   <update id="updateByExample" parameterType="map">
     update forder
     set id = #{record.id,jdbcType=VARCHAR},
-      add_date = #{record.addDate,jdbcType=DATE},
+      add_date = #{record.addDate,jdbcType=TIMESTAMP},
       total = #{record.total,jdbcType=DECIMAL},
       address_id = #{record.addressId,jdbcType=VARCHAR},
       user_id = #{record.userId,jdbcType=VARCHAR},
       logistics = #{record.logistics,jdbcType=INTEGER},
       payment = #{record.payment,jdbcType=INTEGER},
       status = #{record.status,jdbcType=INTEGER},
-      success_time = #{record.successTime,jdbcType=DATE}
+      success_time = #{record.successTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -234,7 +237,7 @@
     update forder
     <set>
       <if test="addDate != null">
-        add_date = #{addDate,jdbcType=DATE},
+        add_date = #{addDate,jdbcType=TIMESTAMP},
       </if>
       <if test="total != null">
         total = #{total,jdbcType=DECIMAL},
@@ -255,21 +258,21 @@
         status = #{status,jdbcType=INTEGER},
       </if>
       <if test="successTime != null">
-        success_time = #{successTime,jdbcType=DATE},
+        success_time = #{successTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zx.persistence.bean.Forder">
     update forder
-    set add_date = #{addDate,jdbcType=DATE},
+    set add_date = #{addDate,jdbcType=TIMESTAMP},
       total = #{total,jdbcType=DECIMAL},
       address_id = #{addressId,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=VARCHAR},
       logistics = #{logistics,jdbcType=INTEGER},
       payment = #{payment,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
-      success_time = #{successTime,jdbcType=DATE}
+      success_time = #{successTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

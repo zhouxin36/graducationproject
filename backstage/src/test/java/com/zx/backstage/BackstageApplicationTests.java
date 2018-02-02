@@ -1,10 +1,13 @@
 package com.zx.backstage;
 
+import com.zx.api.bean.Admin;
 import com.zx.api.bean.EntityAndExample;
 import com.zx.api.bean.User;
 import com.zx.api.bean.UserExample;
 import com.zx.api.utils.MyUtils;
+import com.zx.backstage.service.AdminService;
 import com.zx.backstage.service.UserService;
+import com.zx.backstage.utils.HttpUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -14,7 +17,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RunWith(SpringRunner.class)
@@ -23,13 +29,13 @@ public class BackstageApplicationTests {
 
     private final static Logger logger = LoggerFactory.getLogger(BackstageApplicationTests.class);
 
-    @Autowired
-    RedisTemplate redisTemplate;
-
-    @Test
-    public void contextLoads() {
-        redisTemplate.opsForValue().set("k1", "a1");
-    }
+//    @Autowired
+//    RedisTemplate redisTemplate;
+//
+//    @Test
+//    public void contextLoads() {
+//        redisTemplate.opsForValue().set("k1", "a1");
+//    }
 
     @Autowired
     UserService userService;
@@ -65,6 +71,30 @@ public class BackstageApplicationTests {
         user.setPassword("123456");
         user.setName("zhouxin1");
         userService.insert(user);
+    }
+
+    @Autowired
+    AdminService adminService;
+    @Test
+    public void test3() {
+        Admin admin = new Admin();
+        admin.setLogin("zhouxin");
+        admin.setId(MyUtils.getId(admin.getLogin()));
+        admin.setPassword("123456");
+        admin.setRegTime(LocalDateTime.now());
+        admin.setSystem(1);
+        adminService.insert(admin);
+    }
+
+    @Test
+    public void test4() {
+        List<Admin> zx = adminService.login("zhouxin", "123456");
+        Admin admin = zx.get(0);
+        admin.setSystem(0);
+        adminService.updateByPrimaryKey(admin);
+        logger.info("------->"+zx.get(0).getId());
+        logger.info("------->"+zx.get(0).getLastIp());
+        logger.info("------->"+zx.get(0).getLogin());
     }
 
 

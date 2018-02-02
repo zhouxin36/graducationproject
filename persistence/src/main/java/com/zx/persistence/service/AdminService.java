@@ -70,4 +70,13 @@ public class AdminService {
     public int updateByPrimaryKey(@RequestBody Admin record) {
         return adminMapper.updateByPrimaryKey(record);
     }
+
+    @PostMapping("/login")
+    List<Admin> login(String login, String password){
+        AdminExample adminExample = new AdminExample();
+        AdminExample.Criteria criteria = adminExample.createCriteria();
+        criteria.andLoginEqualTo(login);
+        criteria.andPasswordEqualTo(password);
+        return adminMapper.selectByExample(adminExample);
+    }
 }

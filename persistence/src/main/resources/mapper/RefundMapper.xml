@@ -5,7 +5,7 @@
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="userId" jdbcType="VARCHAR" property="userid" />
     <result column="productId" jdbcType="VARCHAR" property="productid" />
-    <result column="forderId" jdbcType="INTEGER" property="forderid" />
+    <result column="forderId" jdbcType="VARCHAR" property="forderid" />
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="reason" jdbcType="INTEGER" property="reason" />
     <result column="supplement" jdbcType="VARCHAR" property="supplement" />
@@ -106,7 +106,7 @@
       forderId, type, reason, 
       supplement)
     values (#{id,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{productid,jdbcType=VARCHAR}, 
-      #{forderid,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{reason,jdbcType=INTEGER}, 
+      #{forderid,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{reason,jdbcType=INTEGER}, 
       #{supplement,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zx.persistence.bean.Refund">
@@ -145,7 +145,7 @@
         #{productid,jdbcType=VARCHAR},
       </if>
       <if test="forderid != null">
-        #{forderid,jdbcType=INTEGER},
+        #{forderid,jdbcType=VARCHAR},
       </if>
       <if test="type != null">
         #{type,jdbcType=INTEGER},
@@ -177,7 +177,7 @@
         productId = #{record.productid,jdbcType=VARCHAR},
       </if>
       <if test="record.forderid != null">
-        forderId = #{record.forderid,jdbcType=INTEGER},
+        forderId = #{record.forderid,jdbcType=VARCHAR},
       </if>
       <if test="record.type != null">
         type = #{record.type,jdbcType=INTEGER},
@@ -198,7 +198,7 @@
     set id = #{record.id,jdbcType=VARCHAR},
       userId = #{record.userid,jdbcType=VARCHAR},
       productId = #{record.productid,jdbcType=VARCHAR},
-      forderId = #{record.forderid,jdbcType=INTEGER},
+      forderId = #{record.forderid,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=INTEGER},
       reason = #{record.reason,jdbcType=INTEGER},
       supplement = #{record.supplement,jdbcType=VARCHAR}
@@ -216,7 +216,7 @@
         productId = #{productid,jdbcType=VARCHAR},
       </if>
       <if test="forderid != null">
-        forderId = #{forderid,jdbcType=INTEGER},
+        forderId = #{forderid,jdbcType=VARCHAR},
       </if>
       <if test="type != null">
         type = #{type,jdbcType=INTEGER},
@@ -234,7 +234,7 @@
     update refund
     set userId = #{userid,jdbcType=VARCHAR},
       productId = #{productid,jdbcType=VARCHAR},
-      forderId = #{forderid,jdbcType=INTEGER},
+      forderId = #{forderid,jdbcType=VARCHAR},
       type = #{type,jdbcType=INTEGER},
       reason = #{reason,jdbcType=INTEGER},
       supplement = #{supplement,jdbcType=VARCHAR}

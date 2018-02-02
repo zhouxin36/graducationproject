@@ -1,13 +1,20 @@
 package com.zx.api.bean;
 
-import java.util.Date;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
+import java.time.LocalDateTime;
 
 public class Footmark {
     private String id;
 
     private String productId;
 
-    private Date visitTime;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime visitTime;
 
     private String userId;
 
@@ -27,11 +34,11 @@ public class Footmark {
         this.productId = productId;
     }
 
-    public Date getVisitTime() {
+    public LocalDateTime getVisitTime() {
         return visitTime;
     }
 
-    public void setVisitTime(Date visitTime) {
+    public void setVisitTime(LocalDateTime visitTime) {
         this.visitTime = visitTime;
     }
 

@@ -1,6 +1,11 @@
 package com.zx.api.bean;
 
-import java.util.Date;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
+import java.time.LocalDateTime;
 
 public class Favorite {
     private String id;
@@ -9,7 +14,9 @@ public class Favorite {
 
     private String userId;
 
-    private Date addDate;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime addDate;
 
     public String getId() {
         return id;
@@ -35,11 +42,11 @@ public class Favorite {
         this.userId = userId;
     }
 
-    public Date getAddDate() {
+    public LocalDateTime getAddDate() {
         return addDate;
     }
 
-    public void setAddDate(Date addDate) {
+    public void setAddDate(LocalDateTime addDate) {
         this.addDate = addDate;
     }
 }

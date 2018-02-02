@@ -6,11 +6,11 @@
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
     <result column="sex" jdbcType="INTEGER" property="sex" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="reg_time" jdbcType="DATE" property="regTime" />
+    <result column="reg_time" jdbcType="TIMESTAMP" property="regTime" />
     <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
     <result column="last_ip" jdbcType="VARCHAR" property="lastIp" />
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
@@ -94,6 +94,9 @@
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
+    <if test="startRow != null and pageSize != null and pageSize != 0">
+      limit #{startRow},#{pageSize}
+    </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -119,8 +122,8 @@
       member_level, account_security, isabled, 
       account_balance)
     values (#{id,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{sex,jdbcType=INTEGER}, 
-      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{regTime,jdbcType=DATE}, 
+      #{password,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, #{sex,jdbcType=INTEGER}, 
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{regTime,jdbcType=TIMESTAMP}, 
       #{lastTime,jdbcType=TIMESTAMP}, #{lastIp,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
       #{memberLevel,jdbcType=INTEGER}, #{accountSecurity,jdbcType=INTEGER}, #{isabled,jdbcType=INTEGER}, 
       #{accountBalance,jdbcType=DECIMAL})
@@ -191,7 +194,7 @@
         #{password,jdbcType=VARCHAR},
       </if>
       <if test="birthday != null">
-        #{birthday,jdbcType=DATE},
+        #{birthday,jdbcType=TIMESTAMP},
       </if>
       <if test="sex != null">
         #{sex,jdbcType=INTEGER},
@@ -203,7 +206,7 @@
         #{email,jdbcType=VARCHAR},
       </if>
       <if test="regTime != null">
-        #{regTime,jdbcType=DATE},
+        #{regTime,jdbcType=TIMESTAMP},
       </if>
       <if test="lastTime != null">
         #{lastTime,jdbcType=TIMESTAMP},
@@ -250,7 +253,7 @@
         password = #{record.password,jdbcType=VARCHAR},
       </if>
       <if test="record.birthday != null">
-        birthday = #{record.birthday,jdbcType=DATE},
+        birthday = #{record.birthday,jdbcType=TIMESTAMP},
       </if>
       <if test="record.sex != null">
         sex = #{record.sex,jdbcType=INTEGER},
@@ -262,7 +265,7 @@
         email = #{record.email,jdbcType=VARCHAR},
       </if>
       <if test="record.regTime != null">
-        reg_time = #{record.regTime,jdbcType=DATE},
+        reg_time = #{record.regTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.lastTime != null">
         last_time = #{record.lastTime,jdbcType=TIMESTAMP},
@@ -296,11 +299,11 @@
       nickname = #{record.nickname,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
-      birthday = #{record.birthday,jdbcType=DATE},
+      birthday = #{record.birthday,jdbcType=TIMESTAMP},
       sex = #{record.sex,jdbcType=INTEGER},
       phone = #{record.phone,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
-      reg_time = #{record.regTime,jdbcType=DATE},
+      reg_time = #{record.regTime,jdbcType=TIMESTAMP},
       last_time = #{record.lastTime,jdbcType=TIMESTAMP},
       last_ip = #{record.lastIp,jdbcType=VARCHAR},
       avatar = #{record.avatar,jdbcType=VARCHAR},
@@ -325,7 +328,7 @@
         password = #{password,jdbcType=VARCHAR},
       </if>
       <if test="birthday != null">
-        birthday = #{birthday,jdbcType=DATE},
+        birthday = #{birthday,jdbcType=TIMESTAMP},
       </if>
       <if test="sex != null">
         sex = #{sex,jdbcType=INTEGER},
@@ -337,7 +340,7 @@
         email = #{email,jdbcType=VARCHAR},
       </if>
       <if test="regTime != null">
-        reg_time = #{regTime,jdbcType=DATE},
+        reg_time = #{regTime,jdbcType=TIMESTAMP},
       </if>
       <if test="lastTime != null">
         last_time = #{lastTime,jdbcType=TIMESTAMP},
@@ -368,11 +371,11 @@
     set nickname = #{nickname,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      birthday = #{birthday,jdbcType=DATE},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
       sex = #{sex,jdbcType=INTEGER},
       phone = #{phone,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
-      reg_time = #{regTime,jdbcType=DATE},
+      reg_time = #{regTime,jdbcType=TIMESTAMP},
       last_time = #{lastTime,jdbcType=TIMESTAMP},
       last_ip = #{lastIp,jdbcType=VARCHAR},
       avatar = #{avatar,jdbcType=VARCHAR},

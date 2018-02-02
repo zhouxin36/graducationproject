@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.zx.persistence.bean.Footmark">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="product_id" jdbcType="VARCHAR" property="productId" />
-    <result column="visit_time" jdbcType="DATE" property="visitTime" />
+    <result column="visit_time" jdbcType="TIMESTAMP" property="visitTime" />
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -101,7 +101,7 @@
   <insert id="insert" parameterType="com.zx.persistence.bean.Footmark">
     insert into footmark (id, product_id, visit_time, 
       user_id)
-    values (#{id,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, #{visitTime,jdbcType=DATE}, 
+    values (#{id,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, #{visitTime,jdbcType=TIMESTAMP}, 
       #{userId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zx.persistence.bean.Footmark">
@@ -128,7 +128,7 @@
         #{productId,jdbcType=VARCHAR},
       </if>
       <if test="visitTime != null">
-        #{visitTime,jdbcType=DATE},
+        #{visitTime,jdbcType=TIMESTAMP},
       </if>
       <if test="userId != null">
         #{userId,jdbcType=VARCHAR},
@@ -151,7 +151,7 @@
         product_id = #{record.productId,jdbcType=VARCHAR},
       </if>
       <if test="record.visitTime != null">
-        visit_time = #{record.visitTime,jdbcType=DATE},
+        visit_time = #{record.visitTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=VARCHAR},
@@ -165,7 +165,7 @@
     update footmark
     set id = #{record.id,jdbcType=VARCHAR},
       product_id = #{record.productId,jdbcType=VARCHAR},
-      visit_time = #{record.visitTime,jdbcType=DATE},
+      visit_time = #{record.visitTime,jdbcType=TIMESTAMP},
       user_id = #{record.userId,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -178,7 +178,7 @@
         product_id = #{productId,jdbcType=VARCHAR},
       </if>
       <if test="visitTime != null">
-        visit_time = #{visitTime,jdbcType=DATE},
+        visit_time = #{visitTime,jdbcType=TIMESTAMP},
       </if>
       <if test="userId != null">
         user_id = #{userId,jdbcType=VARCHAR},
@@ -189,7 +189,7 @@
   <update id="updateByPrimaryKey" parameterType="com.zx.persistence.bean.Footmark">
     update footmark
     set product_id = #{productId,jdbcType=VARCHAR},
-      visit_time = #{visitTime,jdbcType=DATE},
+      visit_time = #{visitTime,jdbcType=TIMESTAMP},
       user_id = #{userId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
