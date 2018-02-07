@@ -60,7 +60,7 @@ var vm = new Vue({
 	},
 	methods: {
 		query: function () {
-			vm.reload();
+			vm.reload(1);
 		},
         update_password: function(){
 			vm.showList = false;
@@ -90,7 +90,8 @@ var vm = new Vue({
                         return;
                     }
                     alert('操作成功', function(){
-                        vm.reload();
+                        var page = $("#jqGrid").jqGrid('getGridParam','page');
+                        vm.reload(page);
                     });
                 });
 			});
@@ -108,7 +109,8 @@ var vm = new Vue({
                         return;
                     }
                     alert('操作成功', function(){
-                        vm.reload();
+                        var page = $("#jqGrid").jqGrid('getGridParam','page');
+                        vm.reload(page);
                     });
                 });
             });
@@ -126,7 +128,8 @@ var vm = new Vue({
                         return;
                     }
                     alert('操作成功', function(){
-                        vm.reload();
+                        var page = $("#jqGrid").jqGrid('getGridParam','page');
+                        vm.reload(page);
                     });
                 });
             });
@@ -144,7 +147,8 @@ var vm = new Vue({
 			    success: function(r){
 			    	if(r.code == 200){
 						alert(r.msg, function(){
-							vm.reload();
+                            var page = $("#jqGrid").jqGrid('getGridParam','page');
+							vm.reload(page);
 						});
 					}else{
 						alert(r.msg);
@@ -167,12 +171,11 @@ var vm = new Vue({
                     vm.app.lastTime = formatDate(vm.app.lastTime,null,null);
 			});
 		},
-		reload: function () {
+		reload: function (p) {
 			vm.showList = true;
-			var page = $("#jqGrid").jqGrid('getGridParam','page');
-			$("#jqGrid").jqGrid('setGridParam',{ 
+			$("#jqGrid").jqGrid('setGridParam',{
                 postData:{'name': vm.q.name},
-                page:page
+                page:p
             }).trigger("reloadGrid");
 		},
         validator: function () {

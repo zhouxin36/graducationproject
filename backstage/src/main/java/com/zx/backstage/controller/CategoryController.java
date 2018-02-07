@@ -1,16 +1,9 @@
 package com.zx.backstage.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.zx.api.bean.Admin;
 import com.zx.api.bean.Category;
 import com.zx.api.bean.CategoryExample;
 import com.zx.api.dto.R;
-import com.zx.api.dto.ResultDTO;
 import com.zx.api.utils.MyUtils;
 import com.zx.api.utils.PageUtils;
 import com.zx.backstage.service.CategoryService;
@@ -19,6 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 @Controller
@@ -34,6 +30,8 @@ public class CategoryController {
 		category.setAdminId(admin.getId());
 		category.setId(MyUtils.getUUID());
 		int i = categoryService.insert(category);
+		List<Category> categories = categoryService.selectByExample(new CategoryExample());
+		request.getSession().setAttribute("category", categories);
 		if(i==1) {
 			return R.ok("添加成功");
 			
@@ -58,8 +56,10 @@ public class CategoryController {
 	
 	@ResponseBody
 	@RequestMapping("/category_delete")
-	public R categoryDelete(String id) {
+	public R categoryDelete(HttpServletRequest request, String id) {
 		int  i= categoryService.deleteByPrimaryKey(id);
+		List<Category> categories = categoryService.selectByExample(new CategoryExample());
+		request.getSession().setAttribute("category", categories);
 		if(i!=0) {
 			return R.ok("删除成功");
 			
@@ -71,8 +71,10 @@ public class CategoryController {
 	
 	@ResponseBody
 	@RequestMapping("/category_update")
-	public R categoryUpdate(@RequestBody Category category) {
+	public R categoryUpdate(HttpServletRequest request, @RequestBody Category category) {
 		int i = categoryService.updateByPrimaryKey(category);
+		List<Category> categories = categoryService.selectByExample(new CategoryExample());
+		request.getSession().setAttribute("category", categories);
 		if(i!=0) {
 			return R.ok("更新成功");
 			

@@ -3,7 +3,7 @@ $(function () {
         url: baseURL + 'user_list',
         datatype: "json",
         colModel: [			
-			{ label: 'ID', name: 'id', index: "id", width: 30, key: true },
+			{ label: 'ID', name: 'id', index: "id", width: 130, key: true },
 			{ label: '应用标识', name: 'appId', width: 75, sortable:false},
 			{ label: '应用名称', name: 'name', width: 90,sortable:false },
             { label: '应用URL', name: 'url', width: 160, sortable:false, formatter: formatURL},
@@ -57,7 +57,7 @@ var vm = new Vue({
 	},
 	methods: {
 		query: function () {
-			vm.reload();
+			vm.reload(1);
 		},
 		add: function(){
 			vm.showList = false;
@@ -88,7 +88,8 @@ var vm = new Vue({
                     }
 					if(r.code == 0){
 						alert('操作成功', function(){
-						   vm.reload();
+                            var page = $("#jqGrid").jqGrid('getGridParam','page');
+						   vm.reload(page);
 						});
 					}else{
 						alert(r.msg);
@@ -114,7 +115,8 @@ var vm = new Vue({
                     }
 			    	if(r.code === 0){
 						alert('操作成功', function(){
-							vm.reload();
+                            var page = $("#jqGrid").jqGrid('getGridParam','page');
+							vm.reload(page);
 						});
 					}else{
 						alert(r.msg);
@@ -131,12 +133,11 @@ var vm = new Vue({
 				vm.app = r.app;
 			});
 		},
-		reload: function () {
+		reload: function (p) {
 			vm.showList = true;
-			var page = $("#jqGrid").jqGrid('getGridParam','page');
-			$("#jqGrid").jqGrid('setGridParam',{ 
+			$("#jqGrid").jqGrid('setGridParam',{
                 postData:{'name': vm.q.name},
-                page:page
+                page:p
             }).trigger("reloadGrid");
 		},
         validator: function () {
@@ -162,7 +163,7 @@ var vm = new Vue({
  * DataGrid行操作
  * */
 function operateMenu(cellvalue, options, rowObject) {
-    var aid = rowObject.id;
+    var aid = '\"'+rowObject.id+'\"';
     var result = "";
     var detailBtn = "<a class='btn btn-default' data-toggle='modal' data-target='#modal_app_info' onclick='openDetail(" + aid + ")'>详情</a>";
     result += detailBtn;

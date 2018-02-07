@@ -19,7 +19,7 @@ db:
   ##从库数量
   datasource_num: 1
   ##单个从库中从表数量
-  table_num: 1
+  table_num: 2
   ##主表名List
   table_names: user,admin,category,coupon,deposit,favorite,feedback,footmark,forder,mall_activity,pic,product,product_comment,refund,safe_question,sorder,user_address
   ##主库名，从库名为主库名+0~datasource_num

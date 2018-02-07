@@ -92,7 +92,6 @@ var vm = new Vue({
             if(vm.validator()){
                 return ;
             }
-
 			var url = vm.app.id == null ? "app/add" : "app/update";
 			$.ajax({
 				type: "POST",
@@ -125,10 +124,9 @@ var vm = new Vue({
 		},
 		reload: function () {
 			vm.showList = true;
-			var page = $("#jqGrid").jqGrid('getGridParam','page');
-			$("#jqGrid").jqGrid('setGridParam',{ 
+			$("#jqGrid").jqGrid('setGridParam',{
                 postData:{'name': vm.q.name},
-                page:page
+                page:1
             }).trigger("reloadGrid");
 		},
         validator: function () {

@@ -5,11 +5,11 @@ import com.zx.api.bean.MallActivityExample;
 import com.zx.api.bean.Pic;
 import com.zx.api.dto.ResultDTO;
 import com.zx.api.utils.DeleteFileUtil;
-import com.zx.api.utils.ImgUrlUtils;
 import com.zx.api.utils.MyUtils;
 import com.zx.backstage.service.MallActivityService;
 import com.zx.backstage.service.PicService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,12 +32,15 @@ public class MallActivityController {
 	@Autowired
 	PicService picService;
 
+    @Value("${file_base_url}")
+	String FILE_BASE_URL;
+
 	@RequestMapping("/add_activity")
 	@ResponseBody
 	public ResultDTO add_activity(@RequestParam(value = "file", required = false) MultipartFile file, String remark)
 			throws IllegalStateException, IOException {
 //		String path = (String) request.getSession().getAttribute("path");
-		String path = ImgUrlUtils.img_j;
+		String path = FILE_BASE_URL;
 		System.out.println(path);
 		if (!file.isEmpty()) {
 			int random = (int) (Math.random() * 10000);
@@ -80,7 +83,7 @@ public class MallActivityController {
 	@RequestMapping("/find_img_activity")
 	public ResultDTO<Map<String,Object>> find_img_activity(String id) {
 //		String path = (String) request.getSession().getAttribute("path2");
-		String path = ImgUrlUtils.img_x;
+		String path = FILE_BASE_URL;
 		Pic pic = picService.selectByPrimaryKey(id);
 		if (pic != null) {
             ResultDTO<Map<String,Object>> ok = new ResultDTO<>();
@@ -104,7 +107,7 @@ public class MallActivityController {
 	@RequestMapping("/activity_delete")
 	public ResultDTO activity_delete(String id) {
 //		String path = (String) request.getSession().getAttribute("path");
-		String path = ImgUrlUtils.img_j;
+		String path = FILE_BASE_URL;
 		MallActivity mallActivity = mallActivityService.selectByPrimaryKey(id);
 		mallActivityService.deleteByPrimaryKey(id);
 		Pic pic = picService.selectByPrimaryKey(mallActivity.getPicId());

@@ -5,7 +5,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/zhouxin36/backstage-config.git
+          uri: https://github.com/zhouxin36/{application}-config.git
       profile: dev
       label: master
   application:
