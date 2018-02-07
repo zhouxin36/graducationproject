@@ -1,10 +1,6 @@
 server:
   port: 8101
   context-path: /graducation
-
-#feign:
-#  hystrix:
-#    enabled: true
 logging:
   level: debug
 eureka:

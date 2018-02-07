@@ -38,6 +38,7 @@ repositories {
         compile 'com.dangdang:sharding-jdbc-core:1.5.4.1'
         compile 'com.alibaba:druid:1.0.12'
         compile('org.springframework.boot:spring-boot-configuration-processor')
+        compile ('org.springframework.cloud:spring-cloud-starter-config')
     }
 }
 

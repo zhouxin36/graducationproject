@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/hystrix-dashboard" />
             <option value="$PROJECT_DIR$/hystrix-turbine" />
             <option value="$PROJECT_DIR$/persistence" />
+            <option value="$PROJECT_DIR$/stage" />
           </set>
         </option>
       </GradleProjectSettings>

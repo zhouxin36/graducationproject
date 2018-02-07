@@ -20,6 +20,8 @@
       <module name="hystrix-turbine_test" target="1.8" />
       <module name="persistence_main" target="1.8" />
       <module name="persistence_test" target="1.8" />
+      <module name="stage_main" target="1.8" />
+      <module name="stage_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

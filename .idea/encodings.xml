@@ -4,7 +4,7 @@
     <file url="file://$PROJECT_DIR$/api/src/main/resources/bootstrap.yml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backstage/src/main/java/com/zx/backstage/controller/ForderController.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backstage/src/main/resources/static/layui/font/iconfont.woff" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/persistence/src/main/resources/application.yml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/persistence/src/main/resources/bootstrap.yml" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

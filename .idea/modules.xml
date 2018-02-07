@@ -27,6 +27,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/persistence/persistence.iml" filepath="$PROJECT_DIR$/.idea/modules/persistence/persistence.iml" group="persistence" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/persistence/persistence_main.iml" filepath="$PROJECT_DIR$/.idea/modules/persistence/persistence_main.iml" group="persistence" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/persistence/persistence_test.iml" filepath="$PROJECT_DIR$/.idea/modules/persistence/persistence_test.iml" group="persistence" />
+      <module fileurl="file://$PROJECT_DIR$/stage/stage.iml" filepath="$PROJECT_DIR$/stage/stage.iml" group="stage" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/stage/stage_main.iml" filepath="$PROJECT_DIR$/.idea/modules/stage/stage_main.iml" group="stage" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/stage/stage_test.iml" filepath="$PROJECT_DIR$/.idea/modules/stage/stage_test.iml" group="stage" />
     </modules>
   </component>
 </project>
