@@ -59,6 +59,7 @@ public class ResultDTO<T> {
     public static ResultDTO ok() {
         ResultDTO r = new ResultDTO();
         r.setCode(HttpStatus.OK.value());
+        r.setMsg("success");
         return r;
     }
 
@@ -70,6 +71,12 @@ public class ResultDTO<T> {
 
     public static ResultDTO buildSuccessData(Object data) {
         ResultDTO r = ok();
+        r.setData(data);
+        return r;
+    }
+
+    public static ResultDTO buildSuccessDataError(Object data) {
+        ResultDTO r = error();
         r.setData(data);
         return r;
     }
