@@ -175,11 +175,14 @@ public class ProductController {
 	public ResultDTO selectProductByCategoryId(String id) {
         ProductExample example = new ProductExample();
         ProductExample.Criteria criteria = example.createCriteria();
+        example.setOrderByClause("sale desc");
         criteria.andCategoryIdEqualTo(id);
         criteria.andOpenEqualTo(1);
         example.setPageSize(6);
-        example.setStartRow(1);
+        example.setStartRow(0);
         List<Product> list = productService.selectByExample(example);
+        if(list == null)
+            return ResultDTO.error();
         return ResultDTO.buildSuccessData(list);
 	}
 

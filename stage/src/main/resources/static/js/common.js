@@ -46,9 +46,9 @@ function checkNoLoginStatus(jqXHR, textStatus, errorThrown){
 /* ============== UAS =================*/
 
 //jqGrid的配置信息
-$.jgrid.defaults.width = 1000;
-$.jgrid.defaults.responsive = true;
-$.jgrid.defaults.styleUI = 'Bootstrap';
+// $.jgrid.defaults.width = 1000;
+// $.jgrid.defaults.responsive = true;
+// $.jgrid.defaults.styleUI = 'Bootstrap';
 
 //工具集合Tools
 window.T = {};
@@ -72,25 +72,25 @@ var fileURL = "http://localhost:10000/graducation/images/";
 //登录token
 var token = localStorage.getItem("token");
 
-//jquery全局配置
-$.ajaxSetup({
-	dataType: "json",
-	cache: false,
-    headers: {
-        "token": token
-    },
-    error: checkNoLoginStatus
-});
-
-//jqgrid全局配置
-$.extend($.jgrid.defaults, {
-    ajaxGridOptions : {
-        headers: {
-            "token": token
-        },
-        error: checkNoLoginStatus
-    }
-});
+// //jquery全局配置
+// $.ajaxSetup({
+// 	dataType: "json",
+// 	cache: false,
+//     headers: {
+//         "token": token
+//     },
+//     error: checkNoLoginStatus
+// });
+//
+// //jqgrid全局配置
+// $.extend($.jgrid.defaults, {
+//     ajaxGridOptions : {
+//         headers: {
+//             "token": token
+//         },
+//         error: checkNoLoginStatus
+//     }
+// });
 
 
 //重写alert

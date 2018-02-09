@@ -5,9 +5,22 @@ $(function () {
         colModel: [			
 			{ label: 'ID', name: 'id', index: "id", width: 130, key: true },
 			{ label: '图片', name: 'picId', width: 75, sortable:false,formatter: function(value, options, row){
-                return value === 0 ?
-              '<span class="label label-success">正常</span>' :
-            '<span class="label label-danger">禁用</span>';
+                    var url_image = null;
+                    $.ajax({
+                        url:baseURL + "find_img_activity",
+                        data:"id=" + value,
+                        type:"get",
+                        async: false,
+                        success:function (r) {
+                            if(r.code == 200){
+                                url_image = r.data.pic.path;
+                            }else{
+                                alert(r.msg);
+                                return;
+                            }
+                        }
+                    });
+                    return   "<image src='"+fileURL+url_image+"' style='width: 160px;height: 160px;'/>";
                 }
 			},
             { label: '详细介绍', name: 'remark', width: 60, sortable:false}
@@ -37,6 +50,14 @@ $(function () {
         	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
         }
     });
+    $("#form_activity").ajaxForm(function(data){
+        if(data.code== 200){
+            alert("提交成功！");
+            vm.reload(1);
+        }else {
+            alert("提交失败！");
+        }
+    });
 });
 
 var vm = new Vue({
@@ -49,6 +70,7 @@ var vm = new Vue({
 		showList: true,
 		title:null,
         app:{
+            remark:null,
 			deleteStatus:0
 		}
 	},
@@ -61,16 +83,13 @@ var vm = new Vue({
 			vm.title = "新增";
 			vm.app = {deleteStatus:0};
 
-            var btnCust = '<button type="button" class="btn btn-secondary" title="Add picture tags" ' +
-                'onclick="alert(\'Call your custom code here.\')">' +
-                '<i class="glyphicon glyphicon-tag"></i>' +
-                '</button>';
             $("#file-4").fileinput({
                 overwriteInitial: true,
                 maxFileSize: 15000,
                 showClose: false,
                 showCaption: false,
                 showBrowse: false,
+                showUpload:false,
                 browseOnZoneClick: true,
                 removeLabel: '',
                 removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
@@ -78,34 +97,18 @@ var vm = new Vue({
                 elErrorContainer: '#kv-avatar-errors-2',
                 msgErrorClass: 'alert alert-block alert-danger',
                 defaultPreviewContent: '<img src="../images/1.jpg" alt="Your Avatar"><h6 class="text-muted">Click to select</h6>',
-                layoutTemplates: {main2: '{preview} ' +  btnCust + ' {remove} {browse}'},
                 allowedFileExtensions: ["jpg", "png", "gif","jpeg"]
             });
 		},
-		update: function () {
+		del: function () {
 			var id = getSelectedRow();
 			if(id == null){
 				return ;
 			}
-			vm.showList = false;
-            vm.title = "修改";
-			
-			vm.getApp(id);
-		},
-		del: function () {
-			var id = getSelectedRows();
-			if(id == null){
-				return ;
-			}
-
 			confirm('确定要删除选中的记录？', function(){
-                $.get(baseURL + "app/"+id+"/del", function(r){
-                    if (r.permissionCheck) {
-                        alert(r.msg);
-                        return;
-                    }
-					if(r.code == 0){
-						alert('操作成功', function(){
+                $.get(baseURL + "activity_delete","id="+id, function(r){
+					if(r.code == 200){
+						alert(r.msg, function(){
                             var page = $("#jqGrid").jqGrid('getGridParam','page');
 						   vm.reload(page);
 						});
@@ -116,9 +119,6 @@ var vm = new Vue({
 			});
 		},
 		saveOrUpdate: function () {
-            if(vm.validator()){
-                return ;
-            }
             $("#form_activity").submit();
             // $.ajax({
 			// 	type: "POST",

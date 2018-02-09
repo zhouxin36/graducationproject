@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,9 +42,9 @@ public class MallActivityController {
     @Value("${file_base_url}")
 	String FILE_BASE_URL;
 
-	@RequestMapping("/add_activity")
+	@RequestMapping(value = "/add_activity",method = RequestMethod.POST)
 	@ResponseBody
-	public ResultDTO add_activity(HttpServletRequest request, @RequestParam("file") MultipartFile file, String remark)
+	public ResultDTO add_activity(HttpServletRequest request, String remark)
 			throws IllegalStateException, IOException {
         List<MultipartFile> files =((MultipartHttpServletRequest)request).getFiles("file");
 		String path = FILE_BASE_URL;

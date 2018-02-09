@@ -3,52 +3,43 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>首页</title>
-
-<link href="../AmazeUI-2.4.2/assets/css/amazeui.css" rel="stylesheet"
-	type="text/css" />
-<link href="../AmazeUI-2.4.2/assets/css/admin.css" rel="stylesheet"
-	type="text/css" />
- <link rel="stylesheet" href="../css/layer.css">
-<link href="../basic/css/demo.css" rel="stylesheet" type="text/css" />
-
+<link href="../css/amazeui.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="../css/layer.css">
+<link href="../css/demo.css" rel="stylesheet" type="text/css" />
 <link href="../css/hmstyle.css" rel="stylesheet" type="text/css" />
 <link href="../css/skin.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="../js/layer.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/jquery.flexslider.js"></script>
+<script type="text/javascript" src="../js/amazeui.min.js"></script>
 <script type="text/javascript">
-	var t = null;
+
+        var t = null;
 	$(function () {
-		
+
 		//页面一加载，判断用户是否登录，根据结果改变左上角的样式...
 		$
 				.post(
-						"../../User/check_login",
+						"../User/check_login",
 						function(msg, status) {
-							if (msg.code == 100) {
+							if (msg.code == 200) {
 								//登录成功
 								console.log(msg);
 								var a = $("<a></a>").attr("href", "#")
 										.addClass("h").append(
-												"欢迎你! " + msg.map.name);
+												"欢迎你! " + msg.data.name);
 								
 								var logout  = $("<a></a>").attr("href" , "#").append("&nbsp;  &nbsp;  退出登录");
 								var div = $("#login_status");
 								div.append(a).append(logout);
-								
 								//点击退出登录
 								 logout.click(function(){
-								/* 	 if(confirm("确定退出登录?")){
-										 $.post("../../User/logout",function(data){
-									           $(location).prop("href","../home/home.jsp");
-								              });
-										}
-									  */
-									 
 									 layer.msg('确定退出登录?', {
 										  time: 0 //不自动关闭
 										  ,btn: ['确定', '取消']
 										  ,yes: function(index){
-											  $.post("../../User/logout",function(data){
+											  $.post("../User/logout",function(data){
 										           $(location).prop("href","../home/home.jsp");
 									              });
 											  layer.close(index);
@@ -59,10 +50,10 @@
 								
 								
 								 //改变购物车的数字
-			                   	$.post("../../Order/getSorderById",function(data,status){
+			                   	$.post("../Order/getSorderById",function(data,status){
 			                   		
-			                   		$("#J_MiniCartNum").html(data.map.list.length);
-			                   		$("#shop_cart_number").html(data.map.list.length);
+			                   		$("#J_MiniCartNum").html(data.data.list.length);
+			                   		$("#shop_cart_number").html(data.data.list.length);
 			                   		
 			                   	});
 								
@@ -78,72 +69,6 @@
 								div.append(a).append(b);
 							}
 
-							
-
-							
-							
-							//加载界面信息
-							$.ajax({
-								url:"../../Product/home_message",
-								type:"post",
-								async : false,
-								success:function(msg){
-									//轮播
-									carousel(msg.map);
-									for(var i = 0; msg.map.category_list[i] != null;i++){
-										category_list(msg.map.category_list[i]);
-									}
-									var ul = $("#js_climit_li");
-									ul.children("li").each(function() {
-										$(this).mouseover(function() {
-											$(this).attr("class","appliance js_toggle relative hover");
-											$(this).children(".top").attr("style","display:block;");
-											});
-										$(this).mouseout(function() {
-											$(this).attr("class","appliance js_toggle relative");
-											$(this).children(".top").attr("style","display:none;");
-											});
-										});
-									//商品展示
-									show_p(msg.map,$("#f1"));
-									show_p_two(msg.map,$("#f2"));
-									
-								},
-								error:function(){
-									
-								}
-							});
-							
-							
-
-							
-							var i = 0;
-							//无限计时
-							timeout();
-							//下标点选择图片轮转
-							$("#div_dd").children("div").each(function() {
-								$(this).mouseover(function() {
-									clearTimeout(t);
-									$("#div_dd").children("div").each(function() {
-										$(this).text("●");
-										$(this).attr("id","left1");		
-										});
-									$(".am-slides").children("li").each(function() {
-										$(this).attr("style","width: 1519px; float: left; display: none;");
-										});
-									$(this).text("○");var a = $(this).attr("class");
-									var b = ".ban" + a;
-									$(this).attr("id","right1");
-									$(b).attr("style","width: 1519px; float: left; display: block;");
-									});
-								$(this).mouseout(function() {t = setTimeout(timeout,3000);});
-								});
-							//今日推荐
-							today_rem();
-							//热门活动
-							//hot_activity();
-							
-							
 						});
          //零食板块 （上面的板块）
 		function show_p(msg,p) {
@@ -156,11 +81,11 @@
 			var h1_2 = $("<h3></h3>");
 			var div1_2 = $("<div></div>");
 			div1_2.addClass("today-brands");
-			for (var i = 0; msg.msg1_3.map.pageInfo.list[i] != null; i++) {
+			for (var i = 0; msg.msg1_3.data.pageInfo.list[i] != null; i++) {
 				var a1 = $("<a></a>");
-				var name = msg.msg1_3.map.pageInfo.list[i].name.split('/');
+				var name = msg.msg1_3.data.pageInfo.list[i].name.split('/');
 				a1.append(name[0]);
-				a1.attr("href", "introduction.jsp?id="+msg.msg1_3.map.pageInfo.list[i].id);
+				a1.attr("href", "introduction.jsp?id="+msg.msg1_3.data.pageInfo.list[i].id);
 				div1_2.append(a1);
 			}
 			var sp = $("<span></span>");
@@ -184,16 +109,16 @@
 			div2_1.addClass("am-u-sm-5 am-u-md-4 text-one list ");
 			var div2_1_1 = $("<div></div>");
 			div2_1_1.addClass("word");
-			for (var i = 0; msg.msg1_2.map.pageInfo.list[i] != null; i++) {
+			for (var i = 0; msg.msg1_2.data.pageInfo.list[i] != null; i++) {
 				var a2_1_1 = $("<a></a>");
-				a2_1_1.addClass("outer").attr("href", "introduction.jsp?id="+msg.msg1_2.map.pageInfo.list[i].id);
+				a2_1_1.addClass("outer").attr("href", "introduction.jsp?id="+msg.msg1_2.data.pageInfo.list[i].id);
 				var sp2_1_1 = $("<span></span>");
 				sp2_1_1.addClass("inner");
 				var b2_1_1 = $("<b></b>");
 				b2_1_1.addClass("text");
-				var name = msg.msg1_2.map.pageInfo.list[i].name.split('/');
+				var name = msg.msg1_2.data.pageInfo.list[i].name.split('/');
 				b2_1_1.append(name[0]);
-				//b2_1_1.append(msg.msg1_2.map.pageInfo.list[i].name);
+				//b2_1_1.append(msg.msg1_2.data.pageInfo.list[i].name);
 				sp2_1_1.append(b2_1_1);
 				a2_1_1.append(sp2_1_1);
 				div2_1_1.append(a2_1_1);
@@ -220,27 +145,27 @@
 			//第二小部分
 			var div2_2_2 = $("<div></div>");
 			div2_2_2.addClass("am-u-sm-7 am-u-md-4 text-two sug");
-			show_product1(msg.msg1_1.map.pageInfo.list[0],div2_2_2);
+			show_product1(msg.msg1_1.data.pageInfo.list[0],div2_2_2);
 			div2.append(div2_2_2);
 			var div2_2_3 = $("<div></div>");
 			div2_2_3.addClass("am-u-sm-7 am-u-md-4 text-two");
-			show_product1(msg.msg1_1.map.pageInfo.list[1],div2_2_3);
+			show_product1(msg.msg1_1.data.pageInfo.list[1],div2_2_3);
 			div2.append(div2_2_3);
 			var div2_2_4 = $("<div></div>");
 			div2_2_4.addClass("am-u-sm-3 am-u-md-2 text-three big");
-			show_product1(msg.msg1_1.map.pageInfo.list[2],div2_2_4);
+			show_product1(msg.msg1_1.data.pageInfo.list[2],div2_2_4);
 			div2.append(div2_2_4);
 			var div2_2_5 = $("<div></div>");
 			div2_2_5.addClass("am-u-sm-3 am-u-md-2 text-three sug");
-			show_product1(msg.msg1_1.map.pageInfo.list[3],div2_2_5);
+			show_product1(msg.msg1_1.data.pageInfo.list[3],div2_2_5);
 			div2.append(div2_2_5);
 			var div2_2_6 = $("<div></div>");
 			div2_2_6.addClass("am-u-sm-3 am-u-md-2 text-three ");
-			show_product1(msg.msg1_1.map.pageInfo.list[4],div2_2_6);
+			show_product1(msg.msg1_1.data.pageInfo.list[4],div2_2_6);
 			div2.append(div2_2_6);
 			var div2_2_7 = $("<div></div>");
 			div2_2_7.addClass("am-u-sm-3 am-u-md-2 text-three last big");
-			show_product1(msg.msg1_1.map.pageInfo.list[5],div2_2_7);
+			show_product1(msg.msg1_1.data.pageInfo.list[5],div2_2_7);
 			div2.append(div2_2_7);
 
 			//第三部分
@@ -260,10 +185,10 @@
 			var h1_2 = $("<h3></h3>");
 			var div1_2 = $("<div></div>");
 			div1_2.addClass("today-brands");
-			for (var i = 0; msg.msg2_3.map.pageInfo.list[i] != null; i++) {
+			for (var i = 0; msg.msg2_3.data.pageInfo.list[i] != null; i++) {
 				var a1 = $("<a></a>");
-				a1.attr("href", "introduction.jsp?id="+msg.msg2_3.map.pageInfo.list[i].id);
-				var name = msg.msg2_3.map.pageInfo.list[i].name.split('/');
+				a1.attr("href", "introduction.jsp?id="+msg.msg2_3.data.pageInfo.list[i].id);
+				var name = msg.msg2_3.data.pageInfo.list[i].name.split('/');
 				a1.append(name[0]);
 				div1_2.append(a1);
 			}
@@ -288,14 +213,14 @@
 			div2_1.addClass("am-u-sm-5 am-u-md-4 text-one list ");
 			var div2_1_1 = $("<div></div>");
 			div2_1_1.addClass("word");
-			for (var i = 0; msg.msg2_2.map.pageInfo.list[i] != null; i++) {
+			for (var i = 0; msg.msg2_2.data.pageInfo.list[i] != null; i++) {
 				var a2_1_1 = $("<a></a>");
-				a2_1_1.addClass("outer").attr("href", "introduction.jsp?id="+msg.msg2_2.map.pageInfo.list[i].id);
+				a2_1_1.addClass("outer").attr("href", "introduction.jsp?id="+msg.msg2_2.data.pageInfo.list[i].id);
 				var sp2_1_1 = $("<span></span>");
 				sp2_1_1.addClass("inner");
 				var b2_1_1 = $("<b></b>");
 				b2_1_1.addClass("text");
-				var name = msg.msg2_2.map.pageInfo.list[i].name.split('/');
+				var name = msg.msg2_2.data.pageInfo.list[i].name.split('/');
 				b2_1_1.append(name[0]);
 				sp2_1_1.append(b2_1_1);
 				a2_1_1.append(sp2_1_1);
@@ -323,27 +248,27 @@
 			//第二小部分
 			var div2_2_2 = $("<div></div>");
 			div2_2_2.addClass("am-u-sm-7 am-u-md-4 text-two sug");
-			show_product1(msg.msg2_1.map.pageInfo.list[0],div2_2_2);
+			show_product1(msg.msg2_1.data.pageInfo.list[0],div2_2_2);
 			div2.append(div2_2_2);
 			var div2_2_3 = $("<div></div>");
 			div2_2_3.addClass("am-u-sm-7 am-u-md-4 text-two");
-			show_product1(msg.msg2_1.map.pageInfo.list[1],div2_2_3);
+			show_product1(msg.msg2_1.data.pageInfo.list[1],div2_2_3);
 			div2.append(div2_2_3);
 			var div2_2_4 = $("<div></div>");
 			div2_2_4.addClass("am-u-sm-3 am-u-md-2 text-three big");
-			show_product1(msg.msg2_1.map.pageInfo.list[2],div2_2_4);
+			show_product1(msg.msg2_1.data.pageInfo.list[2],div2_2_4);
 			div2.append(div2_2_4);
 			var div2_2_5 = $("<div></div>");
 			div2_2_5.addClass("am-u-sm-3 am-u-md-2 text-three sug");
-			show_product1(msg.msg2_1.map.pageInfo.list[3],div2_2_5);
+			show_product1(msg.msg2_1.data.pageInfo.list[3],div2_2_5);
 			div2.append(div2_2_5);
 			var div2_2_6 = $("<div></div>");
 			div2_2_6.addClass("am-u-sm-3 am-u-md-2 text-three ");
-			show_product1(msg.msg2_1.map.pageInfo.list[4],div2_2_6);
+			show_product1(msg.msg2_1.data.pageInfo.list[4],div2_2_6);
 			div2.append(div2_2_6);
 			var div2_2_7 = $("<div></div>");
 			div2_2_7.addClass("am-u-sm-3 am-u-md-2 text-three last big");
-			show_product1(msg.msg2_1.map.pageInfo.list[5],div2_2_7);
+			show_product1(msg.msg2_1.data.pageInfo.list[5],div2_2_7);
 			div2.append(div2_2_7);
 
 			//第三部分
@@ -372,13 +297,13 @@
 				data:"id="+msg.id+"&type="+1,
 				type:"post",
 				success:function(ms){
-					if(ms.code == 100)
-						img.attr("src", ms.map.path+ms.map.pic_list[0].path);
+					if(ms.code == 200)
+						img.attr("src", fileURL+ms.data.pic_list[0].path);
 					else 
-						img.attr("src", ms.map.path+"1.jpg");
+						img.attr("src", fileURL+"no_img.jpg");
 				},
 				error:function(msg){
-					img.attr("src", ms.map.path+"1.jpg");
+					img.attr("src", fileURL+"no_img.jpg");
 				}
 			});
 			a_pic.append(img);
@@ -423,7 +348,7 @@
 				h2.append("秒杀");
 				div3.append(h1).append(h2);
 				var img2 = $("<img/>");
-				img2.attr("src", "../images/activity1.jpg ");
+				img2.attr("src", "../images/activityno_img.jpg ");
 				div4.append(img2);
 				div5.append(h1);
 				div2.append(div3).append(h2).append(div4).append(div5);
@@ -438,7 +363,7 @@
 			$.ajax({
 				type : "post" ,
 				dataType : "json" ,
-				url : "../../Product/selectProductDes" ,
+				url : "../Product/selectProductDes" ,
 				async : false ,
 				success : function(msg){
 					console.log("before 今日推荐");
@@ -454,7 +379,7 @@
 					div1.append(img1).append(p1);
 					div_mian.append(div1);
                     
-					var list = msg.map.list ;
+					var list = msg.data.list ;
 					
 					for (var i = 0; i < 3; i++) {
 						var div2 = $("<div></div>");
@@ -478,13 +403,13 @@
 							type:"post",
 							async : false,
 							success:function(ms){
-								if(ms.code == 100)
-									img2.attr("src", ms.map.path+ms.map.pic_list[0].path);
+								if(ms.code == 200)
+									img2.attr("src", fileURL+ms.data.pic_list[0].path);
 								else 
-									img2.attr("src", ms.map.path+"1.jpg");
+									img2.attr("src", fileURL+"no_img.jpg");
 							},
 							error:function(msg){
-								img2.attr("src", ms.map.path+"1.jpg");
+								img2.attr("src", fileURL+"no_img.jpg");
 							}
 						});
 						//img2.attr("src", "../images/tj.png");
@@ -527,67 +452,6 @@
 			t = setTimeout(timeout, 3000);
 
 		}
-		//轮播
-		function carousel(msg) {
-			var ul = $("<ul></ul>");
-			ul.addClass("am-slides");
-			var div_d = $("<div></div>");
-			div_d.attr("id", "div_dd");
-			//轮播图片数量
-			for (var i = 0; msg.activity_list[i] != null; i++) {
-				var li = $("<li></li>");
-				li.addClass("banner" + i);
-				li.attr("style", "width: 1519px; float: left; display: none;");
-				var a = $("<a><a/>");
-				a.attr("href", "http://www.baidu.com");
-				var img = $("<img/>");
-				img.attr("style","width:1010px;height:455px;");
-				$.ajax({
-					url : "../../MallActivity/find_img_activity",
-					data : "id=" + msg.activity_list[i].picId,
-					type : "post",
-					async : false,
-					success : function(ms) {
-						if (ms.code == 100) {
-							//类型列表
-							img.attr("src", ms.map.p+ms.map.pic.path);
-						} else {
-							
-							img.attr("src", ms.map.p+"1.jpg");
-						}
-					},
-					error : function(ms) {
-						layer.msg("error！", {
-											icon : 5,
-											time : 3000
-										});
-					}
-				});
-				/* img.attr("src", msg.path + msg.activity_list[i]); */
-				var div_dot = $("<div></div>");
-				div_dot.text("●");
-				var left = 400 + i * 20;
-				div_dot.addClass("ner" + i);
-				div_dot.attr("id", "left1");
-				div_dot.attr("style",
-						"text-align:center;width:20px;height:20px;position: absolute; left: "
-								+ left + "px; top: 400px;")
-
-				a.append(img);
-				li.append(a);
-				ul.append(li);
-				div_d.append(div_dot);
-			}
-			var div_a = $("<div></div>");
-			div_a.addClass("am-slider am-slider-default scoll");
-			div_a.attr("data-am-flexslider", "data-am-flexslider").attr("id",
-					"demo-slider-0");
-			div_a.append(ul);
-			var d = $("<div></div>");
-			d.addClass("clear");
-			var div_l = $("#lunbo");
-			div_l.append(div_a).append(d).append(div_d);
-		}
 
 		//类别列表
 		function category_list(msg) {
@@ -625,19 +489,19 @@
 			dt_s.append(sp_s_1);
 			dl_s.append(dt_s);
 			$.ajax({
-				url:"../../Product/selectProductByCategoryId",
+				url:"../Product/selectProductByCategoryId",
 				type:"post",
 				data:"id="+msg.id,
 				async : false,
 				success:function(ms){
-					if(ms.code == 100){
-						for (var i = 0; ms.map.pageInfo.list[i] != null; i++) {
+					if(ms.code == 200){
+						for (var i = 0; ms.data[i] != null; i++) {
 							var dd_s = $("<dd></dd>");
 							var a_s = $("<a></a>");
-							a_s.attr("title", ms.map.pageInfo.list[i].name)
-								.attr("href", "http://localhost:8080/ECC/muban/home/introduction.jsp?id="+ms.map.pageInfo.list[i].id);
+							a_s.attr("title", ms.data[i].name)
+								.attr("href", "http://localhost:8080/ECC/muban/home/introduction.jsp?id="+ms.data[i].id);
 							var sp_s_2 = $("<span></span>");
-							sp_s_2.append(ms.map.pageInfo.list[i].name);
+							sp_s_2.append(ms.data[i].name);
 							a_s.append(sp_s_2);
 							dd_s.append(a_s);
 							dl_s.append(dd_s);
@@ -753,7 +617,6 @@
 				});
 	});
 </script>
-<script src="../AmazeUI-2.4.2/assets/js/amazeui.min.js"></script>
 
 
 
@@ -808,10 +671,11 @@
 			<div class="search-bar pr">
 				<!-- <a name="index_none_header_sysc" href="#"></a> -->
 
+				<form>
 				<input id="searchInput" name="" type="text" placeholder="搜索"
 					autocomplete="off">
 				<button id="ai-topsearch" class="submit am-btn" index="1">搜索</button>
-
+				</form>
 			</div>
 		</div>
 
@@ -819,7 +683,14 @@
 
 		<div class="clear"></div>
 	</div>
-	<div class="banner" id="lunbo"></div>
+	<div class="banner" id="banner_activity">
+        <div class="am-slider am-slider-default" id="demo-slider-0">
+            <ul class="am-slides">
+                <!--<li><img src="../images/image.jpg"/></li>-->
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
 	<div class="shopNav">
 		<div class="slideall">
 
@@ -1061,7 +932,43 @@
 			<div>充值</div>
 		</div>
 	</div>
-	<script type="text/javascript " src="../basic/js/quick_links.js "></script>
+	<script type="text/javascript " src="../js/quick_links.js "></script>
 </body>
+<script type="application/javascript">
+    $(function () {
+        //加载界面信息.
+        var li = "";
+        $.ajax({
+            url:"../Product/home_message",
+            type:"post",
+            async : false,
+            success:function(msg){
+                //轮播
+                var list = msg.data.activity_list;
 
+                for(var i = 0;i<list.length;i++){
+                    $.ajax({
+                        url: "../MallActivity/find_img_activity",
+                        data:"id="+list[i].picId,
+                        type: "post",
+                        async: false,
+                        success: function (msg) {
+                            li += '<li><img src="'+fileURL+ msg.data.pic.path+'" />' +
+                            '</li>';
+                        }
+                    });
+                }
+                // slider.addSlide(li,0);
+                //商品展示
+                // show_p(msg.data,$("#f1"));
+                // show_p_two(msg.data,$("#f2"));
+            },
+            error:function(){
+            }
+        });
+        $(".am-slides").html(li);
+        var $slider = $('#demo-slider-0');
+        $slider.flexslider();
+    });
+</script>
 </html>
