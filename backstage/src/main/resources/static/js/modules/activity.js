@@ -20,7 +20,7 @@ $(function () {
                             }
                         }
                     });
-                    return   "<image src='"+fileURL+url_image+"' style='width: 160px;height: 160px;'/>";
+                    return   "<image src='"+fileURL+url_image+"' style='width: 355px;height: 160px;'/>";
                 }
 			},
             { label: '详细介绍', name: 'remark', width: 60, sortable:false}
@@ -88,15 +88,13 @@ var vm = new Vue({
                 maxFileSize: 15000,
                 showClose: false,
                 showCaption: false,
-                showBrowse: false,
+                showBrowse: true,
                 showUpload:false,
+                showRemove:false,
                 browseOnZoneClick: true,
-                removeLabel: '',
-                removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
-                removeTitle: 'Cancel or reset changes',
-                elErrorContainer: '#kv-avatar-errors-2',
                 msgErrorClass: 'alert alert-block alert-danger',
-                defaultPreviewContent: '<img src="../images/1.jpg" alt="Your Avatar"><h6 class="text-muted">Click to select</h6>',
+                initialPreview: "../images/1.jpg",
+                initialPreviewAsData: true,
                 allowedFileExtensions: ["jpg", "png", "gif","jpeg"]
             });
 		},
