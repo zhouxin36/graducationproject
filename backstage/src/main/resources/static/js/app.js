@@ -3,7 +3,7 @@ $(function () {
         url: baseURL + 'user_list',
         datatype: "json",
         colModel: [			
-			{ label: 'ID', name: 'id', index: "id", width: 130, key: true },
+			{ label: 'ID', name: 'id', index: "id", width: 130, key: true,sortable:false },
 			{ label: '应用标识', name: 'appId', width: 75, sortable:false},
 			{ label: '应用名称', name: 'name', width: 90,sortable:false },
             { label: '应用URL', name: 'url', width: 160, sortable:false, formatter: formatURL},

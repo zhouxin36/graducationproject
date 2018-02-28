@@ -5,7 +5,6 @@ $(function () {
         colModel: [			
 			{ label: 'ID', name: 'id', index: "id", width: 130, key: true ,sortable:false},
 			{ label: '类型', name: 'type', width: 75, sortable:false,sortable:false},
-			{ label: '热度', name: 'hot', width: 90,sortable:false ,sortable:false},
         ],
 		viewrecords: true,
         height: screen.height * 0.55,

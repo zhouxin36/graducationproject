@@ -222,7 +222,7 @@ public class UserController {
         System.out.println(list);
 
         StringBuffer content = new StringBuffer("<h2>DGUT</h2>");
-        content.append("欢迎注册天猫会员<br>点击<a href='User/user_activity/"+list.get(0).getId()+"/"+MyUtils.md5Passwrod(user.getEmail())+"'>此处链接</a>激活账号");
+        content.append("欢迎注册天猫会员<br>点击<a href='http://localhost:8301/graducation/User/user_activity/"+list.get(0).getId()+"/"+MyUtils.md5Passwrod(user.getEmail())+"'>此处链接</a>激活账号");
         SendMailUtil.send(email, content.toString());
         if(i==1) {
             return ResultDTO.ok();

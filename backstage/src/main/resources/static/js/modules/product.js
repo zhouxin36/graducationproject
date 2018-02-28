@@ -58,11 +58,31 @@ vm = new Vue({
         title: null,
         category: null,
         app: {
-            deleteStatus: 0,
+            deleteStatus: 0
         },
-        list_category: null,
+        list_category: null
     },
     methods: {
+        product_open:function () {
+            var id = getSelectedRow();
+            if (id == null) {
+                return;
+            }
+            $.get(baseURL + "product_open", "id=" + id, function (r) {
+                var page = $("#jqGrid").jqGrid('getGridParam', 'page');
+                vm.reload(page);
+            });
+        },
+        product_down:function () {
+            var id = getSelectedRow();
+            if (id == null) {
+                return;
+            }
+            $.get(baseURL + "product_down", "id=" + id, function (r) {
+                var page = $("#jqGrid").jqGrid('getGridParam', 'page');
+                vm.reload(page);
+            });
+        },
         upload_img: function () {
             var id = getSelectedRow();
             if (id == null) {

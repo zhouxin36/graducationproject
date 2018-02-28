@@ -115,6 +115,7 @@ public class CommentController {
         Map<String,Object> map = new HashMap<>();
         map.put("list", list);
         map.put("list1",list1);
+        map.put("favour",favour);
 		if(list.size() == 0)
 			return ResultDTO.error();
 		else

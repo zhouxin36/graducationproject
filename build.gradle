@@ -32,7 +32,6 @@ subprojects {
 		compile('org.springframework.boot:spring-boot-starter-web')
 		testCompile('org.springframework.boot:spring-boot-starter-test')
 		compile ('org.springframework.cloud:spring-cloud-starter-eureka')
-		compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '1.4.3.RELEASE'
 
 		compile('org.assertj:assertj-core:3.8.0')
 		testCompile('io.rest-assured:rest-assured:3.0.6')

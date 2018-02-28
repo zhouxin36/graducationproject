@@ -3,7 +3,7 @@ $(function () {
         url: baseURL + 'activity_list',
         datatype: "json",
         colModel: [			
-			{ label: 'ID', name: 'id', index: "id", width: 130, key: true },
+			{ label: 'ID', name: 'id', index: "id", width: 130, key: true , sortable:false},
 			{ label: '图片', name: 'picId', width: 75, sortable:false,formatter: function(value, options, row){
                     var url_image = null;
                     $.ajax({

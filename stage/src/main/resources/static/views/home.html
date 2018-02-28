@@ -40,7 +40,7 @@
 										  ,btn: ['确定', '取消']
 										  ,yes: function(index){
 											  $.post("../User/logout",function(data){
-										           $(location).prop("href","../home/home.jsp");
+										           $(location).prop("href","home.html");
 									              });
 											  layer.close(index);
 										  }
@@ -61,14 +61,13 @@
 								//登录失败
 
 								var a = $("<a></a>").attr("href",
-										"../home/login.jsp").addClass("h")
+										"login.html").addClass("h")
 										.append("亲，请登录  ");
 								var b = $("<a></a>").attr("href",
-										"../home/register.jsp").append("免费注册");
+										"register.html").append("免费注册");
 								var div = $("#login_status");
 								div.append(a).append(b);
 							}
-
 						});
          //零食板块 （上面的板块）
 		function show_p(msg,p) {
@@ -85,7 +84,7 @@
 				var a1 = $("<a></a>");
 				var name = msg.msg1_3.data.pageInfo.list[i].name.split('/');
 				a1.append(name[0]);
-				a1.attr("href", "introduction.jsp?id="+msg.msg1_3.data.pageInfo.list[i].id);
+				a1.attr("href", "introduction.html?id="+msg.msg1_3.data.pageInfo.list[i].id);
 				div1_2.append(a1);
 			}
 			var sp = $("<span></span>");
@@ -111,7 +110,7 @@
 			div2_1_1.addClass("word");
 			for (var i = 0; msg.msg1_2.data.pageInfo.list[i] != null; i++) {
 				var a2_1_1 = $("<a></a>");
-				a2_1_1.addClass("outer").attr("href", "introduction.jsp?id="+msg.msg1_2.data.pageInfo.list[i].id);
+				a2_1_1.addClass("outer").attr("href", "introduction.html?id="+msg.msg1_2.data.pageInfo.list[i].id);
 				var sp2_1_1 = $("<span></span>");
 				sp2_1_1.addClass("inner");
 				var b2_1_1 = $("<b></b>");
@@ -187,7 +186,7 @@
 			div1_2.addClass("today-brands");
 			for (var i = 0; msg.msg2_3.data.pageInfo.list[i] != null; i++) {
 				var a1 = $("<a></a>");
-				a1.attr("href", "introduction.jsp?id="+msg.msg2_3.data.pageInfo.list[i].id);
+				a1.attr("href", "introduction.html?id="+msg.msg2_3.data.pageInfo.list[i].id);
 				var name = msg.msg2_3.data.pageInfo.list[i].name.split('/');
 				a1.append(name[0]);
 				div1_2.append(a1);
@@ -215,7 +214,7 @@
 			div2_1_1.addClass("word");
 			for (var i = 0; msg.msg2_2.data.pageInfo.list[i] != null; i++) {
 				var a2_1_1 = $("<a></a>");
-				a2_1_1.addClass("outer").attr("href", "introduction.jsp?id="+msg.msg2_2.data.pageInfo.list[i].id);
+				a2_1_1.addClass("outer").attr("href", "introduction.html?id="+msg.msg2_2.data.pageInfo.list[i].id);
 				var sp2_1_1 = $("<span></span>");
 				sp2_1_1.addClass("inner");
 				var b2_1_1 = $("<b></b>");
@@ -290,7 +289,7 @@
 					.append(msg.price+"元");
 			var i_addcart = $("<i></i>").addClass(
 					"am-icon-shopping-basket am-icon-md  seprate").append("");
-			var a_pic = $("<a></a>").attr("href", "introduction.jsp?id="+msg.id);
+			var a_pic = $("<a></a>").attr("href", "introduction.html?id="+msg.id);
 			var img = $("<img/>");
 			$.ajax({
 				url:"../../Pic/selectPicByProductType",
@@ -395,7 +394,7 @@
 						h2.append(name[0]);
 						div3.append(h1).append(h2);
 						var a = $("<a></a>");
-						a.attr("href", "../home/introduction.jsp?id="+list[i].id);
+						a.attr("href", "../home/introduction.html?id="+list[i].id);
 						var img2 = $("<img/>");
 						$.ajax({
 							url:"../../Pic/selectPicByProductType",
@@ -418,15 +417,10 @@
 						div2.append(div3).append(div4);
 						div_mian.append(div2);
 					}
-					
-					
-					
-					
 				}
 			});
 	
 		}
-
 		//无限计时
 		function timeout() {
 			var right = null;
@@ -450,178 +444,50 @@
 			$(right).attr("id", "right1");
 			$(b).attr("style", "width: 1519px; float: left; display: block;");
 			t = setTimeout(timeout, 3000);
-
 		}
-
-		//类别列表
-		function category_list(msg) {
-			var ul = $("#js_climit_li");
-			var li = $("<li></li>");
-			li.addClass("appliance js_toggle relative");
-			
-			
-
-			//div1
-			var div1 = $("<div></div>");
-			div1.addClass("category-info");
-			var h = $("<h3></h3>");
-			h.addClass("category-name b-category-name");
-			var i = $("<i></i>");
-			var img = $("<img/>");
-			img.attr("src", "../images/cake.png");
-			var a = $("<a></a>");
-			a.addClass("ml-22");
-			a.attr("title", msg.type);
-			a.append(msg.type);
-			i.append(img);
-			h.append(i).append(a);
-			var em = $("<em></em>");
-			em.append("&gt;");
-			div1.append(h).append(em);
-
-			//sort-side
-			var dl_s = $("<dl></dl>");
-			dl_s.addClass("dl-sort");
-			var dt_s = $("<dt></dt>");
-			var sp_s_1 = $("<span></span>");
-			sp_s_1.attr("title", msg.type);
-			sp_s_1.append(msg.type);
-			dt_s.append(sp_s_1);
-			dl_s.append(dt_s);
-			$.ajax({
-				url:"../Product/selectProductByCategoryId",
-				type:"post",
-				data:"id="+msg.id,
-				async : false,
-				success:function(ms){
-					if(ms.code == 200){
-						for (var i = 0; ms.data[i] != null; i++) {
-							var dd_s = $("<dd></dd>");
-							var a_s = $("<a></a>");
-							a_s.attr("title", ms.data[i].name)
-								.attr("href", "http://localhost:8080/ECC/muban/home/introduction.jsp?id="+ms.data[i].id);
-							var sp_s_2 = $("<span></span>");
-							sp_s_2.append(ms.data[i].name);
-							a_s.append(sp_s_2);
-							dd_s.append(a_s);
-							dl_s.append(dd_s);
-						}
-					}else{
-					}
-					
-				},
-				error:function(){
-					layer.msg("error！", {
-						icon : 5,
-						time : 3000
-					});
-				}
-			});
-			
-
-			//brand-side
-			/* var dl_b = $("<dl></dl>");
-			dl_b.addClass("dl-sort");
-			var dt_b = $("<dt></dt>");
-			var sp_b = $("<span></span>");
-			sp_b.append("实力商家");
-			dt_b.append(sp_b);
-			dl_b.append(dt_b);
-			for (var i = 0; i < 10; i++) {
-				var dd_b = $("<dd></dd>");
-				var a_b = $("<a></a>");
-				a_b.attr("title", "杭派女装批发网").attr("href", "#").attr("rel",
-						"nofollow").attr("target", "_blank");
-				var sp_b_2 = $("<span></span>");
-				sp_b_2.addClass("red");
-				sp_b_2.append("杭派女装批发网");
-				a_b.append(sp_b_2);
-				dd_b.append(a_b);
-				dl_b.append(dd_b);
-			} */
-
-			//div2
-			var div2 = $("<div></div>");
-			div2.addClass("menu-item menu-in top");
-			var div2_1 = $("<div></div>");
-			div2_1.addClass("area-in");
-			var div2_2 = $("<div></div>");
-			div2_2.addClass("area-bg");
-			var div2_3 = $("<div></div>");
-			div2_3.addClass("menu-srot");
-			var div2_4 = $("<div></div>");
-			div2_4.addClass("sort-side");
-			for (var i = 0; i < 2; i++) {
-				div2_4.append(dl_s);
-			}
-			var div2_5 = $("<div></div>");
-			div2_5.addClass("brand-side");
-			//div2_5.append(dl_b);
-			div2_3.append(div2_4).append(div2_5);
-			div2_2.append(div2_3);
-			div2_1.append(div2_2);
-			div2.append(div2_1);
-
-			var b = $("<b></b>");
-			b.addClass("arrow");
-			li.append(div1).append(div2).append(b);
-			ul.append(li);
-			
-			
-		}
-
 		//点击搜索按钮，新建一个超链接跳转到商品搜索界面
 		$("#ai-topsearch").click(
 				function() {
 					var productname = $("#searchInput").val();
 					var span = $("<span></span>").append("搜索界面");
 					var a = $("<a></a>").attr("href",
-							"../home/search.jsp?productname=" + productname)
+							"../home/search.html?productname=" + productname)
 							.attr("target", "_blank").append(span);
 					span.click();
 				});
-
 	})
-
 	//右侧导航条的Jquery
 	$(function() {
-
 		//客服中心 填写反馈意见
 		$("#kefu").click(function(){
-		      $(location).prop("href","../Feedback/FeedBacks.jsp");
+		      $(location).prop("href","../Feedback/FeedBacks.html");
 		});
-		
 		//跳转购物车
 		$("#Navigation_right_shopcart").click(function() {
-			$(location).prop('href', '../home/shopcart.jsp');
+			$(location).prop('href', '../home/shopcart.html');
 		});
 		//跳转我的资产
 		$("#Navigation_right_assets").click(function() {
-			$(location).prop('href', '../test/test_main.jsp?action=bill');
+			$(location).prop('href', '../test/test_main.html?action=bill');
 		});
 		//跳转我的足迹
 		$("#Navigation_right_foot").click(function() {
-			$(location).prop('href', '../test/test_main.jsp?action=foot');
+			$(location).prop('href', '../test/test_main.html?action=foot');
 		});
 		//跳转我的充值
 		$("#broadcast").click(function() {
-			$(location).prop('href', '../test/test_main.jsp?action=pay');
+			$(location).prop('href', '../test/test_main.html?action=pay');
 		});
-		
 		//跳转我的收藏
 		$("#Navigation_right_collection").click(
 				function() {
 
 					$(location).prop('href',
-							'../test/test_main.jsp?action=collection');
+							'../test/test_main.html?action=collection');
 				});
 	});
 </script>
-
-
-
 </head>
-
 <body>
 	<div class="hmtop">
 		<!--顶部导航条 -->
@@ -637,18 +503,18 @@
 			<ul class="message-r">
 				<div class="topMessage home">
 					<div class="menu-hd">
-						<a href="../home/home.jsp" target="_top" class="h">商城首页</a>
+						<a href="home.html" target="_top" class="h">商城首页</a>
 					</div>
 				</div>
 				<div class="topMessage my-shangcheng">
 					<div class="menu-hd MyShangcheng">
-						<a href="../test/test_main.jsp" target="_top"><i
+						<a href="../test/test_main.html" target="_top"><i
 							class="am-icon-user am-icon-fw"></i>个人中心</a>
 					</div>
 				</div>
 				<div class="topMessage mini-cart">
 					<div class="menu-hd">
-						<a id="mc-menu-hd" href="../home/shopcart.jsp" target="_top"><i
+						<a id="mc-menu-hd" href="../home/shopcart.html" target="_top"><i
 							class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong
 							id="J_MiniCartNum" class="h">0</strong></a>
 					</div>
@@ -656,9 +522,7 @@
 				<div class="topMessage favorite"></div>
 			</ul>
 		</div>
-
 		<!--悬浮搜索框-->
-
 		<div class="nav white">
 			<div class="logo">
 				<img src="../images/logo.png" />
@@ -666,11 +530,7 @@
 			<div class="logoBig">
 				<li><img src="../images/logobig.png" /></li>
 			</div>
-
-
 			<div class="search-bar pr">
-				<!-- <a name="index_none_header_sysc" href="#"></a> -->
-
 				<form>
 				<input id="searchInput" name="" type="text" placeholder="搜索"
 					autocomplete="off">
@@ -678,9 +538,6 @@
 				</form>
 			</div>
 		</div>
-
-
-
 		<div class="clear"></div>
 	</div>
 	<div class="banner" id="banner_activity">
@@ -693,19 +550,16 @@
     </div>
 	<div class="shopNav">
 		<div class="slideall">
-
 			<div class="long-title">
 				<span class="all-goods">全部分类</span>
 			</div>
 			<div class="nav-cont">
-				
 				<div class="nav-extra">
-					<i class="am-icon-user-secret am-icon-md nav-user"></i><b></b><a href='../test/test_main.jsp'>
+					<i class="am-icon-user-secret am-icon-md nav-user"></i><b></b><a href='../test/test_main.html'>
 					个人中心</a>
 					<i class="am-icon-angle-right" style="padding-left: 10px;"></i>
 				</div>
 			</div>
-
 			<!--侧边导航 -->
 			<div id="nav" class="navfull">
 				<div class="area clearfix">
@@ -719,11 +573,6 @@
 
 				</div>
 			</div>
-
-
-
-
-
 			<!--小导航 -->
 			<div class="am-g am-g-fixed smallnav">
 				<div class="am-u-sm-3">
@@ -774,26 +623,12 @@
 			<div id="today_re" class="am-g am-g-fixed recommendation"></div>
 			<div class="clear "></div>
 			<!--热门活动 -->
-
-			
-
-
 			<div id="f1">
 				<!--甜点-->
-
 			</div>
-
-
 			<div id="f2">
 				<!--坚果-->
 			</div>
-
-
-
-
-
-
-
 		</div>
 	</div>
 	<!--引导 -->
@@ -813,7 +648,7 @@
 			<div id="wrap">
 				<div id="prof" class="item "></div>
 				<div id="shopCart " class="item ">
-					<a href="../home/shopcart.jsp"> <span class="message "></span>
+					<a href="../home/shopcart.html"> <span class="message "></span>
 					</a>
 					<div id="Navigation_right_shopcart">
 						<p>购物车</p>
@@ -945,7 +780,9 @@
             success:function(msg){
                 //轮播
                 var list = msg.data.activity_list;
-
+                for(var i = 0; msg.data.category_list[i] != null;i++){
+                    category_list(msg.data.category_list[i]);
+                }
                 for(var i = 0;i<list.length;i++){
                     $.ajax({
                         url: "../MallActivity/find_img_activity",
@@ -958,6 +795,17 @@
                         }
                     });
                 }
+                var ul = $("#js_climit_li");
+                ul.children("li").each(function() {
+                    $(this).mouseover(function() {
+                        $(this).attr("class","appliance js_toggle relative hover");
+                        $(this).children(".top").attr("style","display:block;");
+                    });
+                    $(this).mouseout(function() {
+                        $(this).attr("class","appliance js_toggle relative");
+                        $(this).children(".top").attr("style","display:none;");
+                    });
+                });
                 // slider.addSlide(li,0);
                 //商品展示
                 // show_p(msg.data,$("#f1"));
@@ -970,5 +818,122 @@
         var $slider = $('#demo-slider-0');
         $slider.flexslider();
     });
+
+    //类别列表
+    function category_list(msg) {
+        var ul = $("#js_climit_li");
+        var li = $("<li></li>");
+        li.addClass("appliance js_toggle relative");
+
+
+
+        //div1
+        var div1 = $("<div></div>");
+        div1.addClass("category-info");
+        var h = $("<h3></h3>");
+        h.addClass("category-name b-category-name");
+        var i = $("<i></i>");
+        var img = $("<img/>");
+        img.attr("src", "../images/cake.png");
+        var a = $("<a></a>");
+        a.addClass("ml-22");
+        a.attr("title", msg.type);
+        a.append(msg.type);
+        i.append(img);
+        h.append(i).append(a);
+        var em = $("<em></em>");
+        em.append("&gt;");
+        div1.append(h).append(em);
+
+        //sort-side
+        var dl_s = $("<dl></dl>");
+        dl_s.addClass("dl-sort");
+        var dt_s = $("<dt></dt>");
+        var sp_s_1 = $("<span></span>");
+        sp_s_1.attr("title", msg.type);
+        sp_s_1.append(msg.type);
+        dt_s.append(sp_s_1);
+        dl_s.append(dt_s);
+        $.ajax({
+            url:"../Product/selectProductByCategoryId",
+            type:"post",
+            data:"id="+msg.id,
+            async : false,
+            success:function(ms){
+                if(ms.code == 200){
+                    for (var i = 0; ms.data[i] != null; i++) {
+                        var dd_s = $("<dd></dd>");
+                        var a_s = $("<a></a>");
+                        a_s.attr("title", ms.data[i].name)
+                            .attr("href", "introduction.html?id="+ms.data[i].id);
+                        var sp_s_2 = $("<span></span>");
+                        sp_s_2.append(ms.data[i].name);
+                        a_s.append(sp_s_2);
+                        dd_s.append(a_s);
+                        dl_s.append(dd_s);
+                    }
+                }else{
+                }
+
+            },
+            error:function(){
+                layer.msg("error！", {
+                    icon : 5,
+                    time : 3000
+                });
+            }
+        });
+
+
+        //brand-side
+        /* var dl_b = $("<dl></dl>");
+        dl_b.addClass("dl-sort");
+        var dt_b = $("<dt></dt>");
+        var sp_b = $("<span></span>");
+        sp_b.append("实力商家");
+        dt_b.append(sp_b);
+        dl_b.append(dt_b);
+        for (var i = 0; i < 10; i++) {
+            var dd_b = $("<dd></dd>");
+            var a_b = $("<a></a>");
+            a_b.attr("title", "杭派女装批发网").attr("href", "#").attr("rel",
+                    "nofollow").attr("target", "_blank");
+            var sp_b_2 = $("<span></span>");
+            sp_b_2.addClass("red");
+            sp_b_2.append("杭派女装批发网");
+            a_b.append(sp_b_2);
+            dd_b.append(a_b);
+            dl_b.append(dd_b);
+        } */
+
+        //div2
+        var div2 = $("<div></div>");
+        div2.addClass("menu-item menu-in top");
+        var div2_1 = $("<div></div>");
+        div2_1.addClass("area-in");
+        var div2_2 = $("<div></div>");
+        div2_2.addClass("area-bg");
+        var div2_3 = $("<div></div>");
+        div2_3.addClass("menu-srot");
+        var div2_4 = $("<div></div>");
+        div2_4.addClass("sort-side");
+        for (var i = 0; i < 2; i++) {
+            div2_4.append(dl_s);
+        }
+        var div2_5 = $("<div></div>");
+        div2_5.addClass("brand-side");
+        //div2_5.append(dl_b);
+        div2_3.append(div2_4).append(div2_5);
+        div2_2.append(div2_3);
+        div2_1.append(div2_2);
+        div2.append(div2_1);
+
+        var b = $("<b></b>");
+        b.addClass("arrow");
+        li.append(div1).append(div2).append(b);
+        ul.append(li);
+
+
+    }
 </script>
 </html>
