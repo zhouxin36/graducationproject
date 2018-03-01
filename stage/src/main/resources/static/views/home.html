@@ -51,10 +51,14 @@
 								
 								 //改变购物车的数字
 			                   	$.post("../Order/getSorderById",function(data,status){
-			                   		
-			                   		$("#J_MiniCartNum").html(data.data.list.length);
-			                   		$("#shop_cart_number").html(data.data.list.length);
-			                   		
+			                   		if(data.code == 200) {
+                                        $("#J_MiniCartNum").html(data.data.list.length);
+                                        $("#shop_cart_number").html(data.data.list.length);
+                                    }else {
+                                        $("#J_MiniCartNum").html(0);
+                                        $("#shop_cart_number").html(0);
+                                    }
+
 			                   	});
 								
 							} else {

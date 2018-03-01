@@ -117,7 +117,12 @@ public class UserController {
     public ResultDTO login(User user,HttpServletRequest request) {
         UserExample example=new UserExample();
         UserExample.Criteria criteria=example.createCriteria();
-        criteria.andEmailEqualTo(user.getEmail());
+        if(MyUtils.isEmail(user.getEmail()))
+            criteria.andEmailEqualTo(user.getEmail());
+        else if(MyUtils.isPhone(user.getEmail()))
+            criteria.andPhoneEqualTo(user.getEmail());
+        else
+            return ResultDTO.error("用户不存在或密码错误");
         criteria.andPasswordEqualTo(MyUtils.md5Passwrod(user.getPassword()));
         System.out.println("email:"+user.getEmail());
         System.out.println("password:"+user.getPassword());
@@ -134,7 +139,6 @@ public class UserController {
             session.setAttribute("name", list.get(0).getName());
             session.setAttribute("user_id", list.get(0).getId());
             return ResultDTO.ok("welcome sir");
-
         }
     }
 
@@ -250,7 +254,7 @@ public class UserController {
     @RequestMapping("/sendEmail")
     public ResultDTO sendEmail(String email,HttpServletRequest request) {
         StringBuffer content = new StringBuffer("<h2>five group</h2>");
-        content.append("<a href = 'muban/home/change_password.jsp"+"'>点击此处修改密码</a>");
+        content.append("<a href = 'http://localhost:8301/graducation/views/change_password.html"+"'>点击此处修改密码</a>");
         SendMailUtil.send(email, content.toString());
         return null;
 
