@@ -6,6 +6,7 @@ import com.springcloud.stage.service.ProductService;
 import com.zx.api.bean.*;
 import com.zx.api.dto.R;
 import com.zx.api.dto.ResultDTO;
+import com.zx.api.utils.MyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -85,19 +86,17 @@ public class ProductController {
 			String category, String brand, Double down, Double up , Integer sort) {
 		System.out.println("name=" + name + "&category=" + category + "&brand=" + brand
 				+ "&down=" + down + "&up=" + up + "&sort1=" + sort + "&pn=" + pn);
-		if(brand.equals("")) {
-			brand = null;
-		}
-
         {
             ProductExample example = new ProductExample();
             ProductExample.Criteria criteria=example.createCriteria();
-            criteria.andNameLike("%"+name.trim()+"%");
+            if(!MyUtils.isBlank(name)) {
+                criteria.andNameLike("%" + name.trim() + "%");
+            }
             criteria.andOpenEqualTo(1);
-            if(brand!=null) {
+            if(!MyUtils.isBlank(brand)) {
                 criteria.andNameLike("%"+brand.trim()+"%");
             }
-            if(category!=null) {
+            if(!MyUtils.isBlank(category)) {
                 criteria.andCategoryIdEqualTo(category);
             }
             if(down!=null) {
@@ -117,8 +116,9 @@ public class ProductController {
                     example.setOrderByClause("month_sale desc");
                 }
             }
+            long total= productService.countByExample(example);
             example.setPageSize(10);
-            example.setStartRow(pn);
+            example.setStartRow((pn-1)*10);
             List<Product> list=productService.selectByExample(example);
             for (Product product : list) {
                 System.out.println(product);
@@ -130,13 +130,16 @@ public class ProductController {
                 criteria_.andNameLike("%"+name.trim()+"%");
                 criteria_.andOpenEqualTo(1);
                 example_.setOrderByClause("price asc");
-                BigDecimal max=productService.selectByExample(example_).get(0).getPrice();
-                example_.setOrderByClause("price desc");
                 BigDecimal min=productService.selectByExample(example_).get(0).getPrice();
+                example_.setOrderByClause("price desc");
+                BigDecimal max=productService.selectByExample(example_).get(0).getPrice();
                 Map<String,Object> map = new HashMap<>();
                 map.put("list", list);
                 map.put("max", max);
                 map.put("min", min);
+                map.put("total", total);
+                map.put("totalPage", (total+9)/10);
+                map.put("pn", pn);
                 return ResultDTO.buildSuccessData(map);
             }
 

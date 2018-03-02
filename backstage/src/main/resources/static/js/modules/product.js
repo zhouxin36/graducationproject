@@ -4,6 +4,25 @@ $(function () {
         datatype: "json",
         colModel: [			
 			{ label: 'ID', name: 'id', index: "id", width: 130, key: true },
+            { label: '图片', name: 'id', width: 75, sortable:false,formatter: function(value, options, row){
+                    var url_image = null;
+                    $.ajax({
+                        url:baseURL + "find_img",
+                        data:"id=" + value,
+                        type:"get",
+                        async: false,
+                        success:function (r) {
+                            if(r.code == 200){
+                                url_image = r.list1[0].path;
+                            }else{
+                                alert(r.msg);
+                                return;
+                            }
+                        }
+                    });
+                    return   "<image src='"+fileURL+url_image+"' style='width: 160px;height: 80px;'/>";
+                }
+            },
 			{ label: '商品名称', name: 'name', width: 75, sortable:false},
 			{ label: '商品单价', name: 'price', width: 90,sortable:false },
             { label: '单位', name: 'spec', width: 60, sortable:false},

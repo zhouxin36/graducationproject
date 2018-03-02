@@ -663,7 +663,7 @@
             //页码
             for(var i=1; i<= totalPageNum; i++){
                 var numLi = $("<li></li>").append(
-                    $("<a></a>").append(item).attr("href", "#"));
+                    $("<a></a>").append($("#request_favour_comment").val()).attr("href", "#"));
                 if ($("#request_favour_comment").val() == i) {
                     numLi.addClass("active");
                 }
