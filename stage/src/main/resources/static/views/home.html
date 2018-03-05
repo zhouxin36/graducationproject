@@ -464,30 +464,30 @@
 	$(function() {
 		//客服中心 填写反馈意见
 		$("#kefu").click(function(){
-		      $(location).prop("href","../Feedback/FeedBacks.html");
+		      $(location).prop("href","FeedBacks.html");
 		});
 		//跳转购物车
 		$("#Navigation_right_shopcart").click(function() {
-			$(location).prop('href', '../home/shopcart.html');
+			$(location).prop('href', 'shopcart.html');
 		});
 		//跳转我的资产
 		$("#Navigation_right_assets").click(function() {
-			$(location).prop('href', '../test/test_main.html?action=bill');
+			$(location).prop('href', 'test_main.html?action=bill');
 		});
 		//跳转我的足迹
 		$("#Navigation_right_foot").click(function() {
-			$(location).prop('href', '../test/test_main.html?action=foot');
+			$(location).prop('href', 'test_main.html?action=foot');
 		});
 		//跳转我的充值
 		$("#broadcast").click(function() {
-			$(location).prop('href', '../test/test_main.html?action=pay');
+			$(location).prop('href', 'test_main.html?action=pay');
 		});
 		//跳转我的收藏
 		$("#Navigation_right_collection").click(
 				function() {
 
 					$(location).prop('href',
-							'../test/test_main.html?action=collection');
+							'test_main.html?action=collection');
 				});
 	});
 </script>
@@ -512,13 +512,13 @@
 				</div>
 				<div class="topMessage my-shangcheng">
 					<div class="menu-hd MyShangcheng">
-						<a href="../test/test_main.html" target="_top"><i
+						<a href="test_main.html" target="_top"><i
 							class="am-icon-user am-icon-fw"></i>个人中心</a>
 					</div>
 				</div>
 				<div class="topMessage mini-cart">
 					<div class="menu-hd">
-						<a id="mc-menu-hd" href="../home/shopcart.html" target="_top"><i
+						<a id="mc-menu-hd" href="shopcart.html" target="_top"><i
 							class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong
 							id="J_MiniCartNum" class="h">0</strong></a>
 					</div>
@@ -535,11 +535,11 @@
 				<li><img src="../images/logobig.png" /></li>
 			</div>
 			<div class="search-bar pr">
-				<form>
+				<div>
 				<input id="searchInput" name="" type="text" placeholder="搜索"
 					autocomplete="off">
 				<button id="ai-topsearch" class="submit am-btn" index="1">搜索</button>
-				</form>
+				</div>
 			</div>
 		</div>
 		<div class="clear"></div>
@@ -642,7 +642,7 @@
 		<li><a href="sort.html"><i class="am-icon-list"></i>分类</a></li>
 		<li><a href="shopcart.html"><i
 				class="am-icon-shopping-basket"></i>购物车</a></li>
-		<li><a href="../person/index.html"><i class="am-icon-user"></i>我的</a></li>
+		<li><a href="index.html"><i class="am-icon-user"></i>我的</a></li>
 	</div>
 
 
@@ -652,7 +652,7 @@
 			<div id="wrap">
 				<div id="prof" class="item "></div>
 				<div id="shopCart " class="item ">
-					<a href="../home/shopcart.html"> <span class="message "></span>
+					<a href="shopcart.html"> <span class="message "></span>
 					</a>
 					<div id="Navigation_right_shopcart">
 						<p>购物车</p>

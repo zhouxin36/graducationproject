@@ -89,7 +89,7 @@
                     logout.click(function () {
                         /* if (confirm("确定退出登录?")) {
                             $.post("../User/logout", function(data) {
-                                $(location).prop("href", "../home/home.html");
+                                $(location).prop("href", "home.html");
                             });
                         } */
                         layer.msg('确定退出登录?', {
@@ -97,7 +97,7 @@
                             , btn: ['确定', '取消']
                             , yes: function (index) {
                                 $.post("../User/logout", function (data) {
-                                    $(location).prop("href", "../home/home.html");
+                                    $(location).prop("href", "home.html");
                                 });
                                 layer.close(index);
                             }
@@ -106,9 +106,9 @@
                 } else {
                     //登录失败
 
-                    var a = $("<a></a>").attr("href", "../home/login.html")
+                    var a = $("<a></a>").attr("href", "login.html")
                         .addClass("h").append("亲，请登录  ");
-                    var b = $("<a></a>").attr("href", "../home/register.html")
+                    var b = $("<a></a>").attr("href", "register.html")
                         .append("免费注册");
                     var div = $("#login_status");
                     div.append(a).append(b);
@@ -158,23 +158,23 @@
         function right_dao() {
             //跳转购物车
             $("#Navigation_right_shopcart").click(function () {
-                $(location).prop('href', '../home/shopcart.html');
+                $(location).prop('href', 'shopcart.html');
             });
             //跳转我的资产
             $("#Navigation_right_assets").click(function () {
-                $(location).prop('href', '../test/test_main.html?action=bill');
+                $(location).prop('href', 'test_main.html?action=bill');
             });
             //跳转我的充值
             $("#broadcast").click(function () {
-                $(location).prop('href', '../test/test_main.html?action=pay');
+                $(location).prop('href', 'test_main.html?action=pay');
             });
             //跳转我的足迹
             $("#Navigation_right_foot").click(function () {
-                $(location).prop('href', '../test/test_main.html?action=foot');
+                $(location).prop('href', 'test_main.html?action=foot');
             });
             //跳转我的收藏
             $("#Navigation_right_collection").click(function () {
-                $(location).prop('href', '../test/test_main.html?action=collection');
+                $(location).prop('href', 'test_main.html?action=collection');
             });
         }
 
@@ -744,32 +744,32 @@
     <ul class="message-r">
         <div class="topMessage home">
             <div class="menu-hd">
-                <a href="../home/home.html" target="_top" class="h">商城首页</a>
+                <a href="home.html" target="_top" class="h">商城首页</a>
             </div>
         </div>
         <div class="topMessage my-shangcheng">
             <div class="menu-hd MyShangcheng">
-                <a href="../test/test_main.html" target="_top"><i
+                <a href="test_main.html" target="_top"><i
                         class="am-icon-user am-icon-fw"></i>个人中心</a>
             </div>
         </div>
         <div class="topMessage mini-cart">
             <div class="menu-hd">
-                <a id="mc-menu-hd" href="../home/shopcart.html" target="_top"><i
+                <a id="mc-menu-hd" href="shopcart.html" target="_top"><i
                         class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong
                         id="J_MiniCartNum" class="h">0</strong></a>
             </div>
         </div>
         <div class="topMessage favorite">
         </div>
-        <!-- <div class="menu-hd"><a href="../test/test_collection.html" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div> -->
+        <!-- <div class="menu-hd"><a href="test_collection.html" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div> -->
     </ul>
 </div>
 
 
 <ol class="am-breadcrumb am-breadcrumb-slash">
-    <li><a href="../home/home.html">首页</a></li>
-    <li><a href="../home/search.html">搜索</a></li>
+    <li><a href="home.html">首页</a></li>
+    <li><a href="search.html">搜索</a></li>
     <li class="am-active">内容</li>
 </ol>
 <div class="scoll">
@@ -1096,7 +1096,7 @@
         <div id="wrap">
             <div id="prof" class="item "></div>
             <div id="shopCart " class="item ">
-                <a href="../home/shopcart.html"> <span class="message "></span>
+                <a href="shopcart.html"> <span class="message "></span>
                 </a>
                 <div id="Navigation_right_shopcart">
                     <p>购物车</p>
