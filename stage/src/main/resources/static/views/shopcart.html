@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html>
- <link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
- <link rel="stylesheet" href="../css/layer.css">
- <link rel="stylesheet" href="../css/style2.css">
+<link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="../css/layer.css">
+<link rel="stylesheet" href="../css/style2.css">
 
 
 <script src="../js/jquery-3.3.1.js"></script>
 <script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../js/layer.js"></script>
- <script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
 
- <script type="text/javascript" src="../js/style2.js"></script>
+
 <script type="text/javascript">
-	$(function() {
-		
-		//上面的提示优惠(优惠券)
-		   $.post("../Coupon/getMyCoupon",function(msg){
-			    if(msg.code!=200){
-			    	$("#tip_coupon").html("电器商城大酬宾！买满5000即送无门槛优惠券!");
-			    }else{
-			    	$("#tip_coupon").html("您的优惠券已享优惠:省￥58.50");
-			    }
-		   });
+    $(function () {
+
+        //上面的提示优惠(优惠券)
+        $.post("../Coupon/getMyCoupon", function (msg) {
+            if (msg.code != 200) {
+                $("#tip_coupon").html("电器商城大酬宾！买满5000即送无门槛优惠券!");
+            } else {
+                $("#tip_coupon").html("您的优惠券已享优惠:省￥58.50");
+            }
+        });
 
         //点击搜索按钮，新建一个超链接跳转到商品搜索界面
         $("#ai-topsearch").click(
-            function() {
+            function () {
                 var productname = $("#searchInput").val();
                 var span = $("<span></span>").append("搜索界面");
                 var a = $("<a></a>").attr("href",
@@ -33,230 +33,156 @@
                     .attr("target", "_blank").append(span);
                 span.click();
             });
-		//设置点击结算按钮事件
-		$("#J_Go").click(function(){
-		
-			if(now == 0){
-				layer.msg("请选择商品！", {
-					icon : 5,
-					time : 2000
-				});
-				return;
-			}
-			
-			$.post("../Order/addSorderToForder","id="+array,function(data,status){
-			    if(data.code==200)
-				$(location).prop("href","pay.html?allmoney="+now+"&forderId="+data.data.forderId);
-			});
-			
+        //设置点击结算按钮事件
+        $("#J_Go").click(function () {
 
-				//$("#J_Go").attr("href","pay.jsp?allmoney="+now);
-		});
-		
-		
-		
-		
-		//页面一加载，判断用户是否登录，根据结果改变左上角的样式
-    	  $.post("../User/check_login",function(msg,status){
-    		  if(msg.code==200){
-    			  //登录成功
-    			
-    			  var a  = $("<a></a>").attr("href","#").addClass("h").append("欢迎你! "+msg.data.name);
-    				var logout  = $("<a></a>").attr("href" , "#").append("&nbsp;  &nbsp;  退出登录");
-					var div = $("#login_status");
-					div.append(a).append(logout);
-					
-					//点击退出登录
-					 logout.click(function(){
-						/*  if(confirm("确定退出登录?")){
-							 $.post("../User/logout",function(data){
-						           $(location).prop("href","home.html");
-					              });
-							} */
-						 layer.msg('确定退出登录?', {
-							  time: 0 //不自动关闭
-							  ,btn: ['确定', '取消']
-							  ,yes: function(index){
-								  $.post("../User/logout",function(data){
-							           $(location).prop("href","home.html");
-						              });
-								  layer.close(index);
-							  }
-							});
-					 });
-					
-					
-                  //改变购物车的数字
-                  $.post("../Order/getSorderById", function (data, status) {
+            var setting = [];
+            var i = 0;
+            $(".orderItemNumberSetting").each(function () {
+                setting[i++] = $(this).val();
+            });
+            i=0;
+            $(".productId").each(function () {
+                array[i++] = $(this).val();
+            });
 
-                      if(data.code == 200){
-                          $("#J_MiniCartNum").html(data.data.list.length);
-                          $("#shop_cart_number").html(data.data.list.length);
-                      }else {
-                          $("#J_MiniCartNum").html(0);
-                          $("#shop_cart_number").html(0);
-                      }
-                  });
-   		    getMyShopCart();
-   		  
-   			
-    		  }else{
-    			  //登录失败
-    			 
-    			  var a = $("<a></a>").attr("href","login.html").addClass("h").append("亲，请登录  ");
-    			  var b = $("<a></a>").attr("href","register.html").append("免费注册");
-    		       var div = $("#login_status");
-    		        layer.msg('您还没有登录，马上为您跳转到登录界面！', {icon: 5,time : 2000});
-    		       setTimeout(function(){
-    		    	   $(location).prop('href', 'login.html');
-						},2000);
-    		       div.append(a).append(b);
-    		  }
-    	});
-		
-		
-		//请求拿到自己的购物车
-		function getMyShopCart(){
-			//POST 请求拿到自己的购物车
-		       $.post("../Order/getSorderById",function(mess,status){
-
-                   //加载购物车列表
-                   if(mess.code == 200) {
-                       // item_list(mess);
-                   }
-		       });
-		}
-
-	});
-	var total = 0;
-	var now = 0;
-
-	var array = new Array();
-	var length = 0;
-
-    // <tr oiid="7087" class="cartProductItemTR">
-    //     <td>
-    //     <img selectit="false" oiid="7087" class="cartProductItemIfSelected" src="../images/noright.png">
-    //     <a style="display:none" href="#nowhere"><img src="../images/right.png"></a>
-    //     <img class="cartProductImg"  src="img/productSingle_middle/5015.jpg">
-    //     </td>
-    //     <td>
-    //     <div class="cartProductLinkOutDiv">
-    //     <a href="foreproduct?pid=491" class="cartProductLink">Midea/美的 KFR-32GW/WPAA3 1.5匹壁挂式变频静音冷暖空调</a>
-    // <div class="cartProductLinkInnerDiv">
-    //     <img src="img/site/creditcard.png" title="支持信用卡支付">
-    //     <img src="img/site/7day.png" title="消费者保障服务,承诺7天退货">
-    //     <img src="img/site/promise.png" title="消费者保障服务,承诺如实描述">
-    //     </div>
-    //     </div>
-    //
-    //     </td>
-    //     <td>
-    //     <span class="cartProductItemOringalPrice">￥2899.0</span>
-    // <span  class="cartProductItemPromotionPrice">￥1739.4</span>
-    //
-    // </td>
-    // <td>
-    //
-    // <div class="cartProductChangeNumberDiv">
-    //     <span class="hidden orderItemStock " pid="491">78</span>
-    //     <span class="hidden orderItemPromotePrice " pid="491">1739.4</span>
-    //     <a  pid="491" class="numberMinus" href="#nowhere">-</a>
-    //     <input pid="491" oiid="7087" class="orderItemNumberSetting" autocomplete="off" value="1">
-    //     <a  stock="78" pid="491" class="numberPlus" href="#nowhere">+</a>
-    //     </div>
-    //
-    //     </td>
-    //     <td >
-    //     <span class="cartProductItemSmallSumPrice" oiid="7087" pid="491" >
-    //     ￥1,739.40
-    // </span>
-    //
-    // </td>
-    // <td>
-    // <a class="deleteOrderItem" oiid="7087"  href="#nowhere">删除</a>
-    //     </td>
-    //     </tr>
+            $.post("../Order/addSorderToForder", "id=" + array + "&setting=" + setting, function (data, status) {
+                if (data.code == 200)
+                    $(location).prop("href", "pay.html?allmoney=" + now + "&forderId=" + data.data.forderId);
+            });
 
 
+            //$("#J_Go").attr("href","pay.jsp?allmoney="+now);
+        });
+
+
+        //页面一加载，判断用户是否登录，根据结果改变左上角的样式
+        $.post("../User/check_login", function (msg, status) {
+            if (msg.code == 200) {
+                //登录成功
+
+                var a = $("<a></a>").attr("href", "#").addClass("h").append("欢迎你! " + msg.data.name);
+                var logout = $("<a></a>").attr("href", "#").append("&nbsp;  &nbsp;  退出登录");
+                var div = $("#login_status");
+                div.append(a).append(logout);
+
+                //点击退出登录
+                logout.click(function () {
+                    /*  if(confirm("确定退出登录?")){
+                         $.post("../User/logout",function(data){
+                               $(location).prop("href","home.html");
+                              });
+                        } */
+                    layer.msg('确定退出登录?', {
+                        time: 0 //不自动关闭
+                        , btn: ['确定', '取消']
+                        , yes: function (index) {
+                            $.post("../User/logout", function (data) {
+                                $(location).prop("href", "home.html");
+                            });
+                            layer.close(index);
+                        }
+                    });
+                });
+
+
+                //改变购物车的数字
+                $.post("../Order/getSorderById", function (data, status) {
+
+                    if (data.code == 200) {
+                        $("#J_MiniCartNum").html(data.data.list.length);
+                        $("#shop_cart_number").html(data.data.list.length);
+                    } else {
+                        $("#J_MiniCartNum").html(0);
+                        $("#shop_cart_number").html(0);
+                    }
+                });
+                getMyShopCart();
+
+
+            } else {
+                //登录失败
+
+                var a = $("<a></a>").attr("href", "login.html").addClass("h").append("亲，请登录  ");
+                var b = $("<a></a>").attr("href", "register.html").append("免费注册");
+                var div = $("#login_status");
+                layer.msg('您还没有登录，马上为您跳转到登录界面！', {icon: 5, time: 2000});
+                setTimeout(function () {
+                    $(location).prop('href', 'login.html');
+                }, 2000);
+                div.append(a).append(b);
+            }
+        });
+
+
+        //请求拿到自己的购物车
+        function getMyShopCart() {
+            //POST 请求拿到自己的购物车
+            $.post("../Order/getSorderById", function (mess, status) {
+
+                //加载购物车列表
+                if (mess.code == 200) {
+                    item_list(mess);
+                    acccction();
+                }
+            });
+        }
+
+    });
+    var total = 0;
+    var now = 0;
+
+    var array = new Array();
+    var length = 0;
 
 
     function item_list(msg) {
-		var i = 0;
-		var oiid = 7000;
-		var pid = 400;
-		var div = $("tbody");
-		div.empty();
+        var i = 0;
+        var oiid = 7000;
+        var pid = 400;
+        var div = $("tbody");
+        div.empty();
 
-		$.each(msg.data.list,function(index ,item){
+        $.each(msg.data.list, function (index, item) {
             var tr = $("<tr></tr>");
-            var aaa= oiid++;
-            var ppid= pid++;
-            tr.attr("oiid",aaa);
-            tr.attr("class","cartProductItemTR");
-			
-			$.post("../Product/SelectProductById","id="+item.productId,function(products,status){
-				
-				var product = products.data.product;
-				// var d = $("<div></div>");
-				// d.addClass("clear");
-                //
-				// var li1 = $("<li></li>");
-				// li1.addClass("td td-item");
-				// var div1_1 = $("<div></div>");
-				// var div1_2 = $("<div></div>");
-				// var div1_3 = $("<div></div>");
-				// div1_1.addClass("item-pic");
-				// div1_2.addClass("item-info");
-				// div1_3.addClass("item-basic-info");
-				// var a1 = $("<a></a>");
-				// var a2 = $("<a></a>");
-				// a1.addClass("J_MakePoint").attr("href", "#");
-				// a2.addClass("item-title J_MakePoint").attr("href", "introduction.html?id="+product.id).attr(
-				// 		"data-point", "tbcart.8.11");
-				var img1 = $("<img/>");
-				img1.addClass("cartProductImg");
+            var aaa = oiid++;
+            var ppid = pid++;
+            tr.attr("oiid", aaa);
+            tr.attr("class", "cartProductItemTR");
+
+            $.post("../Product/SelectProductById", "id=" + item.productId, function (products, status) {
+
+                var product = products.data.product;
+                var img1 = $("<img/>");
+                img1.addClass("cartProductImg");
                 var img2 = $("<img/>");
-                img2.attr("selectit","false");
-                img2.attr("oiid",aaa);
+                img2.attr("selectit", "false");
+                img2.attr("oiid", aaa);
                 img2.addClass("cartProductItemIfSelected");
-                img2.attr("src","../images/noright.png");
+                img2.attr("src", "../images/noright.png");
                 var img3 = $("<img/>");
                 var a1 = $("<a style=\"display:none\" href=\"#nowhere\"><img src=\"../images/right.png\"></a>")
                 var td1 = $("<td></td>");
-				$.ajax({
-					url:"../Pic/selectPicByProductType",
-					data:"id="+product.id+"&type="+1,
-					type:"post",
-					success:function(ms){
-						if(ms.code == 200)
-							img1.attr("src", fileURL+ms.data.pic_list[0].path);
-						else 
-							img1.attr("src", fileURL+"no_img.jpg");
-					},
-					error:function(msg){
-						img1.attr("src",fileURL+"no_img.jpg");
-					}
-				});
+                $.ajax({
+                    url: "../Pic/selectPicByProductType",
+                    data: "id=" + product.id + "&type=" + 1,
+                    type: "post",
+                    success: function (ms) {
+                        if (ms.code == 200)
+                            img1.attr("src", fileURL + ms.data.pic_list[0].path);
+                        else
+                            img1.attr("src", fileURL + "no_img.jpg");
+                    },
+                    error: function (msg) {
+                        img1.attr("src", fileURL + "no_img.jpg");
+                    }
+                });
                 td1.append(img2).append(a1).append(img1);
-				// a1.append(img1);
-				// a2.append(product.name);
-				// div1_1.append(a1);
-				// div1_3.append(a2);
-				// div1_2.append(div1_3);
-				// li1.append(div1_1).append(div1_2);
-
-                //     <td>
-                //     <div class="cartProductLinkOutDiv">
-                //     <a href="foreproduct?pid=491" class="cartProductLink">Midea/美的 KFR-32GW/WPAA3 1.5匹壁挂式变频静音冷暖空调</a>
-                //     </div>
-                //
-                //     </td>
 
                 var td2 = $("<td></td>");
                 var div1 = $("<div class=\"cartProductLinkOutDiv\"></div>");
                 var a2 = $("<a class=\"cartProductLink\"></a>");
-                a2.attr("href","introduction.html?id="+product.id);
+                a2.attr("href", "introduction.html?id=" + product.id);
                 a2.append(product.name);
                 div1.append(a2);
                 td2.append(div1);
@@ -268,601 +194,272 @@
                 td3.append(span1);
 
 
-
-            // <td>
-                //
-                // <div class="cartProductChangeNumberDiv">
-                //     <span class="hidden orderItemStock " pid="491">78</span>
-                //     <span class="hidden orderItemPromotePrice " pid="491">1739.4</span>
-                //     <a  pid="491" class="numberMinus" href="#nowhere">-</a>
-                //     <input pid="491" oiid="7087" class="orderItemNumberSetting" autocomplete="off" value="1">
-                //     <a  stock="78" pid="491" class="numberPlus" href="#nowhere">+</a>
-                //     </div>
-                //
-                //     </td>
                 var td4 = $("<td></td>");
                 var div4 = $("<div class=\"cartProductChangeNumberDiv\"></div>");
                 var span4_1 = $("<span class=\"hidden orderItemStock \"></span>");
-                span4_1.attr("pid",ppid);
-                span4_1.append("pid",product.);
+                var span4_2 = $("<span class=\"hidden orderItemPromotePrice \"></span>");
+                span4_1.attr("pid", ppid);
+                span4_2.attr("pid", ppid);
+                span4_1.append(product.stock);
+                span4_2.append(product.price);
+                var a4_1 = $(" <a  class=\"numberMinus\" href=\"#nowhere\">-</a>");
+                var a4_2 = $(" <a  class=\"numberPlus\" href=\"#nowhere\">+</a>");
+                a4_1.attr("pid", ppid);
+                a4_2.attr("pid", ppid);
+                a4_2.attr("stock", product.stock);
+                var inp4 = $("<input class=\"orderItemNumberSetting\" autocomplete=\"off\" value=\"1\"/>");
+                var input4 = $("<input type='hidden' class='productId'/>");
+                input4.val(item.id);
+                inp4.attr("pid", ppid);
+                inp4.attr("oiid", aaa);
+                div4.append(span4_1).append(input4).append(span4_2).append(a4_1).append(inp4).append(a4_2);
+                td4.append(div4);
 
-		// 		var li2 = $("<li></li>");
-        //
-		// 		li2.addClass("td td-info");
-		// 		var div2 = $("<div></div>");
-		// 		div2.addClass("item-props");
-		// 		var sp2_1 = $("<span></span>");
-		// 		var sp2_2 = $("<span></span>");
-		// 		sp2_1.addClass("sku-line");
-		// 		sp2_2.addClass("sku-line");
-		// 		sp2_1.append("型号:"+product.spec);
-		// 		sp2_2.append("");
-		// 		div2.append(sp2_1).append(sp2_2);
-		// 		li2.append(div2);
-        //
-		// 		var li3 = $("<li></li>");
-		// 		li3.addClass("td td-price");
-		// 		var div3_1 = $("<div></div>");
-		// 		var div3_2 = $("<div></div>");
-		// 		div3_1.addClass("item-price price-promo-promo");
-		// 		div3_2.addClass("price-content");
-		// 		var em3 = $("<em></em>");
-		// 		em3.addClass("J_Price price-now");
-		// 		em3.append(product.price);
-		// 		div3_2.append(em3);
-		// 		div3_1.append(div3_2);
-		// 		li3.append(div3_1);
-        //
-		// 		var div_phone = $("<div></div>");
-		// 		div_phone.addClass("pay-phone");
-		// 		div_phone.append(li1).append(li2).append(li3);
-        //
-		// 		var li4 = $("<li></li>");
-		// 		li4.addClass("td td-amount");
-		// 		var div4_1 = $("<div></div>");
-		// 		var div4_2 = $("<div></div>");
-		// 		var div4_3 = $("<div></div>");
-		// 		div4_1.addClass("amount-wrapper");
-		// 		div4_2.addClass("item-amount");
-		// 		div4_3.addClass("sl");
-		//
-		//
-		//
-		// 		var input4_1 = $("<input/>");
-		// 		var input4_2 = $("<input/>");
-		// 		var input4_3 = $("<input/>");
-		// 		input4_1.addClass("min am-btn ").attr("name", "").attr("type", "button")
-		// 		.attr("value", "-");
-		// input4_2.addClass("text_box").attr("name", "").attr("type", "text")
-		// 		.attr("value", item.number).attr("style", "width:30px;").attr("v",item.id);
-		// input4_3.addClass("add am-btn").attr("name", "").attr("type", "button")
-		// 		.attr("value", "+");
-		//
-		// var em5 = $("<em></em>");
-		// em5.addClass("J_ItemSum number").attr("tabindex", "0");
-		// em5.append(parseInt(input4_2.val())*parseInt(product.price));
-		//
-		// var input = $("<input/>");
-        //
-		// input.addClass("check").attr("id", "J_CheckBox_"+i).attr(
-		// 		"name", "items").attr("value", "170037950254").attr("type",
-		// 		"checkbox");
-		//
-		// var nb = 0;
-		// 	input4_2.change(function (){
-		// 		nb = input4_2.val();
-		// 		if(nb<=0)return ;
-		// 		 input4_2.val(nb);
-		// 		 em5.empty();
-		// 		 em5.append(parseInt(input4_2.val())*parseInt(product.price));
-		// 		 if($("#J_Total").html()!=0&&input.is(':checked')==true)
-		// 			 $("#J_Total").html(parseInt($("#J_Total").html())-parseInt(product.price));
-		// 		updatenum($(this));
-		// 	});
-		// input4_1.click(function(){
-		// 	nb = input4_2.val();
-		// 	nb -- ;
-		// 	if(nb<=0)return ;
-		// 	 input4_2.val(nb);
-		// 	 em5.empty();
-		// 	 em5.append(parseInt(input4_2.val())*parseInt(product.price));
-		// 	 if($("#J_Total").html()!=0&&input.is(':checked')==true)
-		// 		 $("#J_Total").html(parseInt($("#J_Total").html())-parseInt(product.price));
-		//
-		// 	 // $("#al_m").val(  parseInt($("#al_m").val()) - parseInt(product.price));
-		// 	// $("#J_ActualFee").html( $("#al_m").val() );
-		// 	updatenum($(this).next());
-		// });
-		// input4_3.click(function(){
-		// 	nb = input4_2.val();
-		// 	nb ++ ;
-		// 	if(nb<=0)return ;
-		// 	 input4_2.val(nb);
-		// 	 em5.empty();
-		// 	 em5.append(parseInt(input4_2.val())*parseInt(product.price));
-		// 	 if($("#J_Total").html()!=0&&input.is(':checked')==true)
-		// 		 $("#J_Total").html(parseInt($("#J_Total").html())+parseInt(product.price));
-		// 	// $("#al_m").val(  parseInt($("#al_m").val()) + parseInt(product.price));
-		// 	// $("#J_ActualFee").html( $("#al_m").val() );
-		// 	updatenum($(this).prev());
-		// });
-        //
-		// 				div4_3.append(input4_1).append(input4_2).append(input4_3);
-		// 				div4_2.append(div4_3);
-		// 				div4_1.append(div4_2);
-		// 				li4.append(div4_1);
-        //
-		// 		var li5 = $("<li></li>");
-		// 		li5.addClass("td td-sum");
-		// 		var div5 = $("<div></div>");
-		// 		div5.addClass("td-inner");
-		//
-		//
-		//
-		// 		total += parseInt(input4_2.val())*parseInt(product.price);
-		// 		div5.append(em5);
-		// 		li5.append(div5);
-        //
-		// 		var li6 = $("<li></li>");
-		// 		li6.addClass("td td-chk");
-		// 		var div6 = $("<div></div>");
-		// 		div6.addClass("cart-checkbox");
-		//
-		// 		   input.click(function(){
-		//
-		// 			   if(input.is(':checked')==true){
-		// 				    now += parseInt(input4_2.val())*parseInt(product.price);
-		// 			      array[length++] = item.id;
-		//
-		// 			   }else{
-		// 				    now -= parseInt(input4_2.val())*parseInt(product.price);
-		// 				    for(var k = 0 ; k < length ;k++){
-		// 				    	if(array[k] == item.id){
-		// 				    		array[k] = -100;
-		// 				    		break;
-		// 				    	}
-		// 				    }
-		//
-		// 			   }
-		// 			   change_money();
-		// 		});
-				
-				
-				//当下面的CheckBox选满的时候上面的CheckBox自动勾选
-				/* $(document).on("click",".check_item",function(){
-				  var flag = $(".check_item:checked").length== $(".check_item").length;
-				  if(flag==true){
-					  $('#check_all').prop("checked",true);
-				  }else{
-					  $('#check_all').prop("checked",false);
-				  }
-				}); */
-				
-				
-				
-				
-				var la = $("<label></label>");
-				la.attr("for", "J_CheckBox_170037950254");
-				div6.append(input).append(la);
-				li6.append(div6);
 
-				var li7 = $("<li></li>");
-				li7.addClass("td td-op");
-				var div7 = $("<div></div>");
-				div7.addClass("td-inner");
-				
-				var a7_2 = $("<button></button>");
-				
-				a7_2.addClass("delete btn btn-danger");
-			
-				a7_2.attr("data-point-url", "#").attr("href", "javascript:;");
-				
-				a7_2.append("删除");
-				
-				a7_2.click(function(){
-				
-					$.post("../Order/deleteSorderById","id="+item.id,function(delete_message,status){
-					 if(delete_message.code==200)
-						 
-						//删除成功之后重新加载购物车列表   
-				       $.post("../Order/getSorderById",function(mess,status) {
-                           if (mess == 200) {
-                               // item_list(mess);
-                           }
-				       });
-					});
-				});
-				
-				div7.append(a7_2);
-				li7.append(div7);
-         
-				var ul = $("<ul></ul>");
+                var td5 = $("<td></td>");
+                var span5_1 = $("<span class=\"cartProductItemSmallSumPrice \"></span>");
+                span5_1.attr("pid", ppid);
+                span5_1.attr("oiid", aaa);
+                span5_1.append(product.price);
+                td5.append(span5_1);
 
-				ul.addClass("item-content clearfix").attr("style",
-						"width:998px;height:115px;");
-				ul.append(div_phone).append(li4).append(li5).append(li6).append(li7);
 
-				var div = $("#show_product_message");
-				
-				
-				div.append(ul);
-				i++;
-			});
-			
-			});
-			
-		
-	}
+                // var la = $("<label></label>");
+                // la.attr("for", "J_CheckBox_170037950254");
+                // div6.append(input).append(la);
+                // li6.append(div6);
+
+                var td7 = $("<td></td>");
+                var div7 = $("<div></div>");
+                div7.addClass("td-inner");
+
+                var a7_2 = $("<button></button>");
+                a7_2.addClass("delete btn btn-danger deleteOrderItem");
+
+                a7_2.attr("data-point-url", "#").attr("href", "#nowhere").attr("oiid", aaa);
+
+                a7_2.append("删除");
+
+                a7_2.click(function () {
+
+                    $.post("../Order/deleteSorderById", "id=" + item.id, function (delete_message, status) {
+                        if (delete_message.code == 200)
+
+                        //删除成功之后重新加载购物车列表
+                            $.post("../Order/getSorderById", function (mess, status) {
+                                if (mess == 200) {
+                                    item_list(mess);
+                                    acccction();
+                                }
+                            });
+                    });
+                });
+
+                div7.append(a7_2);
+                td7.append(div7);
+
+                tr.append(td1).append(td2).append(td3).append(td4).append(td5).append(td7);
+                div.append(tr);
+                a4_2.click(function () {
+
+                    var pid = $(this).attr("pid");
+                    var stock = $("span.orderItemStock[pid=" + pid + "]").text();
+                    var price = $("span.orderItemPromotePrice[pid=" + pid + "]").text();
+                    var num = $(".orderItemNumberSetting[pid=" + pid + "]").val();
+
+                    num++;
+                    if (num > stock)
+                        num = stock;
+                    syncPrice(pid, num, price);
+                });
+                a4_1.click(function () {
+                    var pid = $(this).attr("pid");
+                    var stock = $("span.orderItemStock[pid=" + pid + "]").text();
+                    var price = $("span.orderItemPromotePrice[pid=" + pid + "]").text();
+
+                    var num = $(".orderItemNumberSetting[pid=" + pid + "]").val();
+                    --num;
+                    if (num <= 0)
+                        num = 1;
+                    syncPrice(pid, num, price);
+                });
+                inp4.keyup(function () {
+                    var pid = $(this).attr("pid");
+                    var stock = $("span.orderItemStock[pid=" + pid + "]").text();
+                    var price = $("span.orderItemPromotePrice[pid=" + pid + "]").text();
+
+                    var num = $(".orderItemNumberSetting[pid=" + pid + "]").val();
+                    num = parseInt(num);
+                    if (isNaN(num))
+                        num = 1;
+                    if (num <= 0)
+                        num = 1;
+                    if (num > stock)
+                        num = stock;
+
+                    syncPrice(pid, num, price);
+                });
+                img2.click(function () {
+                    var selectit = $(this).attr("selectit");
+                    if ("selectit" == selectit) {
+                        $(this).attr("src", "../images/noright.png");
+                        $(this).attr("selectit", "false");
+                        $(this).parents("tr.cartProductItemTR").css("background-color", "#fff");
+                    }
+                    else {
+                        $(this).attr("src", "../images/right.png");
+                        $(this).attr("selectit", "selectit");
+                        $(this).parents("tr.cartProductItemTR").css("background-color", "#FFF8E1");
+                    }
+                    syncSelect();
+                    syncCreateOrderButton();
+                    calcCartSumPriceAndNumber();
+                });
+            });
+        });
+
+    }
+$(function () {
+    $("#aaaaa").click(function () {
+        var vala = [];
+        var i = 0;
+        $('.text1').each(function(){
+            vala[i++] = $(this).val();
+        });
+        console.log(vala);
+    })
+});
 </script>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<title>购物车页面</title>
+    <title>购物车页面</title>
 
-<link href="../css/amazeui.min.css" rel="stylesheet"
-	type="text/css" />
-<link href="../css/demo.css" rel="stylesheet" type="text/css" />
-<link href="../css/cartstyle.css" rel="stylesheet" type="text/css" />
-<link href="../css/optstyle.css" rel="stylesheet" type="text/css" />
+    <link href="../css/amazeui.min.css" rel="stylesheet"
+          type="text/css"/>
+    <link href="../css/demo.css" rel="stylesheet" type="text/css"/>
+    <link href="../css/cartstyle.css" rel="stylesheet" type="text/css"/>
+    <link href="../css/optstyle.css" rel="stylesheet" type="text/css"/>
 
-<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
 
 </head>
 
 <body>
 
-	<!--顶部导航条 -->
-	<div class="am-container header">
-		<ul class="message-l">
-			<div class="topMessage">
-				<div class="menu-hd" id="login_status">
-					
-				</div>
-			</div>
-		</ul>
-		<ul class="message-r">
-			<div class="topMessage home">
-				<div class="menu-hd">
-					<a href="home.html" target="_top" class="h">商城首页</a>
-				</div>
-			</div>
-			<div class="topMessage my-shangcheng">
-				<div class="menu-hd MyShangcheng">
-					<a href="test_main.html" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a>
-				</div>
-			</div>
-			<div class="topMessage mini-cart">
-				<div class="menu-hd">
-					<a id="mc-menu-hd" href="shopcart.html" target="_top"><i
-						class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong
-						id="J_MiniCartNum" class="h">0</strong></a>
-				</div>
-			</div>
-			<div class="topMessage favorite">
-				<div class="menu-hd">
-					
-				</div>
-			</div>
-		</ul>
-	</div>
+<!--顶部导航条 -->
+<div class="am-container header">
+    <ul class="message-l">
+        <div class="topMessage">
+            <div class="menu-hd" id="login_status">
 
-	<!--悬浮搜索框-->
+            </div>
+        </div>
+    </ul>
+    <ul class="message-r">
+        <div class="topMessage home">
+            <div class="menu-hd">
+                <a href="home.html" target="_top" class="h">商城首页</a>
+            </div>
+        </div>
+        <div class="topMessage my-shangcheng">
+            <div class="menu-hd MyShangcheng">
+                <a href="test_main.html" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a>
+            </div>
+        </div>
+        <div class="topMessage mini-cart">
+            <div class="menu-hd">
+                <a id="mc-menu-hd" href="shopcart.html" target="_top"><i
+                        class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong
+                        id="J_MiniCartNum" class="h">0</strong></a>
+            </div>
+        </div>
+        <div class="topMessage favorite">
+            <div class="menu-hd">
 
-	<div class="nav white">
-		<div class="logo">
-			<img src="../images/logo.png" />
-		</div>
-		<div class="logoBig">
-			<li><img src="../images/logobig.png" /></li>
-		</div>
+            </div>
+        </div>
+    </ul>
+</div>
 
-		<div class="search-bar pr">
-			<a name="index_none_header_sysc" href="#"></a>
-			<div>
-				<input id="searchInput" name="index_none_header_sysc" type="text"
-					placeholder="搜索" autocomplete="off"> <input
-					id="ai-topsearch" class="submit am-btn" value="搜索" index="1"
-					type="submit">
-			</div>
-		</div>
-	</div>
+<!--悬浮搜索框-->
 
-	<div class="clear"></div>
-
-	<!--购物车 -->
-	<div class="concent">
-		<div id="cartTable">
-			<div class="cart-table-th">
-				<div class="wp">
-					<div class="th th-chk">
-						<div id="J_SelectAll1" class="select-all J_SelectAll"></div>
-					</div>
-					<div class="th th-item">
-						<div class="td-inner">商品信息</div>
-					</div>
-					<div class="th th-price">
-						<div class="td-inner">单价</div>
-					</div>
-					<div class="th th-amount">
-						<div class="td-inner">数量</div>
-					</div>
-					<div class="th th-sum">
-						<div class="td-inner">金额</div>
-					</div>
-					<div class="th th-op">
-						<div class="td-inner">操作</div>
-					</div>
-				</div>
-			</div>
-			<div class="clear"></div>
-
-			<tr class="item-list">
-				<div class="bundle  bundle-last ">
-					<div class="bundle-hd">
-						<div class="bd-promos">
-							<div class="bd-has-promo" id="tip_coupon">
-								
-							</div>
-							<div class="act-promo">
-							
-							</div>
-							<span class="list-change theme-login">编辑</span>
-						</div>
-					</div>
-					<div class="clear"></div>
-					<div class="bundle-main" id="show_product_message"></div>
-				</div>
-			</tr>
-			<div class="clear"></div>
-
-			<div class="clear"></div>
-
-			<div class="float-bar-wrapper">
-			<!-- 	<div id="J_SelectAll2" class="select-all J_SelectAll">
-					<div class="cart-checkbox" id="quan">
-						<input class="check-all check" id="J_SelectAllCbx2"
-							name="select-all" value="true" type="checkbox"> <label
-							for="J_SelectAllCbx2"></label>
-					</div>
-					<span>全选</span>
-				</div> -->
-				
-				<div class="float-bar-right">
-					<div class="amount-sum">
-						
-						<div class="arrow-box">
-							<span class="selected-items-arrow"></span> <span class="arrow"></span>
-						</div>
-					</div>
-					<div class="price-sum">
-						<span class="txt">合计:</span> <strong class="price">¥<em
-							id="J_Total">0.00</em></strong>
-					</div>
-					<div class="btn-area">
-						<a  id="J_Go"
-							class="submit-btn submit-btn-disabled"
-							aria-label="请注意如果没有选择宝贝，将无法结算"> <span>结&nbsp;算</span></a>
-					</div>
-				</div>
-
-			</div>
-
-
-		</div>
-
-		<!--操作页面-->
-<!-- 
-		<div class="theme-popover-mask"></div>
-
-		<div class="theme-popover">
-			<div class="theme-span"></div>
-			<div class="theme-poptit h-title">
-				<a href="javascript:;" title="关闭" class="close">×</a>
-			</div>
-			<div class="theme-popbod dform">
-				<form class="theme-signin" name="loginform" action="" method="post">
-
-					<div class="theme-signin-left">
-
-						<li class="theme-options">
-							<div class="cart-title">颜色：</div>
-							<ul>
-								<li class="sku-line selected">12#川南玛瑙<i></i></li>
-								<li class="sku-line">10#蜜橘色+17#樱花粉<i></i></li>
-							</ul>
-						</li>
-						<li class="theme-options">
-							<div class="cart-title">包装：</div>
-							<ul>
-								<li class="sku-line selected">包装：裸装<i></i></li>
-								<li class="sku-line">两支手袋装（送彩带）<i></i></li>
-							</ul>
-						</li>
-						<div class="theme-options">
-							<div class="cart-title number">数量</div>
-							<dd>
-								<input class="min am-btn am-btn-default" name="" type="button"
-									value="-" /> <input class="text_box" name="" type="text"
-									value="1" style="width: 30px;" /> <input
-									class="add am-btn am-btn-default" name="" type="button"
-									value="+" /> <span class="tb-hidden">库存<span
-									class="stock">1000</span>件
-								</span>
-							</dd>
-
-						</div>
-						<div class="clear"></div>
-						<div class="btn-op">
-							<div class="btn am-btn am-btn-warning">确认</div>
-							<div class="btn close am-btn am-btn-warning">取消</div>
-						</div>
-
-					</div>
-					<div class="theme-signin-right">
-						<div class="img-info">
-							<img src="../images/kouhong.jpg_80x80.jpg" />
-						</div>
-						<div class="text-info">
-							<span class="J_Price price-now">¥39.00</span> <span id="Stock"
-								class="tb-hidden">库存<span class="stock">1000</span>件
-							</span>
-						</div>
-					</div>
-
-				</form>
-			</div>
-		</div> -->
-		<!--引导 -->
-		<div class="navCir">
-			<li><a href="home.html"><i class="am-icon-home "></i>首页</a></li>
-			<li><a href="sort.html"><i class="am-icon-list"></i>分类</a></li>
-			<li class="active"><a href="shopcart.html"><i
-					class="am-icon-shopping-basket"></i>购物车</a></li>
-			<li><a href="../person/index.html"><i class="am-icon-user"></i>我的</a></li>
-		</div>
+<div class="nav white">
+    <div class="logo">
+        <img src="../images/logo.png"/>
     </div>
+    <div class="logoBig">
+        <li><img src="../images/logobig.png"/></li>
+    </div>
+
+    <div class="search-bar pr">
+        <a name="index_none_header_sysc" href="#"></a>
+        <div>
+            <input id="searchInput" name="index_none_header_sysc" type="text"
+                   placeholder="搜索" autocomplete="off"> <input
+                id="ai-topsearch" class="submit am-btn" value="搜索" index="1"
+                type="submit">
+        </div>
+    </div>
+</div>
+
+<div class="clear"></div>
+
+
+    <div class="navCir">
+        <li><a href="home.html"><i class="am-icon-home "></i>首页</a></li>
+        <li><a href="sort.html"><i class="am-icon-list"></i>分类</a></li>
+        <li class="active"><a href="shopcart.html"><i
+                class="am-icon-shopping-basket"></i>购物车</a></li>
+        <li><a href="../person/index.html"><i class="am-icon-user"></i>我的</a></li>
+    </div>
+</div>
 </body>
 
 
- <!---------------------------------------------------------------------------------------------------------------->
- <hr>
- <div class="cartDiv">
-     <div class="cartTitle pull-right">
-         <span>已选商品  (不含运费)</span>
-         <span class="cartTitlePrice">￥0.00</span>
-         <button class="createOrderButton" disabled="disabled">结 算</button>
-     </div>
+<!---------------------------------------------------------------------------------------------------------------->
+<hr>
+<div class="cartDiv">
+    <div class="cartProductList">
+        <table class="cartProductTable">
+            <thead>
+            <tr>
+                <th class="selectAndImage">
+                    <img selectit="false" class="selectAllItem" src="../images/noright.png">
+                    全选
 
+                </th>
+                <th>商品信息</th>
+                <th>单价</th>
+                <th>数量</th>
+                <th width="120px">金额</th>
+                <th class="operation">操作</th>
+            </tr>
+            </thead>
+            <tbody>
 
-     <div class="cartProductList">
-         <table class="cartProductTable">
-             <thead>
-             <tr>
-                 <th class="selectAndImage">
-                     <img selectit="false" class="selectAllItem" src="../images/noright.png">
-                     全选
+            </tbody>
 
-                 </th>
-                 <th>商品信息</th>
-                 <th>单价</th>
-                 <th>数量</th>
-                 <th width="120px">金额</th>
-                 <th class="operation">操作</th>
-             </tr>
-             </thead>
-             <tbody>
+        </table>
+    </div>
 
-             <tr oiid="7087" class="cartProductItemTR">
-                 <td>
-                     <img selectit="false" oiid="7087" class="cartProductItemIfSelected" src="../images/noright.png">
-                     <a style="display:none" href="#nowhere"><img src="../images/right.png"></a>
-                     <img class="cartProductImg"  src="img/productSingle_middle/5015.jpg">
-                 </td>
-                 <td>
-                     <div class="cartProductLinkOutDiv">
-                         <a href="foreproduct?pid=491" class="cartProductLink">Midea/美的 KFR-32GW/WPAA3 1.5匹壁挂式变频静音冷暖空调</a>
-                         <div class="cartProductLinkInnerDiv">
-                             <img src="img/site/creditcard.png" title="支持信用卡支付">
-                             <img src="img/site/7day.png" title="消费者保障服务,承诺7天退货">
-                             <img src="img/site/promise.png" title="消费者保障服务,承诺如实描述">
-                         </div>
-                     </div>
+    <div class="cartFoot">
+        <img selectit="false" class="selectAllItem" src="../images/noright.png">
+        <span>全选</span>
+        <!-- 		<a href="#">删除</a> -->
 
-                 </td>
-                 <td>
-                     <span class="cartProductItemOringalPrice">￥2899.0</span>
-                     <span  class="cartProductItemPromotionPrice">￥1739.4</span>
+        <div class="pull-right">
+            <span>已选商品 <span class="cartSumNumber">0</span> 件</span>
 
-                 </td>
-                 <td>
+            <span>合计 (不含运费): </span>
+            <span class="cartSumPrice">￥0.00</span>
+            <button class="J_GO createOrderButton" disabled="disabled">结 算</button>
+        </div>
 
-                     <div class="cartProductChangeNumberDiv">
-                         <span class="hidden orderItemStock " pid="491">94</span>
-                         <span class="hidden orderItemPromotePrice " pid="491">1190.0</span>
-                         <a  pid="491" class="numberMinus" href="#nowhere">-</a>
-                         <input pid="491" oiid="7087" class="orderItemNumberSetting" autocomplete="off" value="1">
-                         <a  stock="78" pid="491" class="numberPlus" href="#nowhere">+</a>
-                     </div>
+    </div>
 
-                 </td>
-                 <td >
-							<span class="cartProductItemSmallSumPrice" oiid="7087" pid="491" >
-							￥1,739.40
-							</span>
-
-                 </td>
-                 <td>
-                     <a class="deleteOrderItem" oiid="7087"  href="#nowhere">删除</a>
-                 </td>
-             </tr>
-
-             <tr oiid="7086" class="cartProductItemTR">
-                 <td>
-                     <img selectit="false" oiid="7086" class="cartProductItemIfSelected" src="../images/noright.png">
-                     <a style="display:none" href="#nowhere"><img src="../images/right.png"></a>
-                     <img class="cartProductImg"  src="img/productSingle_middle/4533.jpg">
-                 </td>
-                 <td>
-                     <div class="cartProductLinkOutDiv">
-                         <a href="foreproduct?pid=445" class="cartProductLink">Konka/康佳 BCD-218EMS冰箱三门家用节能智能电脑温控玻璃电冰箱</a>
-                         <div class="cartProductLinkInnerDiv">
-                             <img src="img/site/creditcard.png" title="支持信用卡支付">
-                             <img src="img/site/7day.png" title="消费者保障服务,承诺7天退货">
-                             <img src="img/site/promise.png" title="消费者保障服务,承诺如实描述">
-                         </div>
-                     </div>
-
-                 </td>
-                 <td>
-                     <span class="cartProductItemOringalPrice">￥1400.0</span>
-                     <span  class="cartProductItemPromotionPrice">￥1190.0</span>
-
-                 </td>
-                 <td>
-
-                     <div class="cartProductChangeNumberDiv">
-                         <span class="hidden orderItemStock " pid="445">94</span>
-                         <span class="hidden orderItemPromotePrice " pid="445">1190.0</span>
-                         <a  pid="445" class="numberMinus" href="#nowhere">-</a>
-                         <input pid="445" oiid="7086" class="orderItemNumberSetting" autocomplete="off" value="1">
-                         <a  stock="94" pid="445" class="numberPlus" href="#nowhere">+</a>
-                     </div>
-
-                 </td>
-                 <td >
-							<span class="cartProductItemSmallSumPrice" oiid="7086" pid="445" >
-							￥1,190.00
-							</span>
-
-                 </td>
-                 <td>
-                     <a class="deleteOrderItem" oiid="7086"  href="#nowhere">删除</a>
-                 </td>
-             </tr>
-
-             </tbody>
-
-         </table>
-     </div>
-
-     <div class="cartFoot">
-         <img selectit="false" class="selectAllItem" src="../images/noright.png">
-         <span>全选</span>
-         <!-- 		<a href="#">删除</a> -->
-
-         <div class="pull-right">
-             <span>已选商品 <span class="cartSumNumber" >0</span> 件</span>
-
-             <span>合计 (不含运费): </span>
-             <span class="cartSumPrice" >￥0.00</span>
-             <button class="createOrderButton" disabled="disabled" >结  算</button>
-         </div>
-
-     </div>
-
- </div>
-
-
+</div>
 
 
 </html>
+<script type="text/javascript" src="../js/style2.js"></script>

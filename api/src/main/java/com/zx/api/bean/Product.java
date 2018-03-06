@@ -13,6 +13,8 @@ public class Product {
 
     private String name;
 
+    private Integer stock;
+
     private BigDecimal price;
 
     private String remark;
@@ -53,6 +55,14 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 
     public BigDecimal getPrice() {

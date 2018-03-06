@@ -21,7 +21,7 @@
 			targetProject="src/main/resources" />
 		<javaClientGenerator targetPackage="com.zx.persistence.dao"
 			targetProject="src/main/java" type="XMLMAPPER" />
-		<table tableName="feedback">
+		<table tableName="product">
 		</table>
 	</context>
 </generatorConfiguration>

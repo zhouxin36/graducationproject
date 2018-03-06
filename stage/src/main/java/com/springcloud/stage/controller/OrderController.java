@@ -64,8 +64,23 @@ public class OrderController {
 
 	@ResponseBody
 	@RequestMapping("/addSorderToForder")
-	public ResultDTO addSorderToForder(String[] id){
-		Sorder sorder = null;
+	public ResultDTO addSorderToForder(HttpServletRequest request, String[] id,Integer [] setting){
+        for (String i:
+             id) {
+            System.out.println(i);
+        }
+        String userId = getUserId(request);
+        SorderExample sorderExample = new SorderExample();
+        SorderExample.Criteria criteria = sorderExample.createCriteria();
+        criteria.andUserIdEqualTo(userId);
+        criteria.andIsbalancedEqualTo(0);
+        List<Sorder> sorders = sorderService.selectByExample(sorderExample);
+        for(int i=0; i<sorders.size();i++){
+            Sorder sorder = sorders.get(i);
+            sorder.setNumber(setting[i]);
+            sorderService.updateByPrimaryKeySelective(sorder);
+        }
+        Sorder sorder = null;
 		String forderId = MyUtils.getUUID();
 		Forder forder = new Forder();
 		if(id==null){

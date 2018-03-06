@@ -25,6 +25,7 @@ $(function () {
             },
 			{ label: '商品名称', name: 'name', width: 75, sortable:false},
 			{ label: '商品单价', name: 'price', width: 90,sortable:false },
+			{ label: '商品库存', name: 'stock', width: 90,sortable:false },
             { label: '单位', name: 'spec', width: 60, sortable:false},
             { label: '月销量', name: 'monthSale', width: 60, sortable:false},
             { label: '总销量', name: 'sale', width: 60, sortable:false},

@@ -72,6 +72,12 @@
                 </div>
             </div>
 			<div class="form-group">
+				<div class="col-sm-2 control-label">商品库存</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="app.stock" placeholder="商品库存"/>
+				</div>
+			</div>
+			<div class="form-group">
 			   	<div class="col-sm-2 control-label">商品简介</div>
 			   	<div class="col-sm-10">
 			      <input type="text" class="form-control" v-model="app.remark" placeholder="商品简介"/>
@@ -151,6 +157,12 @@
 								<input type="text" v-model="app.spec" class="no-border" readonly="readonly"/>
 							</div>
 						</div>
+                        <div class="form-group">
+                            <div class="col-sm-3 control-label">商品库存：</div>
+                            <div class="col-sm-3">
+                                <input type="text" v-model="app.stock" class="no-border" readonly="readonly"/>
+                            </div>
+                        </div>
 						<div class="form-group">
 							<div class="col-sm-3 control-label">商品添加日期：</div>
 							<div class="col-sm-3">

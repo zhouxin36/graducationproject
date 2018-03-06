@@ -44,65 +44,64 @@ $(function(){
         $("div.orderItemSumDiv").css("height","100px");
     });
 
-    $("div#footer a[href$=#nowhere]").click(function(){
-        alert("模仿天猫的连接，并没有跳转到实际的页面");
-    });
+    // $("div#footer a[href$=#nowhere]").click(function(){
+    //     alert("模仿天猫的连接，并没有跳转到实际的页面");
+    // });
 
 
-    $("a.wangwanglink").click(function(){
-        alert("模仿旺旺的图标，并不会打开旺旺");
-    });
-    $("a.notImplementLink").click(function(){
-        alert("这个功能没做，蛤蛤~");
-    });
+    // $("a.wangwanglink").click(function(){
+    //     alert("模仿旺旺的图标，并不会打开旺旺");
+    // });
+    // $("a.notImplementLink").click(function(){
+    //     alert("这个功能没做，蛤蛤~");
+    // });
 
 
 });
 
 var deleteOrderItem = false;
 var deleteOrderItemid = 0;
-$(function(){
+function acccction(){
+    // $("a.deleteOrderItem").click(function(){
+    //     deleteOrderItem = false;
+    //     var oiid = $(this).attr("oiid");
+    //     deleteOrderItemid = oiid;
+    //     $("#deleteConfirmModal").modal('show');
+    // });
+    // $("button.deleteConfirmButton").click(function(){
+    //     deleteOrderItem = true;
+    //     $("#deleteConfirmModal").modal('hide');
+    // });
 
-    $("a.deleteOrderItem").click(function(){
-        deleteOrderItem = false;
-        var oiid = $(this).attr("oiid")
-        deleteOrderItemid = oiid;
-        $("#deleteConfirmModal").modal('show');
-    });
-    $("button.deleteConfirmButton").click(function(){
-        deleteOrderItem = true;
-        $("#deleteConfirmModal").modal('hide');
-    });
-
-    $('#deleteConfirmModal').on('hidden.bs.modal', function (e) {
-        if(deleteOrderItem){
-            var page="foredeleteOrderItem";
-            $.post(
-                page,
-                {"oiid":deleteOrderItemid},
-                function(result){
-                    if("success"==result){
-                        $("tr.cartProductItemTR[oiid="+deleteOrderItemid+"]").hide();
-                    }
-                    else{
-                        location.href="login.jsp";
-                    }
-                }
-            );
-
-        }
-    })
+    // $('#deleteConfirmModal').on('hidden.bs.modal', function (e) {
+    //     if(deleteOrderItem){
+    //         var page="foredeleteOrderItem";
+    //         $.post(
+    //             page,
+    //             {"oiid":deleteOrderItemid},
+    //             function(result){
+    //                 if("success"==result){
+    //                     $("tr.cartProductItemTR[oiid="+deleteOrderItemid+"]").hide();
+    //                 }
+    //                 else{
+    //                     location.href="login.jsp";
+    //                 }
+    //             }
+    //         );
+    //
+    //     }
+    // });
 
     $("img.cartProductItemIfSelected").click(function(){
-        var selectit = $(this).attr("selectit")
+        var selectit = $(this).attr("selectit");
         if("selectit"==selectit){
             $(this).attr("src","../images/noright.png");
-            $(this).attr("selectit","false")
+            $(this).attr("selectit","false");
             $(this).parents("tr.cartProductItemTR").css("background-color","#fff");
         }
         else{
             $(this).attr("src","../images/right.png");
-            $(this).attr("selectit","selectit")
+            $(this).attr("selectit","selectit");
             $(this).parents("tr.cartProductItemTR").css("background-color","#FFF8E1");
         }
         syncSelect();
@@ -110,10 +109,10 @@ $(function(){
         calcCartSumPriceAndNumber();
     });
     $("img.selectAllItem").click(function(){
-        var selectit = $(this).attr("selectit")
+        var selectit = $(this).attr("selectit");
         if("selectit"==selectit){
             $("img.selectAllItem").attr("src","../images/noright.png");
-            $("img.selectAllItem").attr("selectit","false")
+            $("img.selectAllItem").attr("selectit","false");
             $(".cartProductItemIfSelected").each(function(){
                 $(this).attr("src","../images/noright.png");
                 $(this).attr("selectit","false");
@@ -122,7 +121,7 @@ $(function(){
         }
         else{
             $("img.selectAllItem").attr("src","../images/right.png");
-            $("img.selectAllItem").attr("selectit","selectit")
+            $("img.selectAllItem").attr("selectit","selectit");
             $(".cartProductItemIfSelected").each(function(){
                 $(this).attr("src","../images/right.png");
                 $(this).attr("selectit","selectit");
@@ -184,13 +183,28 @@ $(function(){
                 params += "&oiid="+oiid;
             }
         });
-        params = params.substring(1);
-        location.href="forebuy?"+params;
+        // params = params.substring(1);
+        // location.href="forebuy?"+params;
+        var setting = [];
+        var i = 0;
+        $(".orderItemNumberSetting").each(function () {
+            setting[i++] = $(this).val();
+        });
+        i=0;
+        $(".productId").each(function () {
+            array[i++] = $(this).val();
+        });
+
+        $.post("../Order/addSorderToForder", "id=" + array + "&setting=" + setting, function (data, status) {
+            if (data.code == 200)
+                $(location).prop("href", "pay.html?allmoney=" + now + "&forderId=" + data.data.forderId);
+        });
+
+
     });
 
 
-
-})
+}
 
 function syncCreateOrderButton(){
     var selectAny = false;
@@ -251,15 +265,15 @@ function syncPrice(pid,num,price){
     $(".cartProductItemSmallSumPrice[pid="+pid+"]").html("￥"+cartProductItemSmallSumPrice);
     calcCartSumPriceAndNumber();
 
-    var page = "forechangeOrderItem";
-    $.post(
-        page,
-        {"pid":pid,"number":num},
-        function(result){
-            if("success"!=result){
-                location.href="login.jsp";
-            }
-        }
-    );
+    // var page = "forechangeOrderItem";
+    // $.post(
+    //     page,
+    //     {"pid":pid,"number":num},
+    //     function(result){
+    //         if("success"!=result){
+    //             location.href="login.jsp";
+    //         }
+    //     }
+    // );
 
 }

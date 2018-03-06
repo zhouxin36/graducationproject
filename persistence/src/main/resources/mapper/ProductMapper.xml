@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.zx.persistence.bean.Product">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="stock" jdbcType="INTEGER" property="stock" />
     <result column="price" jdbcType="DECIMAL" property="price" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="xremark" jdbcType="VARCHAR" property="xremark" />
@@ -75,7 +76,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, price, remark, xremark, add_date, open, category_id, sale, month_sale, 
+    id, name, stock, price, remark, xremark, add_date, open, category_id, sale, month_sale, 
     spec, last_admin_id, last_time
   </sql>
   <select id="selectByExample" parameterType="com.zx.persistence.bean.ProductExample" resultMap="BaseResultMap">
@@ -112,16 +113,16 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.zx.persistence.bean.Product">
-    insert into product (id, name, price, 
-      remark, xremark, add_date, 
-      open, category_id, sale, 
-      month_sale, spec, last_admin_id, 
-      last_time)
-    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
-      #{remark,jdbcType=VARCHAR}, #{xremark,jdbcType=VARCHAR}, #{addDate,jdbcType=TIMESTAMP}, 
-      #{open,jdbcType=INTEGER}, #{categoryId,jdbcType=VARCHAR}, #{sale,jdbcType=INTEGER}, 
-      #{monthSale,jdbcType=INTEGER}, #{spec,jdbcType=VARCHAR}, #{lastAdminId,jdbcType=VARCHAR}, 
-      #{lastTime,jdbcType=TIMESTAMP})
+    insert into product (id, name, stock, 
+      price, remark, xremark, 
+      add_date, open, category_id, 
+      sale, month_sale, spec, 
+      last_admin_id, last_time)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{stock,jdbcType=INTEGER}, 
+      #{price,jdbcType=DECIMAL}, #{remark,jdbcType=VARCHAR}, #{xremark,jdbcType=VARCHAR}, 
+      #{addDate,jdbcType=TIMESTAMP}, #{open,jdbcType=INTEGER}, #{categoryId,jdbcType=VARCHAR}, 
+      #{sale,jdbcType=INTEGER}, #{monthSale,jdbcType=INTEGER}, #{spec,jdbcType=VARCHAR}, 
+      #{lastAdminId,jdbcType=VARCHAR}, #{lastTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.zx.persistence.bean.Product">
     insert into product
@@ -131,6 +132,9 @@
       </if>
       <if test="name != null">
         name,
+      </if>
+      <if test="stock != null">
+        stock,
       </if>
       <if test="price != null">
         price,
@@ -172,6 +176,9 @@
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="stock != null">
+        #{stock,jdbcType=INTEGER},
       </if>
       <if test="price != null">
         #{price,jdbcType=DECIMAL},
@@ -223,6 +230,9 @@
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
+      <if test="record.stock != null">
+        stock = #{record.stock,jdbcType=INTEGER},
+      </if>
       <if test="record.price != null">
         price = #{record.price,jdbcType=DECIMAL},
       </if>
@@ -265,6 +275,7 @@
     update product
     set id = #{record.id,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
+      stock = #{record.stock,jdbcType=INTEGER},
       price = #{record.price,jdbcType=DECIMAL},
       remark = #{record.remark,jdbcType=VARCHAR},
       xremark = #{record.xremark,jdbcType=VARCHAR},
@@ -285,6 +296,9 @@
     <set>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="stock != null">
+        stock = #{stock,jdbcType=INTEGER},
       </if>
       <if test="price != null">
         price = #{price,jdbcType=DECIMAL},
@@ -325,6 +339,7 @@
   <update id="updateByPrimaryKey" parameterType="com.zx.persistence.bean.Product">
     update product
     set name = #{name,jdbcType=VARCHAR},
+      stock = #{stock,jdbcType=INTEGER},
       price = #{price,jdbcType=DECIMAL},
       remark = #{remark,jdbcType=VARCHAR},
       xremark = #{xremark,jdbcType=VARCHAR},

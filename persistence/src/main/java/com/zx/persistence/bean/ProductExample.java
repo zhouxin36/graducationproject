@@ -3,7 +3,6 @@ package com.zx.persistence.bean;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class ProductExample {
@@ -125,32 +124,6 @@ public class ProductExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andIdIsNull() {
@@ -290,6 +263,66 @@ public class ProductExample {
 
         public Criteria andNameNotBetween(String value1, String value2) {
             addCriterion("name not between", value1, value2, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockIsNull() {
+            addCriterion("stock is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockIsNotNull() {
+            addCriterion("stock is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockEqualTo(Integer value) {
+            addCriterion("stock =", value, "stock");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockNotEqualTo(Integer value) {
+            addCriterion("stock <>", value, "stock");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockGreaterThan(Integer value) {
+            addCriterion("stock >", value, "stock");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockGreaterThanOrEqualTo(Integer value) {
+            addCriterion("stock >=", value, "stock");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockLessThan(Integer value) {
+            addCriterion("stock <", value, "stock");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockLessThanOrEqualTo(Integer value) {
+            addCriterion("stock <=", value, "stock");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockIn(List<Integer> values) {
+            addCriterion("stock in", values, "stock");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockNotIn(List<Integer> values) {
+            addCriterion("stock not in", values, "stock");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockBetween(Integer value1, Integer value2) {
+            addCriterion("stock between", value1, value2, "stock");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockNotBetween(Integer value1, Integer value2) {
+            addCriterion("stock not between", value1, value2, "stock");
             return (Criteria) this;
         }
 
@@ -504,52 +537,52 @@ public class ProductExample {
         }
 
         public Criteria andAddDateEqualTo(Date value) {
-            addCriterionForJDBCDate("add_date =", value, "addDate");
+            addCriterion("add_date =", value, "addDate");
             return (Criteria) this;
         }
 
         public Criteria andAddDateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("add_date <>", value, "addDate");
+            addCriterion("add_date <>", value, "addDate");
             return (Criteria) this;
         }
 
         public Criteria andAddDateGreaterThan(Date value) {
-            addCriterionForJDBCDate("add_date >", value, "addDate");
+            addCriterion("add_date >", value, "addDate");
             return (Criteria) this;
         }
 
         public Criteria andAddDateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("add_date >=", value, "addDate");
+            addCriterion("add_date >=", value, "addDate");
             return (Criteria) this;
         }
 
         public Criteria andAddDateLessThan(Date value) {
-            addCriterionForJDBCDate("add_date <", value, "addDate");
+            addCriterion("add_date <", value, "addDate");
             return (Criteria) this;
         }
 
         public Criteria andAddDateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("add_date <=", value, "addDate");
+            addCriterion("add_date <=", value, "addDate");
             return (Criteria) this;
         }
 
         public Criteria andAddDateIn(List<Date> values) {
-            addCriterionForJDBCDate("add_date in", values, "addDate");
+            addCriterion("add_date in", values, "addDate");
             return (Criteria) this;
         }
 
         public Criteria andAddDateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("add_date not in", values, "addDate");
+            addCriterion("add_date not in", values, "addDate");
             return (Criteria) this;
         }
 
         public Criteria andAddDateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("add_date between", value1, value2, "addDate");
+            addCriterion("add_date between", value1, value2, "addDate");
             return (Criteria) this;
         }
 
         public Criteria andAddDateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("add_date not between", value1, value2, "addDate");
+            addCriterion("add_date not between", value1, value2, "addDate");
             return (Criteria) this;
         }
 
@@ -1092,14 +1125,14 @@ public class ProductExample {
             this.typeHandler = typeHandler;
         }
 
-        public Criterion() {
-        }
-
         protected Criterion(String condition) {
             super();
             this.condition = condition;
             this.typeHandler = null;
             this.noValue = true;
+        }
+
+        public Criterion() {
         }
 
         protected Criterion(String condition, Object value, String typeHandler) {
