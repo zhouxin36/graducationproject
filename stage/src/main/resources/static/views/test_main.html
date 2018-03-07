@@ -1,14 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0">
 		<title>主界面</title>
 
-		<link href="../AmazeUI-2.4.2/assets/css/admin.css" rel="stylesheet" type="text/css">
-		<link href="../AmazeUI-2.4.2/assets/css/amazeui.css" rel="stylesheet" type="text/css">
+		<!--<link href="../css/admin.css" rel="stylesheet" type="text/css">-->
+		<link href="../css/amazeui.min.css" rel="stylesheet" type="text/css">
         <link href="../css/blstyle.css" rel="stylesheet" type="text/css">
         	<link href="../css/addstyle.css" rel="stylesheet" type="text/css">
         <link href="../css/infstyle.css" rel="stylesheet" type="text/css">
@@ -21,15 +19,15 @@
         <link href="../css/lostyle.css" rel="stylesheet" type="text/css">
              <link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
  
- <link rel="stylesheet" href="./css/layer.css">
+ <link rel="stylesheet" href="../css/layer.css">
         	<link href="../css/personal.css" rel="stylesheet" type="text/css">
         <link href="../css/footstyle.css" rel="stylesheet" type="text/css">
 		<link href="../css/refstyle.css" rel="stylesheet" type="text/css">
-		<link href="../css_test/personal.css" rel="stylesheet" type="text/css">
-		<link href="../css_test/addstyle.css" rel="stylesheet" type="text/css">
-		<script src="../AmazeUI-2.4.2/assets/js/jquery.min.js" type="text/javascript"></script>
-		<script src="../AmazeUI-2.4.2/assets/js/amazeui.js"></script>
-<script type="text/javascript" src="./js/layer.js"></script>
+		<link href="../css/personal.css" rel="stylesheet" type="text/css">
+		<link href="../css/addstyle.css" rel="stylesheet" type="text/css">
+		<script src="../js/jquery.min.js" type="text/javascript"></script>
+		<script src="../js/amazeui.min.js"></script>
+<script type="text/javascript" src="../js/layer.js"></script>
 
 <script type="text/javascript" src="../js/jquery.cityselect.js"></script>
 <script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
@@ -44,7 +42,7 @@
             	 if(action !=null && action.toString().length>1)
             	 {
             		 
-            		 $("#jsp").load("test_"+action+".jsp",function(data,status){
+            		 $("#jsp").load("test_"+action+".html",function(data,status){
  						
  					});
             	 }
@@ -53,11 +51,11 @@
             	 
             	
             	//页面一加载，判断用户是否登录，根据结果改变左上角的样式
-          	  $.post("../../User/check_login",function(msg,status){
-          		  if(msg.code==100){
+          	  $.post("../User/check_login",function(msg,status){
+          		  if(msg.code==200){
           			  //登录成功
-          			  //alert(msg.map.name);
-          			  var a  = $("<a></a>").attr("href","#").addClass("h").append("欢迎你! "+msg.map.name);
+          			  //alert(msg.data.name);
+          			  var a  = $("<a></a>").attr("href","#").addClass("h").append("欢迎你! "+msg.data.name);
 
 						var logout  = $("<a></a>").attr("href" , "#").append("&nbsp;  &nbsp;  退出登录");
 						var div = $("#login_status");
@@ -66,8 +64,8 @@
 						//点击退出登录
 						 logout.click(function(){
 							/*  if(confirm("确定退出登录?")){
-								 $.post("../../User/logout",function(data){
-							           $(location).prop("href","../home/home.jsp");
+								 $.post("../User/logout",function(data){
+							           $(location).prop("href","home.html");
 						              });
 								
 								} */
@@ -75,32 +73,38 @@
 								  time: 0 //不自动关闭
 								  ,btn: ['确定', '取消']
 								  ,yes: function(index){
-									  $.post("../../User/logout",function(data){
-								           $(location).prop("href","../home/home.jsp");
+									  $.post("../User/logout",function(data){
+								           $(location).prop("href","home.html");
 							              });
 									  layer.close(index);
 								  }
 								});
 						 });
-         		       
-         		    //改变购物车的数字
-                   	$.post("../../Order/getSorderById",function(data,status){
-                   		
-                   		$("#J_MiniCartNum").html(data.map.list.length);
-                   	});
+
+                      //改变购物车的数字
+                      $.post("../Order/getSorderById",function(data,status){
+                          if(data.code == 200) {
+                              $("#J_MiniCartNum").html(data.data.list.length);
+                              $("#shop_cart_number").html(data.data.list.length);
+                          }else {
+                              $("#J_MiniCartNum").html(0);
+                              $("#shop_cart_number").html(0);
+                          }
+
+                      });
          		       
           		  }else{
           			  //登录失败
           			 
-          			  var a = $("<a></a>").attr("href","../home/login.jsp").addClass("h").append("亲，请登录  ");
-          			  var b = $("<a></a>").attr("href","../home/register.jsp").append("免费注册");
+          			  var a = $("<a></a>").attr("href","login.html").addClass("h").append("亲，请登录  ");
+          			  var b = $("<a></a>").attr("href","register.html").append("免费注册");
           		       var div = $("#login_status");
           		     layer.msg("您还没有登录，马上为您跳转到登录界面！", {
      					icon : 5,
      					time : 3000
      				});
           		   setTimeout(function(){
-          			 $(location).prop('href', '../home/login.jsp');
+          			 $(location).prop('href', 'login.html');
 						},3000);
           		       div.append(a).append(b);
           		  }
@@ -138,24 +142,24 @@
 			<ul class="message-r">
 				<div class="topMessage home">
 					<div class="menu-hd">
-						<a href="../home/home.jsp" target="_top" class="h">商城首页</a>
+						<a href="home.html" target="_top" class="h">商城首页</a>
 					</div>
 				</div>
 				<div class="topMessage my-shangcheng">
 					<div class="menu-hd MyShangcheng">
-						<a href="../test/test_main.jsp" target="_top"><i
+						<a href="test_main.html" target="_top"><i
 							class="am-icon-user am-icon-fw"></i>个人中心</a>
 					</div>
 				</div>
 				<div class="topMessage mini-cart">
 					<div class="menu-hd">
-						<a id="mc-menu-hd" href="../home/shopcart.jsp" target="_top"><i
+						<a id="mc-menu-hd" href="shopcart.html" target="_top"><i
 							class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong
 							id="J_MiniCartNum" class="h">0</strong></a>
 					</div>
 				</div>
 				<div class="topMessage favorite">
-					<!-- <div class="menu-hd"><a href="../test/test_collection.jsp" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div> -->
+					<!-- <div class="menu-hd"><a href="test_collection.html" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div> -->
 			</ul>
 		</div>
 
@@ -170,7 +174,7 @@
 
 				<div class="nav-extra">
 					<i class="am-icon-user-secret am-icon-md nav-user"></i><b></b>
-						<a href="../test/test_main.jsp"  target="_blank">个人中心 </a>
+						<a href="test_main.html"  target="_blank">个人中心 </a>
 					<i class="am-icon-angle-right" style="padding-left: 10px;"></i>
 				</div>
 			</div>
@@ -262,7 +266,7 @@
 									$(this).attr("class",null);
 								});
 								a.parent().addClass("active");
-								$("#jsp").load("test_comment.jsp",function(data,status){
+								$("#jsp").load("test_comment.html",function(data,status){
 									
 								});});
 							$("#refund").click(function() {
@@ -271,7 +275,7 @@
 									$(this).attr("class",null);
 								});
 								a.parent().addClass("active");
-								$("#jsp").load("test_refund.jsp",function(data,status){
+								$("#jsp").load("test_refund.html",function(data,status){
 									
 								});});
 							
@@ -281,7 +285,7 @@
 										$(this).attr("class",null);
 									});
 									a.parent().addClass("active");
-								$("#jsp").load("test_order.jsp",function(data,status){
+								$("#jsp").load("test_order.html",function(data,status){
 									
 								});});
 							
@@ -292,7 +296,7 @@
 										$(this).attr("class",null);
 									});
 									a.parent().addClass("active");
-									$("#jsp").load("test_address.jsp",function(data,status){
+									$("#jsp").load("test_address.html",function(data,status){
 										
 									});
 								});
@@ -302,7 +306,7 @@
 									$(this).attr("class",null);
 								});
 								a.parent().addClass("active");
-								$("#jsp").load("test_question.jsp",function(data,status){
+								$("#jsp").load("test_question.html",function(data,status){
 									
 								});
 							});
@@ -313,7 +317,7 @@
 									$(this).attr("class",null);
 								});
 								a.parent().addClass("active");
-								$("#jsp").load("test_foot.jsp",function(data,status){
+								$("#jsp").load("test_foot.html",function(data,status){
 									
 								});
 							});
@@ -324,7 +328,7 @@
 										$(this).attr("class",null);
 									});
 									a.parent().addClass("active");
-								$("#jsp").load("test_coupon.jsp",function(data,status){
+								$("#jsp").load("test_coupon.html",function(data,status){
 									
 								});
 							});
@@ -334,7 +338,7 @@
 									$(this).attr("class",null);
 								});
 								a.parent().addClass("active");
-								$("#jsp").load("test_information.jsp",function(data,status){
+								$("#jsp").load("test_information.html",function(data,status){
 									
 								});
 							});
@@ -345,7 +349,7 @@
 									$(this).attr("class",null);
 								});
 								a.parent().addClass("active");
-								$("#jsp").load("test_collection.jsp",function(data,status){
+								$("#jsp").load("test_collection.html",function(data,status){
 									
 								});
 							});
@@ -355,7 +359,7 @@
 									$(this).attr("class",null);
 								});
 								a.parent().addClass("active");
-								$("#jsp").load("test_news.jsp",function(data,status){
+								$("#jsp").load("test_news.html",function(data,status){
 									
 								});
 							});
@@ -365,7 +369,7 @@
 										$(this).attr("class",null);
 									});
 									a.parent().addClass("active");
-								$("#jsp").load("test_change.jsp",function(data,status){
+								$("#jsp").load("test_change.html",function(data,status){
 									
 								});
 							});
@@ -375,7 +379,7 @@
     									$(this).attr("class",null);
     								});
     								a.parent().addClass("active");
-								$("#jsp").load("test_bill.jsp",function(data,status){
+								$("#jsp").load("test_bill.html",function(data,status){
 									
 								});
 							});
@@ -385,7 +389,7 @@
     									$(this).attr("class",null);
     								});
     								a.parent().addClass("active");
-									$("#jsp").load("test_mydeposit.jsp",
+									$("#jsp").load("test_mydeposit.html",
 											function(data, status) {
 											});
 								});
@@ -395,7 +399,7 @@
     									$(this).attr("class",null);
     								});
     								a.parent().addClass("active");
-									$("#jsp").load("test_pay.jsp",
+									$("#jsp").load("test_pay.html",
 											function(data, status) {
 
 											});

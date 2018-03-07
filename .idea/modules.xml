@@ -17,7 +17,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/file/file.iml" filepath="$PROJECT_DIR$/.idea/modules/file/file.iml" group="file" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/file/file_main.iml" filepath="$PROJECT_DIR$/.idea/modules/file/file_main.iml" group="file" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/file/file_test.iml" filepath="$PROJECT_DIR$/.idea/modules/file/file_test.iml" group="file" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/graducationproject.iml" filepath="$PROJECT_DIR$/.idea/modules/graducationproject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/graducationproject.iml" filepath="$PROJECT_DIR$/graducationproject.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hystrix-dashboard/hystrix-dashboard.iml" filepath="$PROJECT_DIR$/.idea/modules/hystrix-dashboard/hystrix-dashboard.iml" group="hystrix-dashboard" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hystrix-dashboard/hystrix-dashboard_main.iml" filepath="$PROJECT_DIR$/.idea/modules/hystrix-dashboard/hystrix-dashboard_main.iml" group="hystrix-dashboard" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hystrix-dashboard/hystrix-dashboard_test.iml" filepath="$PROJECT_DIR$/.idea/modules/hystrix-dashboard/hystrix-dashboard_test.iml" group="hystrix-dashboard" />
@@ -27,7 +27,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/persistence/persistence.iml" filepath="$PROJECT_DIR$/.idea/modules/persistence/persistence.iml" group="persistence" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/persistence/persistence_main.iml" filepath="$PROJECT_DIR$/.idea/modules/persistence/persistence_main.iml" group="persistence" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/persistence/persistence_test.iml" filepath="$PROJECT_DIR$/.idea/modules/persistence/persistence_test.iml" group="persistence" />
-      <module fileurl="file://$PROJECT_DIR$/stage/stage.iml" filepath="$PROJECT_DIR$/stage/stage.iml" group="stage" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/stage/stage.iml" filepath="$PROJECT_DIR$/.idea/modules/stage/stage.iml" group="stage" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/stage/stage_main.iml" filepath="$PROJECT_DIR$/.idea/modules/stage/stage_main.iml" group="stage" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/stage/stage_test.iml" filepath="$PROJECT_DIR$/.idea/modules/stage/stage_test.iml" group="stage" />
     </modules>

@@ -50,6 +50,7 @@ public class UserController {
         return user_id;
     }
 
+    @ResponseBody
     @RequestMapping("/getMyInformtion")
     public ResultDTO getMyInformtion(HttpServletRequest request) {
         User user = service.selectByPrimaryKey(getUserId(request));

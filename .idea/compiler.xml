@@ -12,8 +12,6 @@
       <module name="eurekaserver_test" target="1.8" />
       <module name="file_main" target="1.8" />
       <module name="file_test" target="1.8" />
-      <module name="graduationproject_main" target="1.8" />
-      <module name="graduationproject_test" target="1.8" />
       <module name="hystrix-dashboard_main" target="1.8" />
       <module name="hystrix-dashboard_test" target="1.8" />
       <module name="hystrix-turbine_main" target="1.8" />
