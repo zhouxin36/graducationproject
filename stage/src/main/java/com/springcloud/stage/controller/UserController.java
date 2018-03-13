@@ -1,6 +1,8 @@
 package com.springcloud.stage.controller;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.time.LocalDateTime;
@@ -16,20 +18,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.springcloud.stage.dto.UserDTO;
+import com.springcloud.stage.service.PicService;
 import com.springcloud.stage.service.UserService;
+import com.zx.api.bean.Pic;
+import com.zx.api.bean.PicExample;
 import com.zx.api.bean.User;
 import com.zx.api.bean.UserExample;
 import com.zx.api.dto.ResultDTO;
+import com.zx.api.utils.DeleteFileUtil;
 import com.zx.api.utils.MD5Util;
 import com.zx.api.utils.MyUtils;
 import com.zx.api.utils.SendMailUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 
 @RequestMapping("/User")
@@ -41,6 +48,12 @@ public class UserController {
 
     @Autowired
     UserService service ;
+
+    @Value("${file_base_url}")
+    String FILE_BASE_URL;
+
+    @Autowired
+    PicService picService;
 
     private String getUserId(HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -62,44 +75,54 @@ public class UserController {
         return ResultDTO.buildSuccessData(map);
     }
 
+//    @ResponseBody
+//    @RequestMapping(value = "/updateImg",method = RequestMethod.POST)
+//    public ResultDTO updateImg(HttpServletRequest request,@RequestParam(value = "file")MultipartFile file) {
+//
+//        return ResultDTO.ok();
+//    }
+
+
+
     @ResponseBody
     @RequestMapping("/updateUserById")
-    public ResultDTO updateUserById (User user,@RequestParam(value = "file")MultipartFile file,HttpServletRequest request) throws ParseException {
+    public ResultDTO updateUserById (UserDTO userDTO, @RequestParam(value = "file")MultipartFile file, HttpServletRequest request) throws ParseException {
         HttpSession  session = request.getSession();
+        User user = new User();
+        BeanUtils.copyProperties(userDTO,user);
         user.setEmail((String)session.getAttribute("email"));
         user.setId(getUserId(request));
-
-        service.updateByPrimaryKeySelective(user);
-        int flag = 1;
-
-        if(file==null){
-            System.out.println("file==null");
-            return ResultDTO.ok();
-        }
-        if(file.getOriginalFilename()==""){
-            System.out.println("file==??null");
-            return ResultDTO.ok();
-        }
-        String path = request.getSession().getServletContext().getRealPath("uploads");
-
-        System.out.println(path);
-        java.util.Random r=new java.util.Random();
-        String fileName = r.nextInt(100000)+".jpg";
-        user.setAvatar(fileName);
-
-        service.updateByPrimaryKeySelective(user);
-        File targetFile = new File(path, fileName);
-        if(!targetFile.exists()){
-            targetFile.mkdirs();
-        }
         try {
-            file.transferTo(targetFile);
-        } catch (Exception e) {
+//            List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
+//            MultipartFile file = files.get(0);
+            if(file != null) {
+                BufferedOutputStream stream = null;
+                String userId = getUserId(request);
+                String name = userId + "_" + file.getOriginalFilename();
+                PicExample picExample = new PicExample();
+                PicExample.Criteria criteria = picExample.createCriteria();
+                criteria.andPathLike(userId + "%");
+                List<Pic> pics = picService.selectByExample(picExample);
+                if (pics.size() != 0) {
+                    picService.deleteByPrimaryKey(pics.get(0).getId());
+                    DeleteFileUtil.delete(FILE_BASE_URL, pics.get(0).getPath());
+                }
+                Pic pic = new Pic();
+                pic.setId(MyUtils.getUUID());
+                pic.setPath(name);
+                picService.insert(pic);
+                user.setAvatar(name);
+                userService.updateByPrimaryKeySelective(user);
+                byte[] bytes = file.getBytes();
+                stream = new BufferedOutputStream(new FileOutputStream(new File(FILE_BASE_URL + name)));
+                stream.write(bytes);
+                stream.close();
+            }
+        }catch (Exception e){
             e.printStackTrace();
         }
-        if(flag==0){
-            return ResultDTO.error();
-        }return ResultDTO.ok();
+        service.updateByPrimaryKeySelective(user);
+        return ResultDTO.ok();
     }
 
 
