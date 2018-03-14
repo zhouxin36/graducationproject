@@ -41,6 +41,9 @@ public class AddressController {
 	@RequestMapping("/updateAddressById")
 	public ResultDTO updateAddressById(UserAddress address) {
 		System.out.println(address);
+		if(MyUtils.isEquals(address.getAddress(),"--") || MyUtils.isEquals(address.getAddress(),"")){
+		    address.setAddress(null);
+        }
 		int flag = service.updateByPrimaryKeySelective(address);
 		if (flag == 0) {
 			return ResultDTO.error();

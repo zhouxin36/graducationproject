@@ -1,0 +1,248 @@
+<!DOCTYPE>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>我的足迹</title>
+
+<!--  <span><i class="month-lite" id="today">12-21</i><i class="date-desc">今天</i></span>-->	
+<script type="text/javascript">
+      $(function(){
+    	  
+    	  //请求得到今天的足迹
+    	  $.post("../FootMark/getTodayFootMark",function(data,status){
+    		  if(data.code==200)
+    		  build_today_foot(data);
+    		  $("#today").html(getNowFormatDate());
+    		  
+    		  console.log(data);
+    	  });
+    	  
+    	 
+    	  //请求得到过去一周的足迹
+    	  $.post("../FootMark/getPassWeekFootMark",function(data,status){
+    		  if(data.code==200)
+    			  build_passweek_foot(data);
+    		  console.log(data);
+    		
+    	  });
+    	  
+    	 
+    	  function build_passweek_foot(msg){
+    		  var list = msg.data.list;
+    		  //for(var i = 6 ;  i < (6+list.length) ;i++){
+    			$.each(list,function(index,item){
+    				  $.post("../Product/SelectProductById","id="+item.productId,function(msg,status){
+    	    			   var product = msg.data.product;
+    					  var div_goods_pic = $("<div></div>").addClass("goods-pic");
+                	
+    					  var img_one = "";
+    	     	    		 $.ajax({
+    							  type : "post",
+    							  dataType : "json",
+    							  url : "../Pic/selectPicByProductType",
+    							  data : "id="+item.productId+"&type=1",
+    							  async : false,
+    							  success : function(msg){
+    								  if(msg.code==200){
+    								   img_one = $("<img></img>").attr("src",fileURL+msg.data.pic_list[0].path).addClass("goods-img");
+    								  } else{
+    								   img_one = $("<img></img>").attr("src",fileURL+"no_img.jpg").addClass("goods-img");
+    							         
+    								  }
+    								
+    								  }
+    						  });
+    					
+                		
+                		  var a_one = $("<a></a>").addClass("goods-pic-link").attr("target","_blank").attr("href","introduction.html?id="+item.productId).append(img_one);
+                		  var div_goods_pic_box = $("<div></div>").addClass("goods-pic").append(a_one); 
+                		  div_goods_pic.append(div_goods_pic_box);
+                		  
+                		  var div_goods_attr = $("<div></div>").addClass("goods-attr");
+                		 
+            			  var a_two = $("<a></a>").addClass("title").attr("target","_blank").attr("href","introduction.html?id="+item.productId).append(product.name);
+            			  var div_good_title = $("<div></div>").addClass("good-title").append(a_two);
+            			  var span_one = $("<span class='g_price'></span>").append("<span>¥</span>").append("<strong></strong>").append(product.price); 
+            			  var strong_o = $("<strong>原价</strong>").append(parseInt(product.price)+parseInt("100"));
+            			  var strong_one =  $("<span>¥</span>").append(strong_o);
+            			  var span_two = $("<span class='g_price g_price-original'></span>").append(strong_one); 
+            				  var div_goods_price = $("<div></div>").addClass("goods-price").append(span_one).append(span_two);
+            			 
+            				  var div_clear = $("<div></div>").addClass("clear");
+            				  
+            				  div_goods_attr.append(div_good_title).append(div_goods_price).append(div_clear);
+            				  var i = index +6;
+            				  $("#good_"+i).empty();
+            				  $("#good_"+i).append(div_goods_pic).append(div_goods_attr);
+    				 
+    			 
+    			  });
+    			});  
+    			 
+    			
+    			 
+        		  
+    				
+    	  }
+    	  
+    	  //得到当前日期
+    	  function getNowFormatDate() {
+    var date = new Date();
+    var seperator1 = "-";
+   
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    var currentdate = month +  seperator1 +  strDate ;
+    return currentdate;
+}
+    	  
+    	  
+    	  function build_today_foot(msg){
+    		  $("#box").empty();
+    		   var list =  msg.data.list;
+    		  
+    		   $.each(list,function(index,item){
+    			   $.post("../Product/SelectProductById","id="+item.productId,function(msg,status){
+    				   var i = index + 1;
+    				   var product = msg.data.product;
+    				   var div_goods_pic = $("<div></div>").addClass("goods-pic");
+     	    		   
+     	    		 // var img_one = $("<img></img>").attr("src","../images/TB1_pic.jpg_200x200.jpg").addClass("goods-img");
+     	    		  var img_one = "";
+     	    		 $.ajax({
+						  type : "post",
+						  dataType : "json",
+						  url : "../Pic/selectPicByProductType",
+						  data : "id="+item.productId+"&type=1",
+						  async : false,
+						  success : function(msg){
+							  if(msg.code==200){
+							   img_one = $("<img></img>").attr("src",msg.data.path+msg.data.pic_list[0].path).addClass("goods-img");
+							  } else{
+							   img_one = $("<img></img>").attr("src",msg.data.path+"1.jpg").addClass("goods-img");
+						         
+							  }
+							
+							  }
+					  });
+     	    		       
+     	    		       
+     	    		  
+     	    		  
+     	    		  var a_one = $("<a></a>").addClass("goods-pic-link").attr("target","_blank").attr("href","introduction.html?id="+product.id).append(img_one);
+     	    		  var div_goods_pic_box = $("<div></div>").addClass("goods-pic").append(a_one); 
+     	    		  div_goods_pic.append(div_goods_pic_box);
+     	    		  
+     	    		  var div_goods_attr = $("<div></div>").addClass("goods-attr");
+     	    		 
+     				  var a_two = $("<a></a>").addClass("title").attr("target","_blank").attr("href","introduction.html?id="+product.id).append(product.name);
+     				  var div_good_title = $("<div></div>").addClass("good-title").append(a_two);
+     				  var span_one = $("<span class='g_price'></span>").append("<span>¥</span>").append("<strong></strong>").append(product.price); 
+     				  var strong_o = $("<strong>原价</strong>").append(parseInt(product.price)+parseInt("20"));
+     				  var strong_one =  $("<span>¥</span>").append(strong_o);
+     				  var span_two = $("<span class='g_price g_price-original'></span>").append(strong_one); 
+     					  var div_goods_price = $("<div></div>").addClass("goods-price").append(span_one).append(span_two);
+     				 
+     					  var div_clear = $("<div></div>").addClass("clear");
+     					  
+     					  div_goods_attr.append(div_good_title).append(div_goods_price).append(div_clear);
+     					  $("#good_"+i).empty();
+     					  $("#good_"+i).append(div_goods_pic).append(div_goods_attr);
+    			   });    			  
+    		   });
+    		  
+    	  }
+    	  
+    	  
+    	  
+    	  $("#delete_myfoot_today").click(function(){
+    		  layer.msg("马上就要删除你今天的足迹了哦！", {
+					icon : 0,
+					time : 3000
+				});
+    		  
+    	  });
+    	  
+      });
+</script>
+</head>
+<body>
+		
+		<div class="center">
+			<div class="col-main">
+				<div class="main-wrap">
+
+					<div class="user-foot">
+						<!--标题 -->
+						<div class="am-cf am-padding">
+							<div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">我的足迹</strong> / <small>Browser&nbsp;History</small></div>
+						</div>
+						<hr/>
+
+						<!--足迹列表 -->
+
+						<div class="goods">
+							<div id="today_div" class="goods-date" data-date="2015-12-21">
+								<span><i class="month-lite" id="today">12-21</i><i class="date-desc">今天</i></span>
+								<del class="am-icon-trash" id="delete_myfoot_today"></del>
+								<s class="line"></s>
+							</div>
+
+							<div class="goods-box first-box" id="good_1">
+								
+							</div>
+						</div>
+
+						<div class="goods">
+							<div class="goods-date" data-date="2015-12-21">
+								<s class="line"></s>
+							</div>
+                               <div id="good_2"></div>
+						
+						</div>
+
+						<div class="goods">
+							<div class="goods-date" data-date="2015-12-21">
+								<s class="line"></s>
+							</div>
+ <div id="good_3"></div>
+						
+						</div>
+
+						<div class="goods">
+							<div class="goods-date" data-date="2015-12-21">
+								<s class="line"></s>
+							</div>
+
+						 <div id="good_4"></div>
+						</div>
+						
+
+						<div class="goods">
+							<div class="goods-date" data-date="2015-12-21">
+								<s class="line"></s>
+							</div>
+ <div id="good_5"></div>
+						
+						</div>						
+						<div class="clear"></div>
+						<div class="goods">
+							<div class="goods-date" data-date="2015-12-17">
+								<span><i class="month-lite"></i><i class="day-lite"></i>	<i class="date-desc">一周内</i></span>
+								<del class="am-icon-trash"></del>
+								<s class="line"></s>
+							</div>
+						 <div id="good_6"  ></div>
+						  <div id="good_7" ></div>
+						   <div id="good_8" ></div>
+						 
+						</div>
+						
+						
+					</div>
+				</div>
+
+				
+
+	</body>
+</html>

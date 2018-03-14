@@ -13,6 +13,7 @@ repositories {
 		compile ('org.springframework.cloud:spring-cloud-starter-feign')
 		compile ('org.springframework.cloud:spring-cloud-starter-hystrix')
 		compile ('commons-logging:commons-logging:1.2')
+		compile ('com.alipay:sdk-java:20171027120314')
 	}
 }
 

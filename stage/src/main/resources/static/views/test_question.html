@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -28,19 +26,19 @@
 	        			   return ;
 	        		   }
 	        		   
-	        		   $.post("../../question/getQuestionById",function(data,status){
+	        		   $.post("../question/getQuestionById",function(data,status){
 	        			  
 	        			   $("#user_questionType").val( $("#question_one option:selected").val());
-	        			   if(data.code==100){
+	        			   if(data.code==200){
 	        			    	
 	        			    	
 	        			    	//修改问题答案
-	        			    	$.post("../../question/updateUserQuestion",$("#question_form").serialize(),function(data,status){
+	        			    	$.post("../question/updateUserQuestion",$("#question_form").serialize(),function(data,status){
 	        			    		
 	        			    	});
 	        			    }else{
 	        			    	//添加问题
-                                $.post("../../question/insertUserQuestion",$("#question_form").serialize(),function(data,status){
+                                $.post("../question/insertUserQuestion",$("#question_form").serialize(),function(data,status){
 	        			    		
 	        			    	});
 	        			    }
@@ -56,10 +54,10 @@
 	        	   //建立问题主框架
 	        	function   build_main_question(){
 	        		              
-	        		   $.post("../../question/getQuestionById",function(data,status){
-	        			    if(data.code==100){
+	        		   $.post("../question/getQuestionById",function(data,status){
+	        			    if(data.code==200){
 	        			    	console.log(data);
-	        			    	var list = data.map.list[0];
+	        			    	var list = data.data.list[0];
 	        			    	 $("#question_one ").val(list.questionType);
 	        			    	
 	        			    	 $("#user-answer1").val(list.questionAnswer);
@@ -133,7 +131,7 @@
 						
 
 					</form>
-<center><div class="am-btn am-btn-danger" id="update_question_btn">保存修改</div></center>
+<center><div class="btn	btn-success" id="update_question_btn">保存修改</div></center>
 				</div>
 	</body>
 

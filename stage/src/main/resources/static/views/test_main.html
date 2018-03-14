@@ -32,6 +32,7 @@
 <script type="text/javascript" src="../js/jquery.cityselect.js"></script>
 <script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script src="../js/echarts.min.js"></script>
+<script src="../js/common.js"></script>
 
 	</head>
 <script type="text/javascript">
@@ -383,16 +384,6 @@
 									
 								});
 							});
-     							$("#test_mydeposit").click(function(){
-     								var a = $(this);
-    								$(".menu").find("li").each(function (){
-    									$(this).attr("class",null);
-    								});
-    								a.parent().addClass("active");
-									$("#jsp").load("test_mydeposit.html",
-											function(data, status) {
-											});
-								});
      							$("#test_recharge").click(function(){
      								var a = $(this);
     								$(".menu").find("li").each(function (){
@@ -460,7 +451,6 @@
 							
 							<li> <a id="test_recharge" >充值</a></li>
 							
-							<li><a id="test_mydeposit">我的充值记录</a></li>
 						</ul>
 					</li>
 

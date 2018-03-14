@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -13,9 +11,9 @@
       //用户新建地址
       $("#save_address").click(function(){
     	 
-    	  $.post("../../Address/selectAddressById",function(data,status){
-    		  if(data.code==100){
-    			  var list = data.map.Address;
+    	  $.post("../Address/selectAddressById",function(data,status){
+    		  if(data.code==200){
+    			  var list = data.data.Address;
     			   //如果用户的地址超过3个，则不允许再添加
     			  if(list.length>=3){
     				  layer.msg("每个用户的地址上限为3个，请删除后再添加！", {
@@ -41,12 +39,12 @@
     				 var detailed_address = $("#detailed_address").val();
     				 $("#user_address").val(province+city+street+detailed_address);
     				
-    				  $.post("../../Address/insertAddress",$('#address_form').serialize(),function(data,status){
+    				  $.post("../Address/insertAddress",$('#address_form').serialize(),function(data,status){
                                 layer.msg(status, {
                 					icon : 1,
                 					time : 2000
                 				});
-                                if(data.code==100){
+                                if(data.code==200){
                                 	build_address();
                                 }
      				 }); 
@@ -70,9 +68,9 @@
     				 var detailed_address = $("#detailed_address").val();
     				 $("#user_address").val(province+city+street+detailed_address);
     			
-    				  $.post("../../Address/insertAddress",$('#address_form').serialize(),function(data,status){
+    				  $.post("../Address/insertAddress",$('#address_form').serialize(),function(data,status){
                                
-                                if(data.code==100){
+                                if(data.code==200){
                                 	build_address();
                                 }
      				 }); 
@@ -103,12 +101,12 @@
 	  
 	  function build_address(/*msg*/){
 		  
-		  $.post("../../Address/selectAddressById",function(data,status){
+		  $.post("../Address/selectAddressById",function(data,status){
 	         
-			  if(data.code==100){
+			  if(data.code==200){
 				  $("#address_ul").empty();
 			  console.log(data);
-	              var list = data.map.Address;
+	              var list = data.data.Address;
 	             $.each(list, function(index, addres) {
 			 
 			        var ul = $("#address_ul");
@@ -172,7 +170,7 @@
 		        var  in_i_four = $("<i></i>").addClass("am-icon-trash");
 		        var a_two = $("<a></a>").attr("href","#").append(in_i_four).append("删除");
 		        a_two.click(function(/*msg*/){
-		        	$.post("../../Address/deleteAddressById","id="+addres.id,function(data,status){
+		        	$.post("../Address/deleteAddressById","id="+addres.id,function(data,status){
 		        		build_address();
 		        	});
 		        });
@@ -186,7 +184,7 @@
 			  $(".user-addresslist").click(function (){
 				  var v = $(this);
 				  $.ajax({
-					  url:"../../Address/setDefaultAddress",
+					  url:"../Address/setDefaultAddress",
 					  data:"id="+v.attr("address_id"),
 					  type:"post",
 					  async:false,
@@ -238,8 +236,8 @@
 			 $("#edit_user_address").val(province+city+street+detailed_address);
 		  
 		  
-		  $.post("../../Address/updateAddressById",$('#myModal form').serialize(),function(data,status){
-			  if(data.code==100){
+		  $.post("../Address/updateAddressById",$('#myModal form').serialize(),function(data,status){
+			  if(data.code==200){
 				  layer.msg("修改成功", {
 						icon : 1,
 						time : 2000
@@ -351,7 +349,7 @@
 											</div>
 										</div>
 									</form>
-									<button  id="save_address" class="am-btn am-btn-danger" >保存</button>
+									<button  id="save_address" class="btn btn-success">保存</button>
 								</div>
 
 							</div>

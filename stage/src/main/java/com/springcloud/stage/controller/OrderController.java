@@ -6,6 +6,7 @@ import com.zx.api.bean.*;
 import com.zx.api.dto.ResultDTO;
 import com.zx.api.utils.MyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,6 +38,8 @@ public class OrderController {
 	
 	@Autowired
 	UserAddressService addressService;
+
+
 
 
 
@@ -222,6 +225,8 @@ public class OrderController {
         map.put("addressId", list.get(0).getId());
 	     return ResultDTO.buildSuccessData(map);
 	}
+
+
 	
 	@ResponseBody
 	@RequestMapping("/CheckForderStatus")

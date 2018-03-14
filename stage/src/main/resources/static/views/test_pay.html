@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -9,16 +7,16 @@
 
 <script type="text/javascript">
 	$(function() {
-		$.post("../../User/check_login", function(msg, status) {
+		$.post("../User/check_login", function(msg, status) {
 
-			if (msg.code == 200) {
+			if (msg.code != 200) {
 				layer.msg("请先登录,马上为你跳转登录界面！", {
 					icon : 5,
 					time : 3000
 				});
 
 				setTimeout(function() {
-					window.location.href = "../home/login.jsp";
+					window.location.href = "login.html";
 				}, 3000);
 
 			}
@@ -30,9 +28,12 @@
 <body>
 
 	<div style="width: 1200px; height: 660px">
-		<form id="orderForm" action="/ECC/deposit/payOrder" method="post">
-
-			<h1 style="color: black; margin-top: 130px; margin-left: 150px">选择银行：</h1>
+		<form id="orderForm" action="../deposit/payOrder" method="post">
+			<h1 style="color: black; margin-top: 130px; margin-left: 150px">输入金额：</h1>
+            <br />
+            <input style="float:left;width: 100px;height: 33px; margin-left: 150px;" type="number" name="amount" value="100" class="form-control" placeholder="输入金额" />
+            <label style="font-family: KaiTi;color: gold;font-size: 30px;" align="middle">元</label>
+			<h1 style="color: black; margin-top: 30px; margin-left: 150px">选择银行：</h1>
 			<br /> <img src="../images/bank_img/icbc.bmp"
 				style="width: 154px; height: 33px; margin-left: 150px"
 				align="middle" /> <input type="radio" name="pd_FrpIds"
@@ -63,12 +64,14 @@
 
 			<img src="../images/bank_img/cmb.bmp" align="middle"
 				style="width: 154px; height: 33px; margin-left: 50px" /> <input
-				type="radio" name="pd_FrpIds" value="CMBCHINA-NET-B2C" />招商银行
-			<!-- <h1 style="color:black;margin-top: 30px;margin-left: 150px; " >支付宝支付：</h1><br/>
-						<br/>
-						
- -->
-			<button type="submit" class="btn btn-success" style="width: 154px; height: 33px; margin-left: 50px"> 充值</button>
+				type="radio" name="pd_FrpIds" value="CMBCHINA-NET-B2C" />招商银行&nbsp;&nbsp;&nbsp;&nbsp;
+
+            <img src="../images/bank_img/zhifubao.jpg" align="middle"
+                 style="width: 154px; height: 33px; margin-left: 50px" /> <input
+                type="radio" name="pd_FrpIds" value="zhifubao" />支付宝
+            <br><br><br><br>
+
+			<button type="submit" class="btn btn-success" style="width: 154px; height: 33px; margin-left: 350px"> 充值</button>
 		</form>
 	</div>
 

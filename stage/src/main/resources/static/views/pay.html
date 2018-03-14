@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,26 +5,40 @@
 
 <title>结算页面</title>
 
-<link href="../AmazeUI-2.4.2/assets/css/amazeui.css" rel="stylesheet"
+<link href="../css/amazeui.min.css" rel="stylesheet"
 	type="text/css" />
 
-<link href="../basic/css/demo.css" rel="stylesheet" type="text/css" />
+<link href="../css/demo.css" rel="stylesheet" type="text/css" />
 <link href="../css/cartstyle.css" rel="stylesheet" type="text/css" />
- <link rel="stylesheet" href="./css/layer.css">
+ <link rel="stylesheet" href="../css/layer.css">
 <link href="../css/jsstyle.css" rel="stylesheet" type="text/css" />
-<link href="../css_test/addstyle.css" rel="stylesheet" type="text/css">
+<link href="../css/addstyle.css" rel="stylesheet" type="text/css">
 <link href="../css/addstyle.css" rel="stylesheet" type="text/css">
  <link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="../js/address.js"></script>
-<script src="../AmazeUI-2.4.2/assets/js/jquery.min.js" type="text/javascript"></script>
+<script src="../js/jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="../js/jquery.cityselect.js"></script>
 <script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="./js/layer.js"></script>
+<script type="text/javascript" src="../js/layer.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
 
 </head>
 
-
+<style>
+    .number_a{
+        font-family: Arial;
+        font-size: 14px;
+        font-weight: bold;
+        color: #C40000;
+    }
+</style>
 <script type="text/javascript">
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
 	$(function() {
 		$("#logistics_id").val(0);
 		//选择配送快递
@@ -35,54 +47,53 @@
 			$("#logistics_id").val($(this).val());
 			
 		});
-		
-		
-		
+
+
 		var all_money = 0 ;
 		var AllMoney;
-		var ForderID = $("#forder_id").val();
+		var ForderID = GetQueryString("forderId");
 		if(ForderID==" "){
 			layer.msg("您还没有选择任何订单，马上为您跳转到购物车！", {
 				icon : 5,
 				time : 3000
 			});
 			setTimeout(function(){
-				$(location).prop("href","../home/shopcart.jsp");
+				$(location).prop("href","shopcart.html");
 				},3000);
 			
 		}
 		//页面一加载，判断用户是否登录，根据结果改变左上角的样式
-  	  $.post("../../User/check_login",function(msg,status){
-  		  if(msg.code==100){
+  	  $.post("../User/check_login",function(msg,status){
+  		  if(msg.code==200){
   			  //登录成功
   			  console.log(msg);
-  			  var a  = $("<a></a>").attr("href","#").addClass("h").append("欢迎你! "+msg.map.name);
+  			  var a  = $("<a></a>").attr("href","#").addClass("h").append("欢迎你! "+msg.data.name);
   			var logout  = $("<a></a>").attr("href" , "#").append("&nbsp;  &nbsp;  退出登录");
 			var div = $("#login_status");
 			div.append(a).append(logout);
-			
+
 			//点击退出登录
 			 logout.click(function(){
 				/*  if(confirm("确定退出登录?")){
-					 $.post("../../User/logout",function(data){
-				           $(location).prop("href","../home/home.jsp");
+					 $.post("../User/logout",function(data){
+				           $(location).prop("href","home.html");
 			              });
 					} */
 				 layer.msg('确定退出登录?', {
 					  time: 0 //不自动关闭
 					  ,btn: ['确定', '取消']
 					  ,yes: function(index){
-						  $.post("../../User/logout",function(data){
-					           $(location).prop("href","../home/home.jsp");
+						  $.post("../User/logout",function(data){
+					           $(location).prop("href","home.html");
 				              });
 						  layer.close(index);
 					  }
 					});
 			 });
 			 //改变购物车的数字
-            	$.post("../../Order/getSorderById",function(data,status){
-            		
-            		$("#J_MiniCartNum").html(data.map.list.length);
+            	$.post("../Order/getSorderById",function(data,status){
+
+            		$("#J_MiniCartNum").html(data.data.list.length);
             	});
   		  }else{
   			  //登录失败
@@ -91,57 +102,57 @@
   								time : 3000
   							});
   			setTimeout(function(){
-  				 $(location).prop("href","../home/login.jsp");
+  				 $(location).prop("href","login.html");
 				},3000);
-  			 
-  			  var a = $("<a></a>").attr("href","../home/login.jsp").addClass("h").append("亲，请登录  ");
-  			  var b = $("<a></a>").attr("href","../home/register.jsp").append("免费注册");
+
+  			  var a = $("<a></a>").attr("href","login.html").addClass("h").append("亲，请登录  ");
+  			  var b = $("<a></a>").attr("href","register.html").append("免费注册");
   		       var div = $("#login_status");
   		       div.append(a).append(b);
   		  }
   	  });
-		
+
   	//商品信息
   	item_list();
-  	
-  	
-		
-		
+
+
+
+
   	//点击搜索按钮，新建一个超链接跳转到商品搜索界面
   	$("#ai-topsearch").click(
   			function() {
   				var productname = $("#searchInput").val();
   				var span = $("<span></span>").append("搜索界面");
   				var a = $("<a></a>").attr("href",
-  						"../home/search.jsp?productname=" + productname)
+  						"search.html?productname=" + productname)
   						.attr("target", "_blank").append(span);
   				span.click();
   			});
-		
+
 
 	$("#city").citySelect({
 		nodata:"none",
 		required:false
-	}); 
+	});
 	$("#edit_city").citySelect({
 		nodata:"none",
 		required:false
 	});
-  	
+
 	//点击提交订单
 	 $("#J_Go").click(function(){
-		 
-		   
+
+
 		       //清空模态框数据
 			reset_form($("#myModal form"));
 			   //初始化模态框
 			   $.ajax({
 				   type  : "post",
 				   dataType : "json" ,
-				   url : "../../question/getQuestionById" ,
-				 
+				   url : "../question/getQuestionById" ,
+
 				   success : function(msg){
-					    if(msg.code==200)
+					    if(msg.code!=200)
 				   {
 					    	layer.msg("您尚未设置安全问题,请设置完安全问题再进行结算！", {
 								icon : 5,
@@ -149,13 +160,13 @@
 							});
 
 					    	setTimeout(function(){
-					    		$(location).prop("href","../test/test_main.jsp?action=question");
+					    		$(location).prop("href","test_main.html?action=question");
 					    								},3000);
 				   }
-					   var type = msg.map.list[0].questionType;
+					   var type = msg.data.list[0].questionType;
 					   var question = "" ;
 					   switch (type){
-					  
+
 					   case 2: question="您最喜欢的颜色是什么";break;
 					   case 3: question="您的故乡在哪里";break;
 					   case 4: question="您最喜欢的老师的名字";break;
@@ -165,11 +176,11 @@
 					    $("#question").val(question);
 				   }
 			   });
-		
-			   
+
+
 		       //弹出模态框，要求回答安全问题方可支付
                 $("#myModal").modal("show");
-		    
+
 			function reset_form(ele) {
 				//清除input输入内容
 				$(ele)[0].reset();
@@ -178,16 +189,16 @@
 				//清除span内容
 				$(ele).find(".help-block").text("");
 			}
-		    
-		    
-		 
-		    
-		 
-		    
-		 
-		 
+
+
+
+
+
+
+
+
 	 });
-	
+
   	 //点击模态框里面的提交答案
   	 $("#check_answer").click(function(){
   		  var flag = 0;
@@ -200,16 +211,16 @@
   			 return;}
   		 $.ajax({
   			 type : "post" ,
-  			 url : "../../question/Check_Answer" ,
+  			 url : "../question/Check_Answer" ,
   			 data  : "answer="+$("#question_answer").val(),
   		     async : false,
   		     success : function(msg){
-  		    	if(msg.code==200){
+  		    	if(msg.code!=200){
   		    		layer.msg("答案错误！", {
   						icon : 5,
   						time : 3000
   					});
-  		    		
+
   		    	}else{
   		    		flag = 1;
   		    	}
@@ -217,56 +228,78 @@
   		 });
   		 if(flag==1)
   		{
-  		 $.post("../../Order/finishForderAndSorderByForderId","forderId="+$("#forder_id").val()+"&logistics="+$("#logistics_id").val()+"&money="+$("#J_ActualFee").html(),function(data,status){
-            if(data.code==100)
-         	  $(location).prop('href',"../home/success.jsp?address="+data.map.addressId); 
-            else if(data.code==200)
+  		 $.post("../Order/finishForderAndSorderByForderId","forderId="+GetQueryString("forderId")+"&logistics="+$("#logistics_id").val()+"&money="+$("#J_ActualFee").html(),function(data,status){
+            if(data.code==200)
+         	  $(location).prop('href',"success.html?address="+data.data.addressId);
+            else if(data.code!=200)
          	  {
-            	if(data.map.status == 1){
+            	if(data.data.status == 1){
             		layer.msg("您尚未填写任何购物地址，马上为您跳转到地址编辑界面！", {
     					icon : 5,
     					time : 3000
     				});
                 	setTimeout(function(){
-                		$(location).prop("href","../test/test_main.jsp?action=address");
+                		$(location).prop("href","test_main.html?action=address");
     					},3000);
-    				  
-             	  } 
-            	if(data.map.status == 2){
-            		layer.msg("智商不足，请及时充值！", {
-    					icon : 6,
-    					time : 3000
-    				});
-                	setTimeout(function(){
-                		$(location).prop("href","../test/test_main.jsp?action=pay");
-    					},3000);
+
+             	  }
+            	if(data.data.status == 2){
+            	    var money = $("#J_ActualFee").html();
+            	    var forderId = GetQueryString("forderId");
+            	    var logistics_id = $("#logistics_id").val();
+                    $("#alipay_money").attr("value",money);
+                    $("#alipay_forderId").attr("value",forderId);
+                    $("#alipay_logistics").attr("value",logistics_id);
+            	    $("#form12").submit();
+                    // $.post("../deposit/finishForder","forderId="+GetQueryString("forderId")+"&logistics="+$("#logistics_id").val()+"&money="+$("#J_ActualFee").html(),function(data2,status){
+                    //     if(data2.code==200)
+                    //         $(location).prop('href',"success.html?address="+data2.data.addressId);
+                    //     else if(data2.code!=200) {
+                    //         if (data2.data.status == 1) {
+                    //             layer.msg("您尚未填写任何购物地址，马上为您跳转到地址编辑界面！", {
+                    //                 icon: 5,
+                    //                 time: 3000
+                    //             });
+                    //             setTimeout(function () {
+                    //                 $(location).prop("href", "test_main.html?action=address");
+                    //             }, 3000);
+                    //         }
+                    //     }
+                    // });
+                    // layer.msg("智商不足，请及时充值！", {
+    					// icon : 6,
+    					// time : 3000
+                    // });
+                	// setTimeout(function(){
+                	// 	$(location).prop("href","test_main.html?action=pay");
+    					// },3000);
             	}
             	}
-		 }); 
+		 });
   		}
   	 });
-	
-	
-	
+
+
+
   //点击创建新地址
 	$("#create_new_address").click(function(){
-	
+
 		//每次打开模态框都清空数据
 	//	reset_form($("#myModal form"));
-		
-		$(location).prop("href","../test/test_main.jsp?action=address");
+
+		$(location).prop("href","test_main.html?action=address");
 		//通过JS调用模态框
 		/* $("#myModal").modal({
 			backdrop:"static"
 		}); */
 	});
-		
-		
-		
+
+
+
   	build_address();
-		
-  
-		
+
+
+
 		//优惠券
 		coupon();
 		//红包
@@ -275,9 +308,9 @@
 		$(".set_default_address").click(function() {
 			set_address(this);
 		});
-		
-		
-		
+
+
+
 		//选择方式
 		$(".logistics").find("li").each(function() {
 			var i = $(this);
@@ -287,10 +320,10 @@
 					$(this).removeClass("selected");
 				});
 				$(this).addClass("selected");
-			}); 
+			});
 		});
 	});
-	
+
 	//结算地址
 	function pay_address(){
 		var div_main = $("#holyshit268");
@@ -318,7 +351,7 @@
 		sp1_2_2.append(sp1_2_3).append("").append(sp1_2_4).append("").append(
 				sp1_2_5).append("").append(sp1_2_6);
 		p1.append(sp1_2_1).append(sp1_2_2);
-		
+
 		var p2 = $("<p></p>");
 		p2.addClass("buy-footer-address");
 		var sp1_1_0 = $("<span></span>");
@@ -333,10 +366,10 @@
 		sp1_1_3.append(default_address.find(".buy-phone").text());
 		sp1_1_1.append(sp1_1_2).append(sp1_1_3);
 		p2.append(sp1_1_1);
-		
+
 		div_main.append(p1).append(p2);
 	}
-	
+
 	//红包
 	function bonus(/* msg */){
 		/* var li = $(".td-bonus");
@@ -354,7 +387,7 @@
 		li.append(sp).append(sel); */
 
 	}
-	
+
 	//优惠券
 	function coupon(/* msg */){
 	/* 	var li = $(".td-coupon");
@@ -371,16 +404,16 @@
 		} */
 		/* li.append(sp).append(sel); */
 	}
-	
-	
+
+
 	//商品信息
 	var all = 0;
 	function item_list(/* msg */) {
-		
-		$.post("../../Order/CheckForderStatus","id="+$("#forder_id").val(),function(status){
-			        if(status.code==100)
+
+		$.post("../Order/CheckForderStatus","id="+GetQueryString("forderId"),function(status){
+			        if(status.code==200)
 			        	{
-			        	if(status.map.statue != 0)
+			        	if(status.data.statue != 0)
 			        		{
 
 			        		layer.msg("订单属于已经付款状态，无需再次付款，马上为您跳转主界面！", {
@@ -388,7 +421,7 @@
 			        							time : 3000
 			        						});
 			        		setTimeout(function(){
-			        			$(location).prop("href","../home/home.jsp");
+			        			$(location).prop("href","home.html");
 								},3000);
 			        		return ;
 			        		}
@@ -399,21 +432,21 @@
 							time : 3000
 						});
 				setTimeout(function(){
-					$(location).prop("href","../home/home.jsp");
+					$(location).prop("href","home.html");
 									},3000);
 			             return ;
 			        }
 		});
-		
-		
-		$.post("../../Order/selectSorderByForderId","id="+$("#forder_id").val(),function(data,status){
+
+
+		$.post("../Order/selectSorderByForderId","id="+GetQueryString("forderId"),function(data,status){
 			console.log(data);
-			if(data.code==100){
-				
-			$.each(data.map.list,function(index,item){
-			
-				$.post("../../Product/SelectProductById","id="+item.productId,function(products,status){
-			                if(products.code==200)
+			if(data.code==200){
+
+			$.each(data.data.list,function(index,item){
+
+				$.post("../Product/SelectProductById","id="+item.productId,function(products,status){
+			                if(products.code!=200)
 			                	{
 			                	layer.msg("商品已经下架，请从新选择商品！", {
 			    					icon : 5,
@@ -421,12 +454,12 @@
 			    				});
 
 			    setTimeout(function(){
-			    	 $(location).prop("href","../home/home.jsp");
+			    	 $(location).prop("href","home.html");
 			    							},3000);
 			                	return ;}
-					var product = products.map.product;
-					
-					
+					var product = products.data.product;
+
+
 					var d = $("<div></div>");
 					d.addClass("clear");
 
@@ -445,19 +478,19 @@
 							"data-point", "tbcart.8.11");
 					var img1 = $("<img/>");
 					img1.addClass("itempic J_ItemImg");
-					img1.attr("style","width:80px;height:80px;")
+					img1.attr("style","width:80px;height:80px;");
 					$.ajax({
-						url:"../../Pic/selectPicByProductType",
+						url:"../Pic/selectPicByProductType",
 						data:"id="+product.id+"&type="+1,
 						type:"post",
 						success:function(ms){
-							if(ms.code == 100)
-								img1.attr("src", ms.map.path+ms.map.pic_list[0].path);
-							else 
-								img1.attr("src", ms.map.path+"1.jpg");
+							if(ms.code == 200)
+								img1.attr("src", fileURL+ms.data.pic_list[0].path);
+							else
+								img1.attr("src", fileURL+"no_img.jpg");
 						},
 						error:function(msg){
-							img1.attr("src", ms.map.path+"1.jpg");
+							img1.attr("src", fileURL+"no_img.jpg");
 						}
 					});
 					a1.append(img1);
@@ -488,7 +521,7 @@
 					div3_1.addClass("item-price price-promo-promo");
 					div3_2.addClass("price-content");
 					var em3 = $("<em></em>");
-					em3.addClass("J_Price price-now");
+					em3.addClass("number_a");
 					em3.append(product.price);
 					div3_2.append(em3);
 					div3_1.append(div3_2);
@@ -514,31 +547,13 @@
 				/* 	input4_1.addClass("min am-btn").attr("name", "").attr("type", "button")
 							.attr("value", "-"); */
 					input4_2.addClass("text_box").attr("name", "").attr("type", "text")
-							.attr("value", item.number).attr("style", "width:30px;").attr("readonly",true);
+							.attr("value", item.number).attr("style", "width:30px;border:0px;").attr("readonly",true);
 				/* 	input4_3.addClass("add am-btn").attr("name", "").attr("type", "button")
 							.attr("value", "+"); */
 					sp4.append("购买数量");
 					div4_3/* .append(input4_1) */.append(input4_2)/* .append(input4_3) */;
 					var nb = 0;
-					input4_1.click(function(){
-						nb = input4_2.val();
-						nb -- ; 
-						if(nb<=0)return ;
-						 input4_2.val(nb);
-							
-						 $("#al_m").val(  parseInt($("#al_m").val()) - parseInt(product.price));
-						 $("#J_ActualFee").html( $("#al_m").val());
-					});
-					input4_3.click(function(){
-						nb = input4_2.val();
-						nb ++ ; 
-						if(nb<=0)return ;
-						 input4_2.val(nb);
-						 
-						 $("#al_m").val(  parseInt($("#al_m").val()) + parseInt(product.price));
-						 $("#J_ActualFee").html( $("#al_m").val());
-					});
-					
+
 					div4_2.append(sp4).append(div4_3);
 					div4_1.append(div4_2);
 					li4.append(div4_1);
@@ -547,12 +562,11 @@
 					li5.addClass("td td-sum");
 					var div5 = $("<div></div>");
 					div5.addClass("td-inner");
-					var em5 = $("<em></em>");
-					em5.addClass("J_ItemSum number").attr("tabindex", "0");
-					em5.append(parseInt(item.number)*parseInt(product.price));
-					  $("#all_moneys").val( $("#all_moneys").val()+parseInt(item.number)*parseInt(product.price));
-					//all_money += parseInt(item.number)*parseInt(product.price);
-				 all += parseInt(item.number)*parseInt(product.price);
+					var em5 = $("<p></p>");
+					em5.addClass("number_a").attr("style", "border:0px;");
+					var aaa = item.number*product.price;
+					em5.append(Math.round(item.number*product.price * 10) / 10);
+				 all += item.number*product.price;
 					$("#J_ActualFee").html(all );
 					$("#al_m").val(all);
 				 div5.append(em5);
@@ -586,33 +600,33 @@
 					var tr = $("<tr></tr>");
 					tr.addClass("item-list");
 					tr.append(div_last);
-					$("#table").append(d).append(tr);	
-					
+					$("#table").append(d).append(tr);
+
 				});
-				
+
 			});
 			}else{
-				
+
 				layer.msg("商品已经下架，马上为你跳转主界面！", {
 					icon : 5,
 					time : 3000
 				});
 
 setTimeout(function(){
-	$(location).prop("href","../home/home.jsp");
+	$(location).prop("href","home.html");
 							},3000);
 			}
-			
+
 		});
-		
+
 		//设置总金额
-	  	
-	  
-		
+
+
+
 	}
 
-	
-	
+
+
 	//设置默认地址
 	function set_address(ele) {
 		$("#address_ul").find(".deftip").attr("class", "deftip hidden");
@@ -622,16 +636,16 @@ setTimeout(function(){
 		$(ele).parent().prev().prev().children(".deftip").attr("class",
 				"deftip");
 	}
-	
-	
+
+
 	 function build_address(/*msg*/){
-		  
-		  $.post("../../Address/selectAddressById",function(data,status){
-	         
-			  if(data.code==100){
+
+		  $.post("../Address/selectAddressById",function(data,status){
+
+			  if(data.code==200){
 				  $("#address_ul").empty();
 			  console.log(data);
-	              var list = data.map.Address;
+	              var list = data.data.Address;
 	             $.each(list, function(index, addres) {
 			 
 			        var ul = $("#address_ul");
@@ -672,7 +686,7 @@ setTimeout(function(){
 	    		        
 	    		        var  in_i_three = $("<i></i>").addClass("am-icon-edit");
 	    		       
-	    		         var a_one = $("<a></a>").attr("href","../test/test_main.jsp?action=address").append(in_i_three).append("编辑");
+	    		         var a_one = $("<a></a>").attr("href","test_main.html?action=address").append(in_i_three).append("编辑");
 	    		        a_one.click(function(/*msg*/){
 	    		        	//每次打开模态框都清空数据
 	    					//reset_form($("#myModal form"));
@@ -689,7 +703,7 @@ setTimeout(function(){
 	    		        var in_span_five =  $("<span></span>").addClass("new-addr-bar").append("|");
 	    		        
 	    		        var  in_i_four = $("<i></i>").addClass("am-icon-trash");
-	    		        var a_two = $("<a></a>").attr("href","../test/test_main.jsp?action=address").append(in_i_four).append("删除");
+	    		        var a_two = $("<a></a>").attr("href","test_main.html?action=address").append(in_i_four).append("删除");
 	    		        
 
 	    		        var out_div_two = $("<div></div>").addClass("new-addr-btn").
@@ -710,7 +724,7 @@ setTimeout(function(){
 					});
 
 	setTimeout(function(){
-		  $(location).prop("href","../test/test_main.jsp?action=address");
+		  $(location).prop("href","test_main.html?action=address");
 								},3000);
 			  }
 		  });	
@@ -768,8 +782,13 @@ setTimeout(function(){
 		</div>
 		<!-- /.modal-dialog -->
 	</div>
- <input id="all_moneys" type="hidden" value="${param.allmoney} " />
- <input id="forder_id" type="hidden" value=" ${param.forderId }" />
+
+<form id="form12" action="../deposit/finishForder" method="post">
+        <input type="hidden" name="money" id="alipay_money" value="">
+        <input type="hidden" name="forderId" id="alipay_forderId" value="">
+        <input type="hidden" name="logistics" id="alipay_logistics" value="">
+</form>
+
  <input id="logistics_id" type="hidden" value="0" />
 	<!--顶部导航条 -->
 			<div class="am-container header">
@@ -783,16 +802,16 @@ setTimeout(function(){
 				</ul>
 				<ul class="message-r">
 					<div class="topMessage home">
-						<div class="menu-hd"><a href="../home/home.jsp" target="_top" class="h">商城首页</a></div>
+						<div class="menu-hd"><a href="home.html" target="_top" class="h">商城首页</a></div>
 					</div>
 					<div class="topMessage my-shangcheng">
-						<div class="menu-hd MyShangcheng"><a href="../test/test_main.jsp" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a></div>
+						<div class="menu-hd MyShangcheng"><a href="test_main.html" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a></div>
 					</div>
 					<div class="topMessage mini-cart">
-						<div class="menu-hd"><a id="mc-menu-hd" href="../home/shopcart.jsp" target="_top"><i class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong id="J_MiniCartNum" class="h">0</strong></a></div>
+						<div class="menu-hd"><a id="mc-menu-hd" href="shopcart.html" target="_top"><i class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong id="J_MiniCartNum" class="h">0</strong></a></div>
 					</div>
 					<div class="topMessage favorite">
-						<!-- <div class="menu-hd"><a href="../test/test_collection.jsp" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div> -->
+						<!-- <div class="menu-hd"><a href="test_collection.html" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div> -->
 				</ul>
 				</div>
 
@@ -916,7 +935,7 @@ setTimeout(function(){
 				<div class="pay-confirm clearfix">
 					<div class="box">
 						<div tabindex="0" id="holyshit267" class="realPay">
-							<em class="t">实付款：</em> <span class="price g_price "> <span>¥</span>
+							<em class="t">实付款：</em> <span class="price g_price "> <span class="style-large-bold-red ">¥</span>
 								<em class="style-large-bold-red " id="J_ActualFee"></em>
 								<input type="hidden" id="al_m" />
 							</span>
