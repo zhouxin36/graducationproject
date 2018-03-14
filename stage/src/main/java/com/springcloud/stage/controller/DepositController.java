@@ -224,7 +224,8 @@ public class DepositController {
             forder.setId(userId[0]);
             forder.setStatus(1);
             forder.setSuccessTime(LocalDateTime.now());
-            forder.setPayment(1);
+            forder.setPayment(2);
+            forderService.updateByPrimaryKeySelective(forder);
             out.println("trade_no:"+trade_no+"<br/>out_trade_no:"+out_trade_no+"<br/>total_amount:"+total_amount);
         }else {
             out.println("验签失败");
