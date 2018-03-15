@@ -131,7 +131,7 @@ public class DepositController {
 	}
 
     @GetMapping("/return_url")
-    public void return_url(HttpServletRequest request, HttpServletResponse response)throws Exception{
+    public String return_url(HttpServletRequest request, HttpServletResponse response)throws Exception{
         Map<String,String> params = new HashMap<String,String>();
         Map<String,String[]> requestParams = request.getParameterMap();
         for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext();) {
@@ -178,10 +178,11 @@ public class DepositController {
         }else {
             out.println("验签失败");
         }
+        return "redirect:../views/test_main.html";
     }
 
     @GetMapping("/return_url2")
-    public void return_url2(HttpServletRequest request, HttpServletResponse response)throws Exception{
+    public String return_url2(HttpServletRequest request, HttpServletResponse response)throws Exception{
         Map<String,String> params = new HashMap<String,String>();
         Map<String,String[]> requestParams = request.getParameterMap();
         for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext();) {
@@ -220,54 +221,38 @@ public class DepositController {
                 coupon.setId(MyUtils.getUUID());
                 couponService.insert(coupon);
             }
-            Forder forder = new Forder();
-            forder.setId(userId[0]);
+            Forder forder = forderService.selectByPrimaryKey(userId[0]);
             forder.setStatus(1);
-            forder.setSuccessTime(LocalDateTime.now());
             forder.setPayment(2);
             forderService.updateByPrimaryKeySelective(forder);
-            out.println("trade_no:"+trade_no+"<br/>out_trade_no:"+out_trade_no+"<br/>total_amount:"+total_amount);
+            return "redirect:../views/success.html"+"?addressId="+ forder.getAddressId();
         }else {
             out.println("验签失败");
         }
+        return null;
     }
 
 
     @RequestMapping(value = "/finishForder",method = RequestMethod.POST)
-    public ResultDTO finishForder(String money, String forderId, @RequestParam(value="logistics" ,defaultValue="1") int logistics
+    public void finishForder(String money, String forderId, @RequestParam(value="logistics" ,defaultValue="1") int logistics
             , HttpServletRequest request,HttpServletResponse response){
-        String forderI = new String(request.getParameter("forderId"));
-        String mone = new String(request.getParameter("money"));
-        String logistic = new String(request.getParameter("logistics"));
 	    logger.info("-------->money:"+money+",forderId:"+forderId+",logistics:"+logistics);
-	    logger.info("-------->money:"+mone+",forderId:"+forderI+",logistics:"+logistic);
         Forder forder = forderService.selectByPrimaryKey(forderId);
-        User user = new User();
-        user.setId(getUserId(request));
-        UserAddressExample userAddressExample = new UserAddressExample();
-        UserAddressExample.Criteria criteria = userAddressExample.createCriteria();
-        criteria.andUserIdEqualTo(user.getId());
-        List<UserAddress> list = addressService.selectByExample(userAddressExample);
-        if(list.size()!=0)
-            forder.setAddressId(list.get(0).getId());
-        else {
-            Map<String,Object> map = new HashMap<>();
-            map.put("status", 1);
-            return ResultDTO.buildSuccessDataError(map);
-        }
         forder.setLogistics(logistics);
         BigDecimal total = new BigDecimal(money);
         forder.setTotal(total);
-//        forder.setStatus(1);
-        //forder.setSuccessTime(new Date());
-//        forder.setPayment(1);
-
         forderService.updateByPrimaryKeySelective(forder);
         try {
             alipayService.pay(RETURN_URL,forderId+"_"+ Math.random() * (Math.pow(10, 10)), money, forderId, "", request, response);
         }catch (Exception e){
             logger.error("DepositController/finishForder is error:pd_FrpIds:{},e:{}",forderId,e.getStackTrace());
         }
-        return null;
     }
+
+    @RequestMapping(value = "/test2",method = RequestMethod.GET)
+    public String test(){
+	    logger.error("----------------------->");
+	    return "redirect:../views/success.html";
+    }
+
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id=":hystrix-turbine" external.linked.project.path="$MODULE_DIR$/../../../hystrix-turbine" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="com.springcloud" external.system.module.version="0.0.1" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../hystrix-turbine">
+      <excludeFolder url="file://$MODULE_DIR$/../../../hystrix-turbine/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../hystrix-turbine/build" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../hystrix-turbine/out" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

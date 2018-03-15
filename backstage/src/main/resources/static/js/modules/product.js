@@ -4,7 +4,7 @@ $(function () {
         datatype: "json",
         colModel: [			
 			{ label: 'ID', name: 'id', index: "id", width: 130, key: true },
-            { label: '图片', name: 'id', width: 75, sortable:false,formatter: function(value, options, row){
+            { label: '图片', name: 'id', width: 90, sortable:false,formatter: function(value, options, row){
                     var url_image = null;
                     $.ajax({
                         url:baseURL + "find_img",

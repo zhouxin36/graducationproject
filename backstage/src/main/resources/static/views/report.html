@@ -3,9 +3,9 @@
 <head>
 <title>报表柱状图</title>
 	<meta charset="UTF-8"/>
-<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-<script type="text/javascript" src="../static/js/jquery-3.1.1.min.js"></script>
-<script src="../static/js/echarts.js" charset="utf-8"></script>
+<script type="text/javascript" src="../libs/jquery-3.1.1.min.js"></script>
+<script src="../libs/echarts.js" charset="utf-8"></script>
+<script src="../layui/layui.all.js" charset="utf-8"></script>
 </head>
 <body>
 	<div style="width: 10%">
@@ -30,8 +30,8 @@
 					data : "year=" + $("#changed").val(),
 					type : "post",
 					success : function(msg) {
-						if (msg.code == 100) {
-							chart(msg.map);
+						if (msg.code == 200) {
+							chart(msg.data);
 						} else {
 							layer.msg('查找失败!', {
 								icon : 2,

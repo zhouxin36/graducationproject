@@ -230,7 +230,7 @@
   		{
   		 $.post("../Order/finishForderAndSorderByForderId","forderId="+GetQueryString("forderId")+"&logistics="+$("#logistics_id").val()+"&money="+$("#J_ActualFee").html(),function(data,status){
             if(data.code==200)
-         	  $(location).prop('href',"success.html?address="+data.data.addressId);
+         	  $(location).prop('href',"success.html?addressId="+data.data.addressId);
             else if(data.code!=200)
          	  {
             	if(data.data.status == 1){

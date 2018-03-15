@@ -1,6 +1,7 @@
 package com.zx.backstage.controller;
 
 import com.zx.api.bean.*;
+import com.zx.api.dto.R;
 import com.zx.api.dto.ResultDTO;
 import com.zx.api.utils.MyUtils;
 import com.zx.api.utils.PageUtils;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Controller
@@ -28,7 +30,7 @@ public class ForderController {
 
 	@ResponseBody
 	@RequestMapping("/forder_list")
-	public ResultDTO<Map<String, PageUtils>> productList(@RequestParam Map<String, Object> params) throws Exception{
+	public R productList(@RequestParam Map<String, Object> params) throws Exception{
         Query query = new Query(params);
         ForderExample forderExample = new ForderExample();
         forderExample.setStartRow((Integer) query.get("offset"));
@@ -37,6 +39,10 @@ public class ForderController {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date start = null;
         Date end = null;
+        if(!MyUtils.isBlank((String) query.get("logistics")))
+            criteria.andLogisticsEqualTo(Integer.parseInt((String) query.get("logistics")));
+        if(!MyUtils.isBlank((String) query.get("payment")))
+            criteria.andPaymentEqualTo(Integer.parseInt((String) query.get("payment")));
         if(!MyUtils.isBlank((String) query.get("start"))) {
             start = simpleDateFormat.parse((String) query.get("start"));
             criteria.andAddDateGreaterThanOrEqualTo(start);
@@ -46,13 +52,11 @@ public class ForderController {
             criteria.andAddDateLessThanOrEqualTo(end);
         }
         if(!MyUtils.isBlank((String) query.get("status")))
-            criteria.andStatusEqualTo((Integer) query.get("status"));
+            criteria.andStatusEqualTo(Integer.parseInt((String) query.get("status")));
         List<Forder> feedbacks = forderService.selectByExample(forderExample);
         long total = forderService.countByExample(forderExample);
         PageUtils pageUtil = new PageUtils(feedbacks, (int)total, query.getLimit(), query.getPage());
-		Map<String, PageUtils> map = new HashMap<>();
-		map.put("page",pageUtil);
-        return ResultDTO.buildSuccessData(map);
+        return R.ok().put("page",pageUtil);
 	}
 
 	@ResponseBody

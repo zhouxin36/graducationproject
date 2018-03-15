@@ -222,7 +222,7 @@ public class OrderController {
 	     }
 	     forderService.updateByPrimaryKeySelective(forder);
         Map<String,Object> map = new HashMap<>();
-        map.put("addressId", list.get(0).getId());
+        map.put("addressId", forder.getAddressId());
 	     return ResultDTO.buildSuccessData(map);
 	}
 

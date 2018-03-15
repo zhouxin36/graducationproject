@@ -1,13 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>订单管理</title>
-        <link rel="stylesheet" href="bootstrap-star/css/font-awesome.min.css">
-    <link rel="stylesheet" href="bootstrap-star/css/star-rating.css" media="all" rel="stylesheet" type="text/css"/>
-<script src="bootstrap-star/js/star-rating.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="../bootstrap-star/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../bootstrap-star/css/star-rating.css" media="all" rel="stylesheet" type="text/css"/>
+<script src="../bootstrap-star/js/star-rating.js" type="text/javascript"></script>
 <script type="text/javascript">
 function getMyDate(str) {
 	var oDate = new Date(str), oYear = oDate.getFullYear(), oMonth = oDate
@@ -26,27 +24,7 @@ function getzf(num) {
 function Confirmreceipt(id,ele){
 	
 	
-	   /* if( confirm("确认收货吗?")){
-		   $.ajax({
-			   type : "post" ,
-			   data : "id="+id ,
-			   dataType : "json" ,
-			   url : "../../Order/Confirmreceipt" ,
-			   async : false,
-			   success : function(msg){
-				   if(msg.code==200)
-					   layer.msg("非法操作！", {
-							icon : 5,
-							time : 3000
-						});
-				   else{
-					   
-					   build_order(-1);
-				   }
-			   }
-		   });
-	   } */
-	   
+
 	 layer.msg('确认收货吗?', {
 		  time: 0 //不自动关闭
 		  ,btn: ['确定', '取消']
@@ -55,10 +33,10 @@ function Confirmreceipt(id,ele){
 				   type : "post" ,
 				   data : "id="+id ,
 				   dataType : "json" ,
-				   url : "../../Order/Confirmreceipt" ,
+				   url : "../Order/Confirmreceipt" ,
 				   async : false,
 				   success : function(msg){
-					   if(msg.code==200)
+					   if(msg.code!=200)
 						   layer.msg("非法操作！", {
 								icon : 5,
 								time : 3000
@@ -76,12 +54,12 @@ function Confirmreceipt(id,ele){
  
  function comment(v,id){
 	  $.ajax({
-			url : "../../Forder/request_forder",
+			url : "../Forder/request_forder",
 			data : "id=" + v,
 			type : "post",
 			success : function(msg) {
 				console.log(msg);
-				if (msg.code == 100) {
+				if (msg.code == 200) {
 					var form = $("#form_forder1");
 					form.empty();
 					
@@ -120,36 +98,36 @@ function Confirmreceipt(id,ele){
 					tr1.append(th1).append(th5).append(th2).append(th3);
 					ta.append(tr1);
 					var tbody = $("<tbody></tbody>");
-					for(var i = 0;msg.map.listSorder[i] != null; i++ ){
+					for(var i = 0;msg.data.listSorder[i] != null; i++ ){
 						var tr2 = $("<tr></tr>");
 						var td1 = $("<td></td>");
-						td1.attr("style","width:50px;")
-						td1.append(msg.map.listSorder[i].id);
+						td1.attr("style","width:50px;");
+						td1.append(msg.data.listSorder[i].id);
 						var td2 = $("<td></td>");
 						var td5 = $("<td></td>");
-						td5.attr("style","width:90px;height:90px;")
+						td5.attr("style","width:90px;height:90px;");
 						var img = $("<img/>");
-						img.attr("style","width:80px;height:80px;")
+						img.attr("style","width:80px;height:80px;");
 						$.ajax({
-							url:"../../Pic/selectPicByProductType",
-							data:"id="+msg.map.listSorder[i].productId+"&type="+1,
+							url:"../Pic/selectPicByProductType",
+							data:"id="+msg.data.listSorder[i].productId+"&type="+1,
 							type:"post",
 							async:false,
 							success:function(ms){
-								if(ms.code == 100)
-									img.attr("src", ms.map.path+ms.map.pic_list[0].path);
+								if(ms.code == 200)
+									img.attr("src", fileURL+ms.data.pic_list[0].path);
 								else 
-									img.attr("src", ms.map.path+"1.jpg");
+									img.attr("src", fileURL+"no_img.jpg");
 							},
 							error:function(msg){
-								img.attr("src", ms.map.path+"1.jpg");
+								img.attr("src", fileURL+"no_img.jpg");
 							}
 						});
 						td5.append(img);
 						
-						td2.append(msg.map.listSorder[i].name);
+						td2.append(msg.data.listSorder[i].name);
 						var td3 = $("<td></td>");
-						td2.attr("style","width:200px;")
+						td2.attr("style","width:200px;");
 						var inp = $("<input/>");
 						inp.addClass("rb-rating");
 						inp.attr("name","comment"+i);
@@ -160,7 +138,7 @@ function Confirmreceipt(id,ele){
 						var inp3 = $("<input/>");
 						inp3.attr("type","hidden");
 						inp3.attr("name","product"+i);
-						inp3.val(msg.map.listSorder[i].productId);
+						inp3.val(msg.data.listSorder[i].productId);
 						td3.append(inp).append(inp2).append(inp3);
 						//td3.append(form);
 						inp.rating({'showCaption':true, 'stars':'3', 'min':'0', 'max':'3', 'step':'1', 'size':'xs', 'starCaptions': {0:'未评价', 1:'差评', 2:'中评', 3:'好评'}});
@@ -189,9 +167,9 @@ function Confirmreceipt(id,ele){
 //所有订单
 function build_order(number/*msg*/){
 		$("#tab"+number+"_tbody").empty();
-	     $.post("../../Order/getOrderById","number="+number,function(data,status){
-	  if(data.code==100){
-	    		  var list  = data.map.list;
+	     $.post("../Order/getOrderById","number="+number,function(data,status){
+	  if(data.code==200){
+	    		  var list  = data.data.list;
 	    		  var oper ;
 	    		  switch(number){
 	    		  case -1: oper = "所有订单";break;
@@ -236,7 +214,7 @@ function build_order(number/*msg*/){
   				
   				btn_refund.click(function(){
 		    	   //alert($(this).attr("val"));
-		    	    $("#jsp").load("test_refund.jsp","id=" + $(this).attr("val"),function(data,status){
+		    	    $("#jsp").load("test_refund.html","id=" + $(this).attr("val"),function(data,status){
 					}); 
 		    	  	
   				});
@@ -245,25 +223,25 @@ function build_order(number/*msg*/){
 	             if(forderId != 0){
 	            	 $.ajax({
 	            		 type: "POST",
-	            	     url : "../../Order/selectForderStatusById",
+	            	     url : "../Order/selectForderStatusById",
 	            	     data : "id=" + forderId ,
 	            	     dataType : "Json" ,
 	            	     async: false,
 	            	     success:function(datas,status){
-	            	    	if(datas.code==100){
-	            	    		if(datas.map.Forder.status!=0)
+	            	    	if(datas.code==200){
+	            	    		if(datas.data.Forder.status!=0)
 	            	    			td4.append(btn_look);
-	            	    		if(datas.map.Forder.status == 3)
+	            	    		if(datas.data.Forder.status == 3)
 	            	    			td4.append(btn_comment);
-		            			 if(datas.map.Forder.status==0){
+		            			 if(datas.data.Forder.status==0){
 		            				 var a = $("<a></a>");
-		            				 a.attr("href","../home/pay.jsp?forderId="+forderId+"");
+		            				 a.attr("href","pay.html?forderId="+forderId+"");
 		            				 a.addClass("btn btn-success");
 		            				 a.append("点我付款");
 		            				 td4.append(a);
-		            				//all += "<a href='../home/pay.jsp?forderId="+forderId+"' class='btn btn-success'>点我付款</a>" ;
+		            				//all += "<a href='pay.html?forderId="+forderId+"' class='btn btn-success'>点我付款</a>" ;
 		            	
-		            			 }else if(datas.map.Forder.status==2){
+		            			 }else if(datas.data.Forder.status==2){
 		            				 var a = $("<a></a>");
 		            				 a.addClass("btn btn-success");
 		            				 a.append("确认收货");
@@ -285,12 +263,12 @@ function build_order(number/*msg*/){
 		            					var v = $(this).attr("val");
 		            					$(this).click(function() {
 		            						$.ajax({
-		            							url : "../../Forder/request_forder",
+		            							url : "../Forder/request_forder",
 		            							data : "id=" + v,
 		            							type : "post",
 		            							success : function(msg) {
 		            								console.log(msg);
-		            								if (msg.code == 100) {
+		            								if (msg.code == 200) {
 		            									var form = $("#form_forder");
 		            									form.empty();
 		            									
@@ -307,7 +285,7 @@ function build_order(number/*msg*/){
 		            									input1.addClass("form-control");
 		            									input1.attr("placeholder","订单号");
 		            									input1.attr("readonly",true);
-		            									input1.val(msg.map.forder.id);
+		            									input1.val(msg.data.forder.id);
 		            									div1_1.append(input1);
 		            									div1.append(la1).append(div1_1);
 		            									form.append(div1);
@@ -325,7 +303,7 @@ function build_order(number/*msg*/){
 		            									input2.addClass("form-control");
 		            									input2.attr("placeholder","用户名");
 		            									input2.attr("readonly",true);
-		            									input2.val(msg.map.user.name);
+		            									input2.val(msg.data.user.name);
 		            									div2_1.append(input2);
 		            									div2.append(la2).append(div2_1);
 		            									form.append(div2);
@@ -344,7 +322,7 @@ function build_order(number/*msg*/){
 		            									input3.addClass("form-control");
 		            									input3.attr("placeholder","收货人");
 		            									input3.attr("readonly",true);
-		            									input3.val(msg.map.userAddress.name);
+		            									input3.val(msg.data.userAddress.name);
 		            									div3_1.append(input3);
 		            									div3.append(la3).append(div3_1);
 		            									form.append(div3);
@@ -363,7 +341,7 @@ function build_order(number/*msg*/){
 		            									input4.addClass("form-control");
 		            									input4.attr("placeholder","收货电话");
 		            									input4.attr("readonly",true);
-		            									input4.val(msg.map.userAddress.phone);
+		            									input4.val(msg.data.userAddress.phone);
 		            									div4_1.append(input4);
 		            									div4.append(la4).append(div4_1);
 		            									form.append(div4);
@@ -381,7 +359,7 @@ function build_order(number/*msg*/){
 		            									input5.addClass("form-control");
 		            									input5.attr("placeholder","收货地址");
 		            									input5.attr("readonly",true);
-		            									input5.val(msg.map.userAddress.address);
+		            									input5.val(msg.data.userAddress.address);
 		            									div5_1.append(input5);
 		            									div5.append(la5).append(div5_1);
 		            									form.append(div5);
@@ -400,7 +378,7 @@ function build_order(number/*msg*/){
 		            									input6.addClass("form-control");
 		            									input6.attr("placeholder","邮政编码");
 		            									input6.attr("readonly",true);
-		            									input6.val(msg.map.userAddress.post);
+		            									input6.val(msg.data.userAddress.post);
 		            									div6_1.append(input6);
 		            									div6.append(la6).append(div6_1);
 		            									form.append(div6); */
@@ -418,15 +396,15 @@ function build_order(number/*msg*/){
 		            									input7.addClass("form-control");
 		            									input7.attr("placeholder","订单状态");
 		            									input7.attr("readonly",true);
-		            									if(msg.map.forder.status == 0)
+		            									if(msg.data.forder.status == 0)
 		            										input7.val("未支付");
-		            									else if(msg.map.forder.status == 1)
+		            									else if(msg.data.forder.status == 1)
 		            										input7.val("待发货");
-		            									else if(msg.map.forder.status == 2)
+		            									else if(msg.data.forder.status == 2)
 		            										input7.val("待收货");
-		            									else if(msg.map.forder.status == 3)
+		            									else if(msg.data.forder.status == 3)
 		            										input7.val("待评价");
-		            									else if(msg.map.forder.status == 4)
+		            									else if(msg.data.forder.status == 4)
 	            											input7.val("已完成");
 		            									else
 		            										input7.val("未知状态");
@@ -449,11 +427,11 @@ function build_order(number/*msg*/){
 		            									input8.addClass("form-control");
 		            									input8.attr("placeholder","支付方式");
 		            									input8.attr("readonly",true);
-		            									if(msg.map.forder.payment == 0)
+		            									if(msg.data.forder.payment == 0)
 		            										input8.val("银联");
-		            									else if(msg.map.forder.payment == 1)
+		            									else if(msg.data.forder.payment == 1)
 		            										input8.val("微信支付");
-		            									else if(msg.map.forder.payment == 2)
+		            									else if(msg.data.forder.payment == 2)
 		            										input8.val("支付宝支付");
 		            									else
 		            										input8.val("未知状态");
@@ -476,15 +454,15 @@ function build_order(number/*msg*/){
 		            									input9.addClass("form-control");
 		            									input9.attr("placeholder","物流方式");
 		            									input9.attr("readonly",true);
-		            									if(msg.map.forder.logistics == 0)
+		            									if(msg.data.forder.logistics == 0)
 		            										input9.val("圆通");
-		            									else if(msg.map.forder.logistics == 1)
+		            									else if(msg.data.forder.logistics == 1)
 		            										input9.val("申通");
-		            									else if(msg.map.forder.logistics == 2)
+		            									else if(msg.data.forder.logistics == 2)
 		            										input9.val("韵达");
-		            									else if(msg.map.forder.logistics == 3)
+		            									else if(msg.data.forder.logistics == 3)
 		            										input9.val("中通");
-		            									else if(msg.map.forder.logistics == 4)
+		            									else if(msg.data.forder.logistics == 4)
 		            										input9.val("申通");
 		            									else
 		            										input9.val("其他物流");
@@ -510,37 +488,37 @@ function build_order(number/*msg*/){
 		            									tr1.append(th1).append(th5).append(th2).append(th3).append(th4);
 		            									ta.append(tr1);
 		            									var tbody = $("<tbody></tbody>");
-		            									for(var i = 0;msg.map.listSorder[i] != null; i++ ){
+		            									for(var i = 0;msg.data.listSorder[i] != null; i++ ){
 		            										var tr2 = $("<tr></tr>");
 		            										var td1 = $("<td></td>");
-		            										td1.append(msg.map.listSorder[i].id);
+		            										td1.append(msg.data.listSorder[i].id);
 		            										var td2 = $("<td></td>");
 		            										
 		            										var td5 = $("<td></td>");
 		            										var img = $("<img/>");
-		            										img.attr("style","width:80px;height:80px;")
+		            										img.attr("style","width:80px;height:80px;");
 		            										$.ajax({
-		            											url:"../../Pic/selectPicByProductType",
-		            											data:"id="+msg.map.listSorder[i].productId+"&type="+1,
+		            											url:"../Pic/selectPicByProductType",
+		            											data:"id="+msg.data.listSorder[i].productId+"&type="+1,
 		            											type:"post",
 		            											async:false,
 		            											success:function(ms){
-		            												if(ms.code == 100)
-		            													img.attr("src", ms.map.path+ms.map.pic_list[0].path);
+		            												if(ms.code == 200)
+		            													img.attr("src", fileURL+ms.data.pic_list[0].path);
 		            												else 
-		            													img.attr("src", ms.map.path+"1.jpg");
+		            													img.attr("src", fileURL+"no_img.jpg");
 		            											},
 		            											error:function(msg){
-		            												img.attr("src", ms.map.path+"1.jpg");
+		            												img.attr("src",fileURL+"no_img.jpg");
 		            											}
 		            										});
 		            										td5.append(img);
 		            										
-		            										td2.append(msg.map.listSorder[i].name);
+		            										td2.append(msg.data.listSorder[i].name);
 		            										var td3 = $("<td></td>");
-		            										td3.append(msg.map.listSorder[i].price);
+		            										td3.append(msg.data.listSorder[i].price);
 		            										var td4 = $("<td></td>");
-		            										td4.append(msg.map.listSorder[i].number);
+		            										td4.append(msg.data.listSorder[i].number);
 		            										tr2.append(td1).append(td5).append(td2).append(td3).append(td4);
 		            										tbody.append(tr2);
 		            									}
@@ -562,12 +540,12 @@ function build_order(number/*msg*/){
 		            									input12.addClass("form-control");
 		            									input12.attr("placeholder","订单生成时间");
 		            									input12.attr("readonly",true);
-		            									input12.val(getMyDate(msg.map.forder.addDate));
+		            									input12.val(getMyDate(msg.data.forder.addDate));
 		            									div12_1.append(input12);
 		            									div12.append(la12).append(div12_1);
 		            									form.append(div12);
 		            									
-		            									if(msg.map.forder.successTime !=null){
+		            									if(msg.data.forder.successTime !=null){
 		            										var div13 = $("<div></div>");
 			            									div13.addClass("form-group");
 			            									var la13 = $("<label></label>");
@@ -581,7 +559,7 @@ function build_order(number/*msg*/){
 			            									input13.addClass("form-control");
 			            									input13.attr("placeholder","订单完成时间");
 			            									input13.attr("readonly",true);
-			            									input13.val(getMyDate(msg.map.forder.successTime));
+			            									input13.val(getMyDate(msg.data.forder.successTime));
 			            									div13_1.append(input13);
 			            									div13.append(la13).append(div13_1);
 			            									form.append(div13);
@@ -605,7 +583,7 @@ function build_order(number/*msg*/){
 		            									input11.addClass("form-control");
 		            									input11.attr("placeholder","总金额");
 		            									input11.attr("readonly",true);
-		            									input11.val(msg.map.forder.total+"元");
+		            									input11.val(msg.data.forder.total+"元");
 		            									div11_1.append(input11);
 		            									div11.append(la11).append(div11_1);
 		            									form.append(div11);
@@ -641,7 +619,7 @@ function build_order(number/*msg*/){
 	            	 });
 	             }else{
 	                    	 all += "</td><td>" +
- 		                    "<a href='../home/shopcart.jsp'>结算</a>" + "</td></tr>" ;
+ 		                    "<a href='shopcart.html'>结算</a>" + "</td></tr>" ;
 	             }
 	       }   
 	    	  }   
@@ -708,7 +686,7 @@ function build_order(number/*msg*/){
         	 // var formData = new FormData($("#form_forder1")[0]);
         	  console.log(jsonstr);
     		    $.ajax({
-    			 url:"../../Comment/comment",
+    			 url:"../Comment/comment",
     			 type:"post",
     			 data:jsonstr,
     			 success:function(){
