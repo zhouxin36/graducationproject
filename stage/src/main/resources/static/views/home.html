@@ -296,7 +296,7 @@
 			var a_pic = $("<a></a>").attr("href", "introduction.html?id="+msg.id);
 			var img = $("<img/>");
 			$.ajax({
-				url:"../../Pic/selectPicByProductType",
+				url:"../Pic/selectPicByProductType",
 				data:"id="+msg.id+"&type="+1,
 				type:"post",
 				success:function(ms){
@@ -401,7 +401,7 @@
 						a.attr("href", "introduction.html?id="+list[i].id);
 						var img2 = $("<img/>");
 						$.ajax({
-							url:"../../Pic/selectPicByProductType",
+							url:"../Pic/selectPicByProductType",
 							data:"id="+list[i].id+"&type="+1,
 							type:"post",
 							async : false,

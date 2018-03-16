@@ -8,10 +8,31 @@
 <script src="../bootstrap-star/js/star-rating.js" type="text/javascript"></script>
 <script type="text/javascript">
 function getMyDate(str) {
-	var oDate = new Date(str), oYear = oDate.getFullYear(), oMonth = oDate
-			.getMonth() + 1, oDay = oDate.getDate(), oTime = oYear + '-' + getzf(oMonth) + '-'
-			+ getzf(oDay);//最后拼接时间  
-	return oTime;
+    console.log(str);
+    if(str != null){
+        var ret = "";
+        for(var i = 0; i< str.length; i++){
+            if(i<2){
+                ret += str[i]+'-';
+            }
+            if(i==2){
+                ret += str[i]+' ';
+            }
+            if(i>2 && i<5){
+                ret += str[i]+':';
+            }
+            if(i == 5){
+                ret += str[i];
+            }
+        }
+        return ret;
+    }
+
+    // return str;
+	// var oDate = new Date(str), oYear = oDate.getFullYear(), oMonth = oDate
+	// 		.getMonth() + 1, oDay = oDate.getDate(), oTime = oYear + '-' + getzf(oMonth) + '-'
+	// 		+ getzf(oDay);//最后拼接时间
+	// return oTime;
 };
 //补0操作  
 function getzf(num) {
@@ -43,6 +64,8 @@ function Confirmreceipt(id,ele){
 							});
 					   else{
 						   ele.remove();
+                           $("#jsp").load("test_order.html",function(data,status){
+                           });
 						  // build_order(-1);
 					   }
 				   }
@@ -268,7 +291,6 @@ function build_order(number/*msg*/){
 		            							data : "id=" + v,
 		            							type : "post",
 		            							success : function(msg) {
-		            								console.log(msg);
 		            								if (msg.code == 200) {
 		            									var form = $("#form_forder");
 		            									form.empty();
@@ -527,7 +549,6 @@ function build_order(number/*msg*/){
 		            									div10.append(ta);
 		            									form.append(div10);
 		            									
-		            									
 		            									var div12 = $("<div></div>");
 		            									div12.addClass("form-group");
 		            									var la12 = $("<label></label>");
@@ -696,6 +717,8 @@ function build_order(number/*msg*/){
   						icon : 6,
   						time : 2000
   					});
+                     $("#jsp").load("test_order.html",function(data,status){
+                     });
     			 },
     			 error:function(){
     				 layer.msg("评价失败!!", {

@@ -121,13 +121,9 @@ var vm = new Vue({
 				return ;
 			}
 
-			confirm('确定要删除选中的记录？', function(){
-                $.get(baseURL + "app/"+id+"/del", function(r){
-                    if (r.permissionCheck) {
-                        alert(r.msg);
-                        return;
-                    }
-					if(r.code == 0){
+			confirm('确定要发货吗', function(){
+                $.get(baseURL + "forder_deliver?id="+id, function(r){
+					if(r.code == 200){
 						alert('操作成功', function(){
                             var page = $("#jqGrid").jqGrid('getGridParam','page');
 						   vm.reload(page);

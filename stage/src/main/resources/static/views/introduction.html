@@ -341,9 +341,7 @@
                 a1.attr("href", "#");
                 var img1 = $("<img/>");
                 img1.addClass("am-comment-avatar");
-                img1.attr("src", "../images/hwbn40x40.jpg");
-                a1.append(img1);
-                li.append(a1);
+
 
                 var div1 = $("<div></div>");
                 div1.addClass("am-comment-main");
@@ -355,9 +353,11 @@
                 var a2 = $("<a></a>");
                 a2.attr("href", "#link-to-user");
                 a2.addClass("am-comment-author");
+                var img = "";
                 if (msg.list1[i].anonymous == 1) {
                     a2.append("匿名");
                     a2.addClass("btn-danger");
+                    img = "../images/hwbn40x40.jpg";
                 } else {
                     $.ajax({
                         url: "../Comment/request_product",
@@ -367,6 +367,7 @@
                         success: function (msg) {
                             a2.append(msg.data.user.name);
                             a2.addClass("btn-info");
+                            img = fileURL + msg.data.user.avatar;
                         },
                         error: function (msg) {
                             layer.msg("请求失败！", {
@@ -377,6 +378,9 @@
                         }
                     });
                 }
+                img1.attr("src", img);
+                a1.append(img1);
+                li.append(a1);
 
                 var time = $("<time></time>");
                 time.append(getMyDate(msg.list1[i].commentTime));
@@ -698,14 +702,26 @@
 
         //时间格式转换
         function getMyDate(str) {
-            var oDate = new Date(str), oYear = oDate.getFullYear(), oMonth = oDate
-                .getMonth() + 1, oDay = oDate.getDate(), oHour = oDate
-                .getHours(), oMin = oDate.getMinutes(), oSen = oDate
-                .getSeconds(), oTime = oYear + '-' + getzf(oMonth) + '-'
-                + getzf(oDay) + ' ' + getzf(oHour) + ':' + getzf(oMin) + ':'
-                + getzf(oSen);//最后拼接时间
-            return oTime;
-        };
+            console.log(str);
+            if(str != null){
+                var ret = "";
+                for(var i = 0; i< str.length; i++){
+                    if(i<2){
+                        ret += str[i]+'-';
+                    }
+                    if(i==2){
+                        ret += str[i]+' ';
+                    }
+                    if(i>2 && i<5){
+                        ret += str[i]+':';
+                    }
+                    if(i == 5){
+                        ret += str[i];
+                    }
+                }
+                return ret;
+            }
+        }
 
         //补0操作
         function getzf(num) {
