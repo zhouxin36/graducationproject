@@ -152,4 +152,24 @@ public class Product {
     public void setLastTime(LocalDateTime lastTime) {
         this.lastTime = lastTime;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", stock=" + stock +
+                ", price=" + price +
+                ", remark='" + remark + '\'' +
+                ", xremark='" + xremark + '\'' +
+                ", addDate=" + addDate +
+                ", open=" + open +
+                ", categoryId='" + categoryId + '\'' +
+                ", sale=" + sale +
+                ", monthSale=" + monthSale +
+                ", spec='" + spec + '\'' +
+                ", lastAdminId='" + lastAdminId + '\'' +
+                ", lastTime=" + lastTime +
+                '}';
+    }
 }

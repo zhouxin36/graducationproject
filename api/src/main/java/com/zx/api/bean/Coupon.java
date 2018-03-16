@@ -30,4 +30,13 @@ public class Coupon {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
+    @Override
+    public String toString() {
+        return "Coupon{" +
+                "id='" + id + '\'' +
+                ", status=" + status +
+                ", userId='" + userId + '\'' +
+                '}';
+    }
 }

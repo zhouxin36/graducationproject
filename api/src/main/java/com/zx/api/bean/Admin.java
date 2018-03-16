@@ -81,4 +81,17 @@ public class Admin {
     public void setRegTime(LocalDateTime regTime) {
         this.regTime = regTime;
     }
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "id='" + id + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", system=" + system +
+                ", lastIp='" + lastIp + '\'' +
+                ", lastTime=" + lastTime +
+                ", regTime=" + regTime +
+                '}';
+    }
 }

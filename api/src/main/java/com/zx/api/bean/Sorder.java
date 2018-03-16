@@ -82,4 +82,18 @@ public class Sorder {
     public void setForderId(String forderId) {
         this.forderId = forderId;
     }
+
+    @Override
+    public String toString() {
+        return "Sorder{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", number=" + number +
+                ", productId='" + productId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", isbalanced=" + isbalanced +
+                ", forderId='" + forderId + '\'' +
+                '}';
+    }
 }

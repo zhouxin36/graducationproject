@@ -49,4 +49,14 @@ public class Footmark {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
+    @Override
+    public String toString() {
+        return "Footmark{" +
+                "id='" + id + '\'' +
+                ", productId='" + productId + '\'' +
+                ", visitTime=" + visitTime +
+                ", userId='" + userId + '\'' +
+                '}';
+    }
 }

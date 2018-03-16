@@ -60,4 +60,15 @@ public class Deposit {
     public void setRechargeDate(LocalDateTime rechargeDate) {
         this.rechargeDate = rechargeDate;
     }
+
+    @Override
+    public String toString() {
+        return "Deposit{" +
+                "id='" + id + '\'' +
+                ", userId='" + userId + '\'' +
+                ", rechargeMoney=" + rechargeMoney +
+                ", issuccess=" + issuccess +
+                ", rechargeDate=" + rechargeDate +
+                '}';
+    }
 }

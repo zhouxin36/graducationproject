@@ -50,4 +50,15 @@ public class Category {
     public void setAdminId(String adminId) {
         this.adminId = adminId;
     }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id='" + id + '\'' +
+                ", type='" + type + '\'' +
+                ", standard='" + standard + '\'' +
+                ", hot=" + hot +
+                ", adminId='" + adminId + '\'' +
+                '}';
+    }
 }

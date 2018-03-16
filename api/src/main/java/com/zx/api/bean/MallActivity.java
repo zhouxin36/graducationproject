@@ -30,4 +30,13 @@ public class MallActivity {
     public void setRemark(String remark) {
         this.remark = remark;
     }
+
+    @Override
+    public String toString() {
+        return "MallActivity{" +
+                "id='" + id + '\'' +
+                ", picId='" + picId + '\'' +
+                ", remark='" + remark + '\'' +
+                '}';
+    }
 }

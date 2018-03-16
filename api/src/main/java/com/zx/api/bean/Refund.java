@@ -70,4 +70,17 @@ public class Refund {
     public void setSupplement(String supplement) {
         this.supplement = supplement;
     }
+
+    @Override
+    public String toString() {
+        return "Refund{" +
+                "id='" + id + '\'' +
+                ", userid='" + userid + '\'' +
+                ", productid='" + productid + '\'' +
+                ", forderid='" + forderid + '\'' +
+                ", type=" + type +
+                ", reason=" + reason +
+                ", supplement='" + supplement + '\'' +
+                '}';
+    }
 }

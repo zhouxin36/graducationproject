@@ -174,4 +174,26 @@ public class User{
     public void setAccountBalance(BigDecimal accountBalance) {
         this.accountBalance = accountBalance;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", birthday=" + birthday +
+                ", sex=" + sex +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", regTime=" + regTime +
+                ", lastTime=" + lastTime +
+                ", lastIp='" + lastIp + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", memberLevel=" + memberLevel +
+                ", accountSecurity=" + accountSecurity +
+                ", isabled=" + isabled +
+                ", accountBalance=" + accountBalance +
+                '}';
+    }
 }

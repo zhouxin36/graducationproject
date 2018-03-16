@@ -49,4 +49,14 @@ public class Favorite {
     public void setAddDate(LocalDateTime addDate) {
         this.addDate = addDate;
     }
+
+    @Override
+    public String toString() {
+        return "Favorite{" +
+                "id='" + id + '\'' +
+                ", productId='" + productId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", addDate=" + addDate +
+                '}';
+    }
 }

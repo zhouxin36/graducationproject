@@ -89,4 +89,18 @@ public class ProductComment {
     public void setProductId(String productId) {
         this.productId = productId;
     }
+
+    @Override
+    public String toString() {
+        return "ProductComment{" +
+                "id='" + id + '\'' +
+                ", favourComment=" + favourComment +
+                ", comment='" + comment + '\'' +
+                ", anonymous=" + anonymous +
+                ", userId='" + userId + '\'' +
+                ", commentTime=" + commentTime +
+                ", upvote=" + upvote +
+                ", productId='" + productId + '\'' +
+                '}';
+    }
 }

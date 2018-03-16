@@ -40,4 +40,14 @@ public class Feedback {
     public void setComment(String comment) {
         this.comment = comment;
     }
+
+    @Override
+    public String toString() {
+        return "Feedback{" +
+                "id='" + id + '\'' +
+                ", userId='" + userId + '\'' +
+                ", qq='" + qq + '\'' +
+                ", comment='" + comment + '\'' +
+                '}';
+    }
 }

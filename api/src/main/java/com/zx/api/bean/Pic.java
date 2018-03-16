@@ -40,4 +40,14 @@ public class Pic {
     public void setProductId(String productId) {
         this.productId = productId;
     }
+
+    @Override
+    public String toString() {
+        return "Pic{" +
+                "id='" + id + '\'' +
+                ", type=" + type +
+                ", path='" + path + '\'' +
+                ", productId='" + productId + '\'' +
+                '}';
+    }
 }

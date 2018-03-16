@@ -11,6 +11,8 @@ import com.zx.backstage.service.AdminService;
 import com.zx.backstage.service.CategoryService;
 import com.zx.backstage.service.PicService;
 import com.zx.backstage.service.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -35,6 +37,8 @@ import java.util.Map;
 @Controller
 public class ProductController {
 
+	Logger logger = LoggerFactory.getLogger(ProductController.class);
+
 	@Autowired
 	PicService picService;
 
@@ -53,36 +57,48 @@ public class ProductController {
 	@ResponseBody
 	@RequestMapping("/product_list")
 	public R productList(HttpServletRequest request, @RequestParam Map<String, Object> params) {
-
-        Query query = new Query(params);
-        ProductExample productExample = new ProductExample();
-        productExample.setStartRow((Integer) query.get("offset"));
-        productExample.setPageSize((Integer) query.get("limit"));
-        ProductExample.Criteria criteria = productExample.createCriteria();
-        if(!MyUtils.isBlank((String) query.get("name")))
-            criteria.andNameLike("%"+(String) query.get("name")+"%");
-        List<Product> products = productService.selectByExample(productExample);
-        long total = productService.countByExample(productExample);
-        PageUtils pageUtil = new PageUtils(products, (int)total, query.getLimit(), query.getPage());
-        return R.ok().put("page",pageUtil);
+        logger.info("---->ProductController/productList; params:{}",params);
+        PageUtils pageUtil = null;
+        try {
+            Query query = new Query(params);
+            ProductExample productExample = new ProductExample();
+            productExample.setStartRow((Integer) query.get("offset"));
+            productExample.setPageSize((Integer) query.get("limit"));
+            ProductExample.Criteria criteria = productExample.createCriteria();
+            if (!MyUtils.isBlank((String) query.get("name")))
+                criteria.andNameLike("%" + (String) query.get("name") + "%");
+            List<Product> products = productService.selectByExample(productExample);
+            long total = productService.countByExample(productExample);
+            pageUtil = new PageUtils(products, (int) total, query.getLimit(), query.getPage());
+            return R.ok().put("page", pageUtil);
+        }catch (Exception e){
+            logger.error("ProductController/login; e:{},pageUtil:{}",e.getMessage(),pageUtil);
+            return R.error("系统错误，请联系管理员！");
+        }
 	}
 
 	@ResponseBody
 	@RequestMapping("/product_select_category")
 	public R productSelectCategory(HttpServletRequest request) {
-		@SuppressWarnings("unchecked")
-		List<Category> list = (List<Category>) request.getSession().getAttribute("category");
-		if (list != null) {
-			Map<String, List<Category>> map = new HashMap<>();
-			map.put("list", list);
-			return R.ok().put("list", list);
-		} else {
-            List<Category> categories = categoryService.selectByExample(new CategoryExample());
-            request.getSession().setAttribute("category", categories);
-            Map<String, List<Category>> map = new HashMap<>();
-            map.put("list", categories);
-            return R.ok().put("list", categories);
-		}
+        logger.info("---->ProductController/productSelectCategory; ");
+        Map<String, List<Category>> map = new HashMap<>();
+        List<Category> categories = null;
+        try {
+            @SuppressWarnings("unchecked")
+            List<Category> list = (List<Category>) request.getSession().getAttribute("category");
+            if (list != null) {
+                map.put("list", list);
+                return R.ok().put("list", list);
+            } else {
+                categories = categoryService.selectByExample(new CategoryExample());
+                request.getSession().setAttribute("category", categories);
+                map.put("list", categories);
+                return R.ok().put("list", categories);
+            }
+        }catch (Exception e){
+            logger.error("ProductController/productSelectCategory; e:{},categories:{}",e.getMessage(),categories);
+            return R.error("系统错误，请联系管理员！");
+        }
 	}
 
 	@ResponseBody

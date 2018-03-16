@@ -111,4 +111,20 @@ public class UserAddress {
     public void setLastTime(LocalDateTime lastTime) {
         this.lastTime = lastTime;
     }
+
+    @Override
+    public String toString() {
+        return "UserAddress{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", remark='" + remark + '\'' +
+                ", post='" + post + '\'' +
+                ", address='" + address + '\'' +
+                ", selected=" + selected +
+                ", addDate=" + addDate +
+                ", userId='" + userId + '\'' +
+                ", lastTime=" + lastTime +
+                '}';
+    }
 }

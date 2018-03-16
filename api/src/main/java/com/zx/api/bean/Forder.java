@@ -102,4 +102,19 @@ public class Forder {
     public void setSuccessTime(LocalDateTime successTime) {
         this.successTime = successTime;
     }
+
+    @Override
+    public String toString() {
+        return "Forder{" +
+                "id='" + id + '\'' +
+                ", addDate=" + addDate +
+                ", total=" + total +
+                ", addressId='" + addressId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", logistics=" + logistics +
+                ", payment=" + payment +
+                ", status=" + status +
+                ", successTime=" + successTime +
+                '}';
+    }
 }

@@ -40,4 +40,14 @@ public class SafeQuestion {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
+    @Override
+    public String toString() {
+        return "SafeQuestion{" +
+                "id='" + id + '\'' +
+                ", questionType=" + questionType +
+                ", questionAnswer='" + questionAnswer + '\'' +
+                ", userId='" + userId + '\'' +
+                '}';
+    }
 }
