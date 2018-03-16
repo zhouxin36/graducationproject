@@ -4,19 +4,18 @@
 <head>
 <title>退款售后页面</title>
 	<meta charset="UTF-8"/>
-<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-<link rel="stylesheet" href="./css/font.css">
-<link rel="stylesheet" href="./css/xadmin.css">
-<link rel="stylesheet" href="../static/css/fileinput.min.css">
+<link rel="stylesheet" href="../css/font.css">
+<link rel="stylesheet" href="../css/xadmin.css">
+<link rel="stylesheet" href="../css/fileinput.min.css">
 <link rel="stylesheet"
-	href="../static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-<script type="text/javascript" src="../static/js/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="./lib/layui/layui.js"
+	href="../css/bootstrap.min.css">
+<script type="text/javascript" src="../libs/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="../layui/layui.js"
 	charset="utf-8"></script>
 <script type="text/javascript"
-	src="../static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../static/js/fileinput.js"></script>
-<script type="text/javascript" src="./js/xadmin.js"></script>
+	src="../libs/bootstrap.min.js"></script>
+<script type="text/javascript" src="../libs/fileinput.js"></script>
+<script type="text/javascript" src="../libs/xadmin.js"></script>
 </head>
 
 <body>
@@ -65,9 +64,9 @@
 			url : "../refund_request",
 			type : "post",
 			success : function(msg) {
-				if (msg.code == 100) {
+				if (msg.code == 200) {
 					//类型列表
-					refund_list(msg.map);
+					refund_list(msg.data);
 				} else {
 				}
 			},
@@ -92,8 +91,8 @@
 				type : "post",
 				async : false,
 				success : function(ms) {
-					if (ms.code == 100)
-						td2.append(ms.map.username);
+					if (ms.code == 200)
+						td2.append(ms.data.username);
 					else
 						td2.append("用户名不存在");
 				},
@@ -153,7 +152,7 @@
 					data : "id=" + v,
 					type : "post",
 					success : function(msg) {
-						if (msg.code == 100) {
+						if (msg.code == 200) {
 							var form = $("#form_forder");
 							form.empty();
 							
@@ -170,7 +169,7 @@
 							input1.addClass("form-control");
 							input1.attr("placeholder","订单号");
 							input1.attr("readonly",true);
-							input1.val(msg.map.forder.id);
+							input1.val(msg.data.forder.id);
 							div1_1.append(input1);
 							div1.append(la1).append(div1_1);
 							form.append(div1);
@@ -188,7 +187,7 @@
 							input2.addClass("form-control");
 							input2.attr("placeholder","用户名");
 							input2.attr("readonly",true);
-							input2.val(msg.map.user.name);
+							input2.val(msg.data.user.name);
 							div2_1.append(input2);
 							div2.append(la2).append(div2_1);
 							form.append(div2);
@@ -207,7 +206,7 @@
 							input3.addClass("form-control");
 							input3.attr("placeholder","收货人");
 							input3.attr("readonly",true);
-							input3.val(msg.map.userAddress.name);
+							input3.val(msg.data.userAddress.name);
 							div3_1.append(input3);
 							div3.append(la3).append(div3_1);
 							form.append(div3);
@@ -226,7 +225,7 @@
 							input4.addClass("form-control");
 							input4.attr("placeholder","收货电话");
 							input4.attr("readonly",true);
-							input4.val(msg.map.userAddress.phone);
+							input4.val(msg.data.userAddress.phone);
 							div4_1.append(input4);
 							div4.append(la4).append(div4_1);
 							form.append(div4);
@@ -244,7 +243,7 @@
 							input5.addClass("form-control");
 							input5.attr("placeholder","收货地址");
 							input5.attr("readonly",true);
-							input5.val(msg.map.userAddress.address);
+							input5.val(msg.data.userAddress.address);
 							div5_1.append(input5);
 							div5.append(la5).append(div5_1);
 							form.append(div5);
@@ -263,7 +262,7 @@
 							input6.addClass("form-control");
 							input6.attr("placeholder","邮政编码");
 							input6.attr("readonly",true);
-							input6.val(msg.map.userAddress.post);
+							input6.val(msg.data.userAddress.post);
 							div6_1.append(input6);
 							div6.append(la6).append(div6_1);
 							form.append(div6); */
@@ -281,15 +280,15 @@
 							input7.addClass("form-control");
 							input7.attr("placeholder","订单状态");
 							input7.attr("readonly",true);
-							if(msg.map.forder.status == 0)
+							if(msg.data.forder.status == 0)
 								input7.val("未支付");
-							else if(msg.map.forder.status == 1)
+							else if(msg.data.forder.status == 1)
 								input7.val("待发货");
-							else if(msg.map.forder.status == 2)
+							else if(msg.data.forder.status == 2)
 								input7.val("待收货");
-							else if(msg.map.forder.status == 3)
+							else if(msg.data.forder.status == 3)
 								input7.val("待评价");
-							else if(msg.map.forder.status == 4)
+							else if(msg.data.forder.status == 4)
 								input7.val("已完成");
 							else
 								input7.val("未知状态");
@@ -312,11 +311,11 @@
 							input8.addClass("form-control");
 							input8.attr("placeholder","支付方式");
 							input8.attr("readonly",true);
-							if(msg.map.forder.payment == 0)
+							if(msg.data.forder.payment == 0)
 								input8.val("银联");
-							else if(msg.map.forder.payment == 1)
+							else if(msg.data.forder.payment == 1)
 								input8.val("微信支付");
-							else if(msg.map.forder.payment == 2)
+							else if(msg.data.forder.payment == 2)
 								input8.val("支付宝支付");
 							else
 								input8.val("未知状态");
@@ -339,15 +338,15 @@
 							input9.addClass("form-control");
 							input9.attr("placeholder","物流方式");
 							input9.attr("readonly",true);
-							if(msg.map.forder.logistics == 0)
+							if(msg.data.forder.logistics == 0)
 								input9.val("圆通");
-							else if(msg.map.forder.logistics == 1)
+							else if(msg.data.forder.logistics == 1)
 								input9.val("申通");
-							else if(msg.map.forder.logistics == 2)
+							else if(msg.data.forder.logistics == 2)
 								input9.val("韵达");
-							else if(msg.map.forder.logistics == 3)
+							else if(msg.data.forder.logistics == 3)
 								input9.val("中通");
-							else if(msg.map.forder.logistics == 4)
+							else if(msg.data.forder.logistics == 4)
 								input9.val("申通");
 							else
 								input9.val("其他物流");
@@ -371,16 +370,16 @@
 							tr1.append(th1).append(th2).append(th3).append(th4);
 							ta.append(tr1);
 							var tbody = $("<tbody></tbody>");
-							for(var i = 0;msg.map.listSorder[i] != null; i++ ){
+							for(var i = 0;msg.data.listSorder[i] != null; i++ ){
 								var tr2 = $("<tr></tr>");
 								var td1 = $("<td></td>");
-								td1.append(msg.map.listSorder[i].id);
+								td1.append(msg.data.listSorder[i].id);
 								var td2 = $("<td></td>");
-								td2.append(msg.map.listSorder[i].name);
+								td2.append(msg.data.listSorder[i].name);
 								var td3 = $("<td></td>");
-								td3.append(msg.map.listSorder[i].price);
+								td3.append(msg.data.listSorder[i].price);
 								var td4 = $("<td></td>");
-								td4.append(msg.map.listSorder[i].number);
+								td4.append(msg.data.listSorder[i].number);
 								tr2.append(td1).append(td2).append(td3).append(td4);
 								tbody.append(tr2);
 							}
@@ -401,7 +400,7 @@
 							input11.addClass("form-control");
 							input11.attr("placeholder","总金额");
 							input11.attr("readonly",true);
-							input11.val(msg.map.forder.total+"元");
+							input11.val(msg.data.forder.total+"元");
 							div11_1.append(input11);
 							div11.append(la11).append(div11_1);
 							form.append(div11);

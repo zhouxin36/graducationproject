@@ -307,6 +307,10 @@ vm = new Vue({
                 }
                 vm.app = r.app;
                 vm.category = r.cateType;
+                if (vm.app.open == 1)
+                    vm.app.open = "上架";
+                if (vm.app.open == 2)
+                    vm.app.open = "下架";
                 if (vm.app.addDate != null)
                     vm.app.addDate = formatDate(vm.app.addDate);
                 if (vm.app.lastTime != null)

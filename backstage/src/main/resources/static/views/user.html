@@ -73,78 +73,70 @@
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<div class="col-sm-3 control-label">用户名：</div>
-							<div class="col-sm-3">
-								<input type="text" v-model="app.id" class="hidden"/>
-								<input type="text" v-model="app.name" class="no-border" readonly="readonly"/>
+							<label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">用户名:</label>
+							<div class="col-sm-6">
+								<input type="text"v-model="app.id" class="hidden"/>
+								<input type="text" class="form-control no-border" v-model="app.name" class="no-border" readonly="readonly"/>
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-sm-3 control-label">生日：</div>
-							<div class="col-sm-3">
-								<input type="text" v-model="app.birthday" class="no-border" readonly="readonly"/>
+                            <label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">手机号:</label>
+							<div class="col-sm-6">
+								<input type="text"  v-model="app.phone" class="form-control no-border" readonly="readonly"/>
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-sm-3 control-label">手机号：</div>
-							<div class="col-sm-3">
-								<input type="text" v-model="app.phone" class="no-border" readonly="readonly"/>
+                            <label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">性别:</label>
+							<div class="col-sm-6">
+                                <input type="text"  v-model="app.sex" class="form-control no-border" readonly="readonly"/>
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-sm-3 control-label">性别：</div>
-							<div class="col-sm-3">
-								<p type="text" v-if="app.sex == 0">男</p>
-								<p type="text" v-if="app.sex == 1">女</p>
+                            <label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">邮箱:</label>
+							<div class="col-sm-6">
+								<input type="text" v-model="app.email" class="form-control no-border" readonly="readonly"/>
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-sm-3 control-label">邮箱：</div>
-							<div class="col-sm-3">
-								<input type="text" v-model="app.email" class="no-border" readonly="readonly"/>
+                            <label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">注册时间:</label>
+							<div class="col-sm-6">
+								<input type="text" v-model="app.regTime" class="form-control no-border" readonly="readonly"/>
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-sm-3 control-label">注册时间：</div>
-							<div class="col-sm-3">
-								<input type="text" v-model="app.regTime" class="no-border" readonly="readonly"/>
+                            <label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">上次登录时间:</label>
+							<div class="col-sm-6">
+								<input type="text" v-model="app.lastTime" class="form-control no-border" readonly="readonly"/>
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-sm-3 control-label">上次登录时间：</div>
-							<div class="col-sm-3">
-								<input type="text" v-model="app.lastTime" class="no-border" readonly="readonly"/>
+                            <label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">上次登录ip:</label>
+							<div class="col-sm-6">
+								<input type="text" v-model="app.lastIp" class="form-control no-border" readonly="readonly"/>
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-sm-3 control-label">上次登录ip：</div>
-							<div class="col-sm-3">
-								<input type="text" v-model="app.lastIp" class="no-border" readonly="readonly"/>
+                            <label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">用户头像:</label>
+							<div class="col-sm-6">
+								<input type="text" v-model="app.avatar" class="form-control no-border" readonly="readonly"/>
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-sm-3 control-label">用户头像：</div>
-							<div class="col-sm-3">
-								<input type="text" v-model="app.avatar" class="no-border" readonly="readonly"/>
+                            <label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">会员等级:</label>
+							<div class="col-sm-6">
+								<input type="text" v-model="app.memberLevel" class="form-control no-border" readonly="readonly"/>
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-sm-3 control-label">会员等级：</div>
-							<div class="col-sm-3">
-								<input type="text" v-model="app.memberLevel" class="no-border" readonly="readonly"/>
+                            <label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">账户安全:</label>
+							<div class="col-sm-6">
+								<input type="text" v-model="app.accountSecurity" class="form-control no-border" readonly="readonly"/>
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-sm-3 control-label">账户安全：</div>
-							<div class="col-sm-3">
-								<input type="text" v-model="app.accountSecurity" class="no-border" readonly="readonly"/>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-sm-3 control-label">状态：</div>
-							<div class="col-sm-3">
-								<p type="text" v-if="app.isabled == 0">禁用</p>
-								<p type="text" v-if="app.isabled == 1">可用</p>
+                            <label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">状态:</label>
+							<div class="col-sm-6">
+                                <input type="text" v-model="app.isabled" class="form-control no-border" readonly="readonly"/>
 							</div>
 						</div>
 					</div>

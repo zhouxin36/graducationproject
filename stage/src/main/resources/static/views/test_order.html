@@ -214,8 +214,9 @@ function build_order(number/*msg*/){
   				
   				btn_refund.click(function(){
 		    	   //alert($(this).attr("val"));
-		    	    $("#jsp").load("test_refund.html","id=" + $(this).attr("val"),function(data,status){
-					}); 
+                    refundId = $(this).attr("val");
+		    	    $("#jsp").load("test_refund.html",function(data,status){
+					});
 		    	  	
   				});
 		    	   td4.append(btn_refund);

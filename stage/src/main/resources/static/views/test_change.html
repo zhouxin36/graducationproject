@@ -12,7 +12,8 @@
     	    		console.log(msg);
     	    		var list = msg.data.list;
     	    		$.each(list,function(index,item){
-    	    			$.post("../../Order/selectSorderByForderId","id="+item.forderid,function(msg_two){
+                        console.log(item);
+    	    			$.post("../Order/selectSorderByForderId","id="+item.forderid,function(msg_two){
                              var list_two = msg_two.data.list;
                                     
                                  $.each(list_two,function(index_two,item_two){

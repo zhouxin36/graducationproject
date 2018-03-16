@@ -51,6 +51,8 @@ $(function () {
             { label: '完成时间', name: 'successTime', width: 75, sortable:false,formatter:function(value, options, row){
                     if(value == undefined || value == null ){
                         return "未完成"
+                    }else {
+                        return formatDate(value);
                     }
                 }},
             { label: '操作', name: 'operation', width:50,formatter: operateMenu,sortable:false}

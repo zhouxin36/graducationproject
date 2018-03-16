@@ -163,6 +163,20 @@ var vm = new Vue({
 			        return;
                 }
 				vm.app = r.app;
+			    if(vm.app.sex == 0){
+                    vm.app.sex = "男";
+                }
+                else if(vm.app.sex == 1){
+                    vm.app.sex = "女";
+                }else {
+                    vm.app.sex = "保密";
+                }
+                if(vm.app.isabled == 0){
+                    vm.app.isabled = "禁用";
+                }
+                if(vm.app.isabled == 1){
+                    vm.app.isabled = "可用";
+                }
 			    if(vm.app.birthday != null)
                     vm.app.birthday = formatDate(vm.app.birthday,null,null);
                 if(vm.app.regTime != null)

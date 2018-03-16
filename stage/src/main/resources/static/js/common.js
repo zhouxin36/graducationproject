@@ -68,6 +68,8 @@ T.p = url;
 var baseURL = "/graducation/";
 
 var fileURL = "http://localhost:10000/graducation/images/";
+//退款Id
+var refundId = null;
 
 //登录token
 var token = localStorage.getItem("token");
