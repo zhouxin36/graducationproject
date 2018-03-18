@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>结算页面</title>
+
+<link href="../css/amazeui.min.css" rel="stylesheet"
+	type="text/css" />
+
+<link href="../css/demo.css" rel="stylesheet" type="text/css" />
+<link href="../css/cartstyle.css" rel="stylesheet" type="text/css" />
+ <link rel="stylesheet" href="../css/layer.css">
+<link href="../css/jsstyle.css" rel="stylesheet" type="text/css" />
+<link href="../css/addstyle.css" rel="stylesheet" type="text/css">
+<link href="../css/addstyle.css" rel="stylesheet" type="text/css">
+ <link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../js/address.js"></script>
+<script src="../js/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="../js/jquery.cityselect.js"></script>
+<script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/layer.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
+
+</head>
+
+<style>
+    .number_a{
+        font-family: Arial;
+        font-size: 14px;
+        font-weight: bold;
+        color: #C40000;
+    }
+</style>
+<script type="text/javascript">
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+	$(function() {
+		$("#logistics_id").val(0);
+		//选择配送快递
+		$("#express_list li").click(function(){
+			
+			$("#logistics_id").val($(this).val());
+			
+		});
+
+
+		var all_money = 0 ;
+		var AllMoney;
+		var ForderID = GetQueryString("forderId");
+		if(ForderID==" "){
+			layer.msg("您还没有选择任何订单，马上为您跳转到购物车！", {
+				icon : 5,
+				time : 3000
+			});
+			setTimeout(function(){
+				$(location).prop("href","shopcart.html");
+				},3000);
+			
+		}
+		//页面一加载，判断用户是否登录，根据结果改变左上角的样式
+  	  $.post("../User/check_login",function(msg,status){
+  		  if(msg.code==200){
+  			  //登录成功
+  			  console.log(msg);
+  			  var a  = $("<a></a>").attr("href","#").addClass("h").append("欢迎你! "+msg.data.name);
+  			var logout  = $("<a></a>").attr("href" , "#").append("&nbsp;  &nbsp;  退出登录");
+			var div = $("#login_status");
+			div.append(a).append(logout);
+
+			//点击退出登录
+			 logout.click(function(){
+				/*  if(confirm("确定退出登录?")){
+					 $.post("../User/logout",function(data){
+				           $(location).prop("href","home.html");
+			              });
+					} */
+				 layer.msg('确定退出登录?', {
+					  time: 0 //不自动关闭
+					  ,btn: ['确定', '取消']
+					  ,yes: function(index){
+						  $.post("../User/logout",function(data){
+					           $(location).prop("href","home.html");
+				              });
+						  layer.close(index);
+					  }
+					});
+			 });
+			 //改变购物车的数字
+            	$.post("../Order/getSorderById",function(data,status){
+
+            		$("#J_MiniCartNum").html(data.data.list.length);
+            	});
+  		  }else{
+  			  //登录失败
+  			layer.msg("您还没有登录，马上为您跳转到登录界面！", {
+  								icon : 5,
+  								time : 3000
+  							});
+  			setTimeout(function(){
+  				 $(location).prop("href","login.html");
+				},3000);
+
+  			  var a = $("<a></a>").attr("href","login.html").addClass("h").append("亲，请登录  ");
+  			  var b = $("<a></a>").attr("href","register.html").append("免费注册");
+  		       var div = $("#login_status");
+  		       div.append(a).append(b);
+  		  }
+  	  });
+
+  	//商品信息
+  	item_list();
+
+
+
+
+  	//点击搜索按钮，新建一个超链接跳转到商品搜索界面
+  	$("#ai-topsearch").click(
+  			function() {
+  				var productname = $("#searchInput").val();
+  				var span = $("<span></span>").append("搜索界面");
+  				var a = $("<a></a>").attr("href",
+  						"search.html?productname=" + productname)
+  						.attr("target", "_blank").append(span);
+  				span.click();
+  			});
+
+
+	$("#city").citySelect({
+		nodata:"none",
+		required:false
+	});
+	$("#edit_city").citySelect({
+		nodata:"none",
+		required:false
+	});
+
+	//点击提交订单
+	 $("#J_Go").click(function(){
+
+
+		       //清空模态框数据
+			reset_form($("#myModal form"));
+			   //初始化模态框
+			   $.ajax({
+				   type  : "post",
+				   dataType : "json" ,
+				   url : "../question/getQuestionById" ,
+
+				   success : function(msg){
+					    if(msg.code!=200)
+				   {
+					    	layer.msg("您尚未设置安全问题,请设置完安全问题再进行结算！", {
+								icon : 5,
+								time : 3000
+							});
+
+					    	setTimeout(function(){
+					    		$(location).prop("href","test_main.html?action=question");
+					    								},3000);
+				   }
+					   var type = msg.data.list[0].questionType;
+					   var question = "" ;
+					   switch (type){
+
+					   case 2: question="您最喜欢的颜色是什么";break;
+					   case 3: question="您的故乡在哪里";break;
+					   case 4: question="您最喜欢的老师的名字";break;
+					   case 5: question="您父亲的名字";break;
+					   case 6: question="您母亲的名字";break;
+					   }
+					    $("#question").val(question);
+				   }
+			   });
+
+
+		       //弹出模态框，要求回答安全问题方可支付
+                $("#myModal").modal("show");
+
+			function reset_form(ele) {
+				//清除input输入内容
+				$(ele)[0].reset();
+				//清除父容器DIV样式
+				$(ele).find("*").removeClass("has-success has-error");
+				//清除span内容
+				$(ele).find(".help-block").text("");
+			}
+
+
+
+
+
+
+
+
+	 });
+
+  	 //点击模态框里面的提交答案
+  	 $("#check_answer").click(function(){
+  		  var flag = 0;
+  		 if($("#question_answer").val()=="")
+  			 {
+  			layer.msg("您尚未填写答案！", {
+				icon : 5,
+				time : 3000
+			});
+  			 return;}
+  		 $.ajax({
+  			 type : "post" ,
+  			 url : "../question/Check_Answer" ,
+  			 data  : "answer="+$("#question_answer").val(),
+  		     async : false,
+  		     success : function(msg){
+  		    	if(msg.code!=200){
+  		    		layer.msg("答案错误！", {
+  						icon : 5,
+  						time : 3000
+  					});
+
+  		    	}else{
+  		    		flag = 1;
+  		    	}
+  		     }
+  		 });
+  		 if(flag==1)
+  		{
+  		 $.post("../Order/finishForderAndSorderByForderId","forderId="+GetQueryString("forderId")+"&logistics="+$("#logistics_id").val()+"&money="+$("#J_ActualFee").html(),function(data,status){
+            if(data.code==200)
+         	  $(location).prop('href',"success.html?addressId="+data.data.addressId);
+            else if(data.code!=200)
+         	  {
+            	if(data.data.status == 1){
+            		layer.msg("您尚未填写任何购物地址，马上为您跳转到地址编辑界面！", {
+    					icon : 5,
+    					time : 3000
+    				});
+                	setTimeout(function(){
+                		$(location).prop("href","test_main.html?action=address");
+    					},3000);
+
+             	  }
+            	if(data.data.status == 2){
+            	    var money = $("#J_ActualFee").html();
+            	    var forderId = GetQueryString("forderId");
+            	    var logistics_id = $("#logistics_id").val();
+                    $("#alipay_money").attr("value",money);
+                    $("#alipay_forderId").attr("value",forderId);
+                    $("#alipay_logistics").attr("value",logistics_id);
+            	    $("#form12").submit();
+                    // $.post("../deposit/finishForder","forderId="+GetQueryString("forderId")+"&logistics="+$("#logistics_id").val()+"&money="+$("#J_ActualFee").html(),function(data2,status){
+                    //     if(data2.code==200)
+                    //         $(location).prop('href',"success.html?address="+data2.data.addressId);
+                    //     else if(data2.code!=200) {
+                    //         if (data2.data.status == 1) {
+                    //             layer.msg("您尚未填写任何购物地址，马上为您跳转到地址编辑界面！", {
+                    //                 icon: 5,
+                    //                 time: 3000
+                    //             });
+                    //             setTimeout(function () {
+                    //                 $(location).prop("href", "test_main.html?action=address");
+                    //             }, 3000);
+                    //         }
+                    //     }
+                    // });
+                    // layer.msg("智商不足，请及时充值！", {
+    					// icon : 6,
+    					// time : 3000
+                    // });
+                	// setTimeout(function(){
+                	// 	$(location).prop("href","test_main.html?action=pay");
+    					// },3000);
+            	}
+            	}
+		 });
+  		}
+  	 });
+
+
+
+  //点击创建新地址
+	$("#create_new_address").click(function(){
+
+		//每次打开模态框都清空数据
+	//	reset_form($("#myModal form"));
+
+		$(location).prop("href","test_main.html?action=address");
+		//通过JS调用模态框
+		/* $("#myModal").modal({
+			backdrop:"static"
+		}); */
+	});
+
+
+
+  	build_address();
+
+
+
+		//优惠券
+		coupon();
+		//红包
+		bonus();
+		//设置默认地址
+		$(".set_default_address").click(function() {
+			set_address(this);
+		});
+
+
+
+		//选择方式
+		$(".logistics").find("li").each(function() {
+			var i = $(this);
+			/*  var p = i.find("ul>li"); */
+			i.click(function() {
+				$(".logistics").find("li").each(function() {
+					$(this).removeClass("selected");
+				});
+				$(this).addClass("selected");
+			});
+		});
+	});
+
+	//结算地址
+	function pay_address(){
+		var div_main = $("#holyshit268");
+		div_main.empty();
+		var default_address = $(".defaultAddr");
+		var p1 = $("<p></p>");
+		p1.addClass("buy-footer-address");
+		var sp1_2_1 = $("<span></span>");
+		var sp1_2_2 = $("<span></span>");
+		var sp1_2_3 = $("<span></span>");
+		var sp1_2_4 = $("<span></span>");
+		var sp1_2_5 = $("<span></span>");
+		var sp1_2_6 = $("<span></span>");
+		sp1_2_1.addClass("buy-line-title buy-line-title-type");
+		sp1_2_2.addClass("buy--address-detail");
+		sp1_2_3.addClass("province");
+		sp1_2_4.addClass("city");
+		sp1_2_5.addClass("dist");
+		sp1_2_6.addClass("street");
+		sp1_2_1.append("寄送至：");
+		sp1_2_3.append(default_address.find(".province").text());
+		sp1_2_4.append(default_address.find(".city").text());
+		sp1_2_5.append(default_address.find(".dist").text());
+		sp1_2_6.append(default_address.find(".street").text());
+		sp1_2_2.append(sp1_2_3).append("").append(sp1_2_4).append("").append(
+				sp1_2_5).append("").append(sp1_2_6);
+		p1.append(sp1_2_1).append(sp1_2_2);
+
+		var p2 = $("<p></p>");
+		p2.addClass("buy-footer-address");
+		var sp1_1_0 = $("<span></span>");
+		var sp1_1_1 = $("<span></span>");
+		var sp1_1_2 = $("<span></span>");
+		var sp1_1_3 = $("<span></span>");
+		sp1_1_0.addClass("buy-line-title");
+		sp1_1_1.addClass("buy-address-detail");
+		sp1_1_2.addClass("buy-user");
+		sp1_1_3.addClass("buy-phone");
+		sp1_1_2.append(default_address.find(".buy-user").text());
+		sp1_1_3.append(default_address.find(".buy-phone").text());
+		sp1_1_1.append(sp1_1_2).append(sp1_1_3);
+		p2.append(sp1_1_1);
+
+		div_main.append(p1).append(p2);
+	}
+
+	//红包
+	function bonus(/* msg */){
+		/* var li = $(".td-bonus");
+		var sp = $("<span></span>");
+		sp.addClass("bonus-title");
+		sp.append("红包");
+		var sel = $("<select></select>");
+		sel.attr("data-am-selected","data-am-selected");
+		for(var i=0;i<5;i++){
+			var op = $("<option></option>");
+			op.attr("value",i);
+			op.append("¥50.00元	还剩10.40元");
+			sel.append(op);
+		}
+		li.append(sp).append(sel); */
+
+	}
+
+	//优惠券
+	function coupon(/* msg */){
+	/* 	var li = $(".td-coupon");
+		var sp = $("<span></span>");
+		sp.addClass("coupon-title");
+		sp.append("优惠券");
+		var sel = $("<select></select>");
+		sel.attr("data-am-selected","data-am-selected"); */
+		/* for(var i=0;i<5;i++){
+			var op = $("<option></option>");
+			op.attr("value",i);
+			op.append("￥8	【消费满95元可用】");
+			sel.append(op);
+		} */
+		/* li.append(sp).append(sel); */
+	}
+
+
+	//商品信息
+	var all = 0;
+	function item_list(/* msg */) {
+
+		$.post("../Order/CheckForderStatus","id="+GetQueryString("forderId"),function(status){
+			        if(status.code==200)
+			        	{
+			        	if(status.data.statue != 0)
+			        		{
+
+			        		layer.msg("订单属于已经付款状态，无需再次付款，马上为您跳转主界面！", {
+			        							icon : 5,
+			        							time : 3000
+			        						});
+			        		setTimeout(function(){
+			        			$(location).prop("href","home.html");
+								},3000);
+			        		return ;
+			        		}
+			        	}
+			        else{
+			        	layer.msg("订单不存在！", {
+							icon : 5,
+							time : 3000
+						});
+				setTimeout(function(){
+					$(location).prop("href","home.html");
+									},3000);
+			             return ;
+			        }
+		});
+
+
+		$.post("../Order/selectSorderByForderId","id="+GetQueryString("forderId"),function(data,status){
+			console.log(data);
+			if(data.code==200){
+
+			$.each(data.data.list,function(index,item){
+
+				$.post("../Product/SelectProductById","id="+item.productId,function(products,status){
+			                if(products.code!=200)
+			                	{
+			                	layer.msg("商品已经下架，请从新选择商品！", {
+			    					icon : 5,
+			    					time : 3000
+			    				});
+
+			    setTimeout(function(){
+			    	 $(location).prop("href","home.html");
+			    							},3000);
+			                	return ;}
+					var product = products.data.product;
+
+
+					var d = $("<div></div>");
+					d.addClass("clear");
+
+					var li1 = $("<li></li>");
+					li1.addClass("td td-item");
+					var div1_1 = $("<div></div>");
+					var div1_2 = $("<div></div>");
+					var div1_3 = $("<div></div>");
+					div1_1.addClass("item-pic");
+					div1_2.addClass("item-info");
+					div1_3.addClass("item-basic-info");
+					var a1 = $("<a></a>");
+					var a2 = $("<a></a>");
+					a1.addClass("J_MakePoint").attr("href", "#");
+					a2.addClass("item-title J_MakePoint").attr("href", "#").attr(
+							"data-point", "tbcart.8.11");
+					var img1 = $("<img/>");
+					img1.addClass("itempic J_ItemImg");
+					img1.attr("style","width:80px;height:80px;");
+					$.ajax({
+						url:"../Pic/selectPicByProductType",
+						data:"id="+product.id+"&type="+1,
+						type:"post",
+						success:function(ms){
+							if(ms.code == 200)
+								img1.attr("src", fileURL+ms.data.pic_list[0].path);
+							else
+								img1.attr("src", fileURL+"no_img.jpg");
+						},
+						error:function(msg){
+							img1.attr("src", fileURL+"no_img.jpg");
+						}
+					});
+					a1.append(img1);
+					a2.append(product.name);
+					div1_1.append(a1);
+					div1_3.append(a2);
+					div1_2.append(div1_3);
+					li1.append(div1_1).append(div1_2);
+
+					var li2 = $("<li></li>");
+					;
+					li2.addClass("td td-info");
+					var div2 = $("<div></div>");
+					div2.addClass("item-props");
+					var sp2_1 = $("<span></span>");
+					var sp2_2 = $("<span></span>");
+					sp2_1.addClass("sku-line");
+					sp2_2.addClass("sku-line");
+					sp2_1.append(product.spec);
+					sp2_2.append();
+					div2.append(sp2_1).append(sp2_2);
+					li2.append(div2);
+
+					var li3 = $("<li></li>");
+					li3.addClass("td td-price");
+					var div3_1 = $("<div></div>");
+					var div3_2 = $("<div></div>");
+					div3_1.addClass("item-price price-promo-promo");
+					div3_2.addClass("price-content");
+					var em3 = $("<em></em>");
+					em3.addClass("number_a");
+					em3.append(product.price);
+					div3_2.append(em3);
+					div3_1.append(div3_2);
+					li3.append(div3_1);
+
+					var div_phone = $("<div></div>");
+					div_phone.addClass("pay-phone");
+					div_phone.append(li1).append(li2).append(li3);
+
+					var li4 = $("<li></li>");
+					li4.addClass("td td-amount");
+					var div4_1 = $("<div></div>");
+					var div4_2 = $("<div></div>");
+					var div4_3 = $("<div></div>");
+					div4_1.addClass("amount-wrapper");
+					div4_2.addClass("item-amount");
+					div4_3.addClass("sl");
+					var sp4 = $("<span></span>");
+					sp4.addClass("phone-title");
+					var input4_1 = $("<input/>");
+					var input4_2 = $("<input/>");
+					var input4_3 = $("<input/>");
+				/* 	input4_1.addClass("min am-btn").attr("name", "").attr("type", "button")
+							.attr("value", "-"); */
+					input4_2.addClass("text_box").attr("name", "").attr("type", "text")
+							.attr("value", item.number).attr("style", "width:30px;border:0px;").attr("readonly",true);
+				/* 	input4_3.addClass("add am-btn").attr("name", "").attr("type", "button")
+							.attr("value", "+"); */
+					sp4.append("购买数量");
+					div4_3/* .append(input4_1) */.append(input4_2)/* .append(input4_3) */;
+					var nb = 0;
+
+					div4_2.append(sp4).append(div4_3);
+					div4_1.append(div4_2);
+					li4.append(div4_1);
+
+					var li5 = $("<li></li>");
+					li5.addClass("td td-sum");
+					var div5 = $("<div></div>");
+					div5.addClass("td-inner");
+					var em5 = $("<p></p>");
+					em5.addClass("number_a").attr("style", "border:0px;");
+					var aaa = item.number*product.price;
+					em5.append(Math.round(item.number*product.price * 10) / 10);
+				 all += item.number*product.price;
+					$("#J_ActualFee").html(all );
+					$("#al_m").val(all);
+				 div5.append(em5);
+					li5.append(div5);
+
+					var li6 = $("<li></li>");
+					li6.addClass("td td-oplist");
+					var div6_1 = $("<div></div>");
+					div6_1.addClass("td-inner");
+					var div6_2 = $("<div></div>");
+					div6_2.addClass("pay-logis");
+					var sp6 = $("<span></span>");
+					sp6.addClass("phone-title");
+					var b6 = $("<b></b>");
+					b6.addClass("sys_item_freprice");
+					b6.append("10");
+					div6_2.append("快递").append(b6).append("元");
+					div6_1.append(sp6);
+					li6.append(div6_1);
+
+					var ul = $("<ul></ul>");
+					ul.addClass("item-content clearfix").attr("style",
+							"width:998px;height:115px;");
+					ul.append(div_phone).append(li4).append(li5).append(li6);
+					var div_main = $("<div></div>");
+					div_main.addClass("bundle-main");
+					div_main.append(ul).append(d);
+					var div_last = $("<div></div>");
+					div_last.addClass("bundle  bundle-last");
+					div_last.append(div_main);
+					var tr = $("<tr></tr>");
+					tr.addClass("item-list");
+					tr.append(div_last);
+					$("#table").append(d).append(tr);
+
+				});
+
+			});
+			}else{
+
+				layer.msg("商品已经下架，马上为你跳转主界面！", {
+					icon : 5,
+					time : 3000
+				});
+
+setTimeout(function(){
+	$(location).prop("href","home.html");
+							},3000);
+			}
+
+		});
+
+		//设置总金额
+
+
+
+	}
+
+
+
+	//设置默认地址
+	function set_address(ele) {
+		$("#address_ul").find(".deftip").attr("class", "deftip hidden");
+		$("#address_ul").find(".set_default_address").attr("class",
+				"set_default_address");
+		$(ele).attr("class", "set_default_address hidden");
+		$(ele).parent().prev().prev().children(".deftip").attr("class",
+				"deftip");
+	}
+
+
+	 function build_address(/*msg*/){
+
+		  $.post("../Address/selectAddressById",function(data,status){
+
+			  if(data.code==200){
+				  $("#address_ul").empty();
+			  console.log(data);
+	              var list = data.data.Address;
+	             $.each(list, function(index, addres) {
+			 
+			        var ul = $("#address_ul");
+				   var li  =  $("<li></li>");
+				   if(addres.selected == 1){
+	     			   	  li.addClass("user-addresslist defaultAddr");
+	     			   	 li.attr("address_id",addres.id);
+	     				   
+	    		         var i_one = $("<i></i>").addClass("am-icon-check-circle");
+	    		        var out_span = $("<span></span>").addClass("new-option-r").
+	    		        append(i_one).append("默认地址");
+	    		        
+	    		        li.append(out_span);
+	    		       
+	    		        var in_span_one = $("<span></span>").addClass("new-txt")
+	    		        .append(addres.name);
+	    		        var in_span_two = $("<span></span>").addClass("new-txt-rd2")
+	    		        .append(addres.phone);
+	    		        var out_p = $("<p></p>").addClass("new-tit new-p-re").
+	    		         append(in_span_one).append(in_span_two);
+	    		        
+	    		        li.append(out_p);
+	    		        
+	    		        var in_span_three = $("<span></span>").addClass("title").append("地址:");
+	    		        
+	    		        var str = addres.address;
+	    		        var reg= /-/g;
+	    		              if(str!=null)
+	    		        str = str.replace(reg," ");
+	    		        
+	    		        var in_span_four = $("<span></span>").addClass("province").
+	    		        append(str);
+	    		        var in_p_one =  $("<p></p>").addClass("new-mu_l2cw")
+	    		        .append(in_span_three).append(in_span_four);
+	    		        var out_div_one = $("<div></div>").addClass("new-mu_l2a new-p-re").append(in_p_one);
+	    		        
+	    		        li.append(out_div_one);
+	    		        
+	    		        var  in_i_three = $("<i></i>").addClass("am-icon-edit");
+	    		       
+	    		         var a_one = $("<a></a>").attr("href","test_main.html?action=address").append(in_i_three).append("编辑");
+	    		        a_one.click(function(/*msg*/){
+	    		        	//每次打开模态框都清空数据
+	    					//reset_form($("#myModal form"));
+	    					
+	    					//通过JS调用模态框
+	    					//$("#myModal").modal({
+	    					//	backdrop:"static"
+	    					//});
+	    					//初始化模态框的数据
+	    					// build_motai(addres);
+	    					
+	    					
+	    		        });
+	    		        var in_span_five =  $("<span></span>").addClass("new-addr-bar").append("|");
+	    		        
+	    		        var  in_i_four = $("<i></i>").addClass("am-icon-trash");
+	    		        var a_two = $("<a></a>").attr("href","test_main.html?action=address").append(in_i_four).append("删除");
+	    		        
+
+	    		        var out_div_two = $("<div></div>").addClass("new-addr-btn").
+	    		        append(a_one).append(in_span_five).append(a_two);
+	    		        
+	    		        li.append(out_div_two);
+	    		        ul.append(li);
+	    		      //结算地址
+	    				pay_address();
+	   			     }else{
+	   			    
+	  		      }
+	       });
+			  }else{
+				  layer.msg("您尚未填写任何购物地址，马上为您跳转到地址编辑界面！", {
+						icon : 5,
+						time : 3000
+					});
+
+	setTimeout(function(){
+		  $(location).prop("href","test_main.html?action=address");
+								},3000);
+			  }
+		  });	
+	   }             
+	 
+	 
+	
+	
+	
+	  
+		
+		
+		  
+		
+		
+		
+		  
+		
+</script>
+<body>
+<!-- 模态框 -->
+	<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">请回答您设置的安全问题</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" id="form1">
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">问题：</label>
+							<div class="col-sm-10">
+								<input type="email"  disabled="disabled" class="form-control" id="question" name="question"
+									placeholder="email"> <span class="help-block"></span>
+							</div>
+							<label for="inputEmail3" class="col-sm-2 control-label">答案：</label>
+							<div class="col-sm-10">
+								<input    class="form-control" id="question_answer" name="question_answer" 
+									> <span class="help-block"></span>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" id="check_answer">
+						提交</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+
+<form id="form12" action="../deposit/finishForder" method="post">
+        <input type="hidden" name="money" id="alipay_money" value="">
+        <input type="hidden" name="forderId" id="alipay_forderId" value="">
+        <input type="hidden" name="logistics" id="alipay_logistics" value="">
+</form>
+
+ <input id="logistics_id" type="hidden" value="0" />
+	<!--顶部导航条 -->
+			<div class="am-container header">
+				<ul class="message-l">
+					<div class="topMessage">
+						<div class="menu-hd" id="login_status">
+							<!-- <a href="#"  class="h">亲，请登录</a>
+							<a href="#" >免费注册</a> -->
+						</div>
+					</div>
+				</ul>
+				<ul class="message-r">
+					<div class="topMessage home">
+						<div class="menu-hd"><a href="home.html" target="_top" class="h">商城首页</a></div>
+					</div>
+					<div class="topMessage my-shangcheng">
+						<div class="menu-hd MyShangcheng"><a href="test_main.html" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a></div>
+					</div>
+					<div class="topMessage mini-cart">
+						<div class="menu-hd"><a id="mc-menu-hd" href="shopcart.html" target="_top"><i class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong id="J_MiniCartNum" class="h">0</strong></a></div>
+					</div>
+					<div class="topMessage favorite">
+						<!-- <div class="menu-hd"><a href="test_collection.html" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div> -->
+				</ul>
+				</div>
+
+	<!--悬浮搜索框-->
+
+<div class="nav white">
+			<div class="logo">
+				<img src="../images/logo.png" />
+			</div>
+			<div class="logoBig">
+				<li><img src="../images/logobig.png" /></li>
+			</div>
+
+
+			<div class="search-bar pr">
+				<!-- <a name="index_none_header_sysc" href="#"></a> -->
+
+				<input id="searchInput" name="" type="text" placeholder="搜索"
+					autocomplete="off">
+				<button id="ai-topsearch" class="submit am-btn" index="1">搜索</button>
+
+			</div>
+		</div>
+
+	<div class="clear"></div>
+	<div class="concent">
+		<!--地址 -->
+		<div class="paycont">
+			<div class="address">
+				<h3>确认收货地址</h3>
+				<div class="control">
+					<div id="create_new_address" class="tc-btn  am-btn am-btn-danger">创建新地址</div>
+				</div>
+				<div class="clear"></div>
+				<ul id="address_ul">
+
+				</ul>
+
+				<div class="clear"></div>
+			</div>	
+			<!--物流 -->
+			<div class="logistics">
+				<h3>选择物流方式</h3>
+				<ul class="op_express_delivery_hot" id="express_list">
+					<li value="0" data-value="yuantong" class="OP_LOG_BTN selected"><i
+						class="c-gap-right" style="background-position: 0px -468px"></i>圆通</li>
+					<li value="1" data-value="shentong" class="OP_LOG_BTN  "><i
+						class="c-gap-right" style="background-position: 0px -1008px"></i>申通</li>
+					<li value="2" data-value="yunda" class="OP_LOG_BTN  "><i
+						class="c-gap-right" style="background-position: 0px -576px"></i>韵达</li>
+					<li value="3" data-value="zhongtong" class="OP_LOG_BTN"><i
+						class="c-gap-right" style="background-position: 0px -324px"></i>中通</li>
+					<li value="4" data-value="shunfeng" class="OP_LOG_BTN"><i
+						class="c-gap-right" style="background-position: 0px -180px"></i>顺丰</li>
+				</ul>
+			</div>
+			<div class="clear"></div>
+            
+			
+			<div class="clear"></div>
+
+			<!--订单 -->
+			<div class="concent">
+				<div id="payTable">
+					<h3>确认订单信息</h3>
+					<div class="cart-table-th">
+						<div class="wp">
+
+							<div class="th th-item">
+								<div class="td-inner">商品信息</div>
+							</div>
+							<div class="th th-price">
+								<div class="td-inner">单价</div>
+							</div>
+							<div class="th th-amount">
+								<div class="td-inner">数量</div>
+							</div>
+							<div class="th th-sum">
+								<div class="td-inner">金额</div>
+							</div>
+							<!-- <div class="th th-oplist">
+								<div class="td-inner">配送方式</div>
+							</div> -->
+
+						</div>
+					</div>
+				</div>
+				<table id="table">
+				</table>
+			</div>
+
+			<div class="clear"></div>
+			<div class="pay-total">
+				<!--留言-->
+				<div class="order-extra">
+					<div class="order-user-info">
+						<div id="holyshit257" class="memo">
+							<label>买家留言：</label> <input type="text"
+								title="选填,对本次交易的说明（建议填写已经和卖家达成一致的说明）"
+								placeholder="选填,建议填写和卖家达成一致的说明"
+								class="memo-input J_MakePoint c2c-text-default memo-close">
+							<div class="msg hidden J-msg">
+								<p class="error">最多输入500个字符</p>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<!--优惠券 -->
+				<div class="buy-agio">
+					<li class="td td-coupon"></li>
+
+					<li class="td td-bonus"></li>
+
+				</div>
+				<div class="clear"></div>
+			</div>
+
+			<!--信息 -->
+			<div class="order-go clearfix">
+				<div class="pay-confirm clearfix">
+					<div class="box">
+						<div tabindex="0" id="holyshit267" class="realPay">
+							<em class="t">实付款：</em> <span class="price g_price "> <span class="style-large-bold-red ">¥</span>
+								<em class="style-large-bold-red " id="J_ActualFee"></em>
+								<input type="hidden" id="al_m" />
+							</span>
+						</div>
+
+						<div id="holyshit268" class="pay-address">
+
+						</div>
+					</div>
+
+					<div id="holyshit269" class="submitOrder">
+						<div class="go-btn-wrap">
+							<a id="J_Go"  class="btn-go" tabindex="0"
+								title="点击此按钮，提交订单">提交订单</a>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="clear"></div>
+	</div>
+	<div class="theme-popover-mask"></div>
+	<div class="theme-popover">
+
+		<!--标题 -->
+		<div class="am-cf am-padding">
+			<div class="am-fl am-cf">
+				<strong class="am-text-danger am-text-lg">新增地址</strong> / <small>Add
+					address</small>
+			</div>
+		</div>
+		<hr />
+
+		<div class="am-u-md-12">
+			<form class="am-form am-form-horizontal">
+
+				<div class="am-form-group">
+					<label for="user-name" class="am-form-label">收货人</label>
+					<div class="am-form-content">
+						<input type="text" id="user-name" placeholder="收货人">
+					</div>
+				</div>
+
+				<div class="am-form-group">
+					<label for="user-phone" class="am-form-label">手机号码</label>
+					<div class="am-form-content">
+						<input id="user-phone" placeholder="手机号必填" type="email">
+					</div>
+				</div>
+
+				<div class="am-form-group">
+					<label for="user-phone" class="am-form-label">所在地</label>
+					<div class="am-form-content address">
+						<select data-am-selected>
+							<option value="a">浙江省</option>
+							<option value="b">湖北省</option>
+						</select> <select data-am-selected>
+							<option value="a">温州市</option>
+							<option value="b">武汉市</option>
+						</select> <select data-am-selected>
+							<option value="a">瑞安区</option>
+							<option value="b">洪山区</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="am-form-group">
+					<label for="user-intro" class="am-form-label">详细地址</label>
+					<div class="am-form-content">
+						<textarea class="" rows="3" id="user-intro" placeholder="输入详细地址"></textarea>
+						<small>100字以内写出你的详细地址...</small>
+					</div>
+				</div>
+
+				<div class="am-form-group theme-poptit">
+					<div class="am-u-sm-9 am-u-sm-push-3">
+						<div class="am-btn am-btn-danger">保存</div>
+						<div class="am-btn am-btn-danger close">取消</div>
+					</div>
+				</div>
+			</form>
+		</div>
+
+	</div>
+
+	<div class="clear"></div>
+	
+	
+
+	
+	
+</body>
+
+</html>

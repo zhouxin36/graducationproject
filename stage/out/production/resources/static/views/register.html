@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>注册</title>
+
+    <link rel="stylesheet"
+          href="../css/amazeui.min.css"/>
+    <link href="../css/dlstyle.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../css/font.css">
+    <link rel="stylesheet" href="../css/xadmin.css">
+    <link rel="stylesheet" type="text/css" href="../css/verify.css">
+    <link rel="stylesheet"
+          href="../bootstrap-3.3.7-dist/css/bootstrap.min.css">
+</head>
+
+<body>
+<!-- 模态框 -->
+<div id="myModal-c" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 605px;">
+            <div id="mpanel5" style="margin-top:50px;">
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- 模态框 -->
+<div class="login-boxtitle">
+    <a href="home.html"><img alt="" src="../images/logobig.png"/></a>
+</div>
+
+<div class="login-banner">
+    <div class="login-main">
+        <div class="login-banner-bg">
+            <span></span><img src="../images/big.jpg"/>
+        </div>
+        <div class="login-box">
+            <h3 class="title">注册</h3>
+            <div class="login-form">
+                <span id="sp_lgoin_message" style="font-size: 10px; color: red;"></span>
+                <form id="form1">
+                    <div class="user-pass">
+                        <label for="password"><i
+                                class="glyphicon glyphicon-user"
+                                style="margin: 10px 0px 15px 5px;"></i></label> <input type="text"
+                                                                                       name="name" id="name"
+                                                                                       placeholder="用户名">
+                    </div>
+                    <span id="sp_name" style="font-size: 10px;color: red;">&nbsp;</span>
+
+                    <div class="user-email">
+                        <label for="email"><i
+                                class="glyphicon glyphicon-envelope"
+                                style="margin: 10px 0px 15px 5px;"></i></label> <input type="email"
+                                                                                       name="email" id="email"
+                                                                                       placeholder="请输入邮箱账号">
+                    </div>
+                    <span id="sp" style="font-size: 10px;color: red;">&nbsp;</span>
+                    <div class="user-phone">
+                        <label for="phone"><i
+                                class="am-icon-mobile-phone am-icon-md"></i></label> <input type="tel"
+                                                                                            name="phone" id="phone"
+                                                                                            placeholder="请输入手机号">
+                    </div>
+                    <span id="sp_phone" style="font-size: 10px;color: red;">&nbsp;</span>
+
+                    <div class="user-pass">
+                        <label for="password"><i class="am-icon-lock"
+                        ></i></label> <input type="password"
+                                             name="password" id="password" placeholder="设置密码">
+                    </div>
+                    <span id="sp_password" style="font-size: 10px;color: red;">&nbsp;</span>
+
+                </form>
+                <form>
+                    <div class="user-pass">
+                        <label for="passwordRepeat"><i class="am-icon-lock"
+                        ></i></label> <input type="password"
+                                             name="passwordRepeat" id="passwordRepeat" placeholder="确认密码">
+                    </div>
+                    <span id="sp1" style="font-size: 10px;color: red;">&nbsp;</span>
+                </form>
+
+
+            </div>
+            <div class="login-links">
+                <a
+                        href="login.html" class="zcnext am-fr am-btn-default">登陆</a>
+                <div class="am-cf">
+                    <input type="submit" name="" value="注册" id="zhuce"
+                           class="am-btn am-btn-primary am-btn-sm am-fl">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../js/jquery.min.js"></script>
+<script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="../js/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../js/xadmin.js"></script>
+<script type="text/javascript" src="../js/verify.js"></script>
+<script type="text/javascript">
+    $(document).keypress(function(e) {
+        var eCode = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+        if (eCode == 13){
+            register();
+        }
+    });
+    function register() {
+        var i = 0;
+        var sp = $("#sp");
+        var sp1 = $("#sp1");
+        var sp2 = $("#sp2");
+        var sp_name = $("#sp_name");
+        var sp_phone = $("#sp_phone");
+        var sp_password = $("#sp_password");
+        var name = $("#name").val();
+        var email = $("#email").val();
+        var phone = $("#phone").val();
+        var password = $("#password").val();
+        var passwordRepeat = $("#passwordRepeat").val();
+        if (name == "") {
+            i++;
+            sp_name.empty();
+            sp_name.append("用户名不能为空");
+            return;
+        }
+        if (email == "") {
+            i++;
+            sp.empty();
+            sp.append("邮箱不能为空");
+            return;
+        }
+        if (phone == "") {
+            i++;
+            sp_phone.empty();
+            sp_phone.append("电话不能为空");
+            return;
+        }
+        if (password == "") {
+            i++;
+            sp_password.empty();
+            sp_password.append("密码不能为空");
+            return;
+        }
+        if (passwordRepeat == "") {
+            i++;
+            sp1.empty();
+            sp1.append("重复密码不能为空");
+            return;
+        }
+
+        $("#myModal-c").modal("show");
+    }
+    function refresh(){
+        $('#mpanel5').empty();
+        $('#mpanel5').pointsVerify({
+            defaultNum : 4,	//默认的文字数量
+            checkNum : 2,	//校对的文字数量
+            vSpace : 5,	//间隔
+            imgName : image,
+            imgSize : {
+                width: '600px',
+                height: '200px'
+            },
+            barSize : {
+                width : '600px',
+                height : '40px'
+            },
+            ready : function() {
+            },
+            success : function() {
+                action();
+                //......后续操作
+            },
+            error : function() {
+//		        	alert('验证失败！');
+            }
+
+        });
+    }
+    
+    function action(){
+        $("#myModal-c").modal("hide");
+            layer.msg("注册中，请稍等", {
+                icon: 1,
+                time: 5000
+            });
+            $.ajax({
+                url: "../User/zhuce",
+                data: $("#form1").serialize(),
+                type: "post",
+
+                success: function (msg) {
+                    if (msg.code == 200) {
+                        layer.msg("注册成功！马上为您跳转登录界面！", {
+                            icon: 1,
+                            time: 5000
+                        });
+                        setTimeout(function () {
+                            $(location).prop("href", "login.html");
+                        }, 5000);
+
+                    } else {
+                        refresh();
+                        layer.msg("注册失败！", {
+                            icon: 2,
+                            time: 5000
+                        });
+                    }
+
+                },
+                error: function () {
+                    refresh();
+                    layer.msg("error！", {
+                        icon: 2,
+                        time: 5000
+                    });
+                }
+            });
+    }
+    $(function () {
+        var sp = $("#sp");
+        var num = sp[0].offsetWidth;
+
+        $("#zhuce").click(function () {
+            register();
+        });
+
+        $("#name").change(function () {
+            var v = this.value;
+            if (null != v && "" != v) {
+                $("#sp_name").empty();
+                $("#sp_name").append("&nbsp;");
+
+            }
+        });
+
+        $("#phone").change(function () {
+            var v = this.value;
+            if (null != v && "" != v) {
+                $("#sp_phone").empty();
+                var reg = new RegExp("^(13|14|15|17|18)[0-9]{9}$");
+                if(reg.test(v)) {
+                    $("#sp_phone").append("&nbsp;");
+                }else {
+                    $("#sp_phone").append("手机号格式不正确");
+                }
+            }
+        });
+
+        $("#password").change(function () {
+            var v = this.value;
+            if (null != v && "" != v) {
+                if(v.length >=6 && v.length<=16) {
+                    $("#sp_password").empty();
+                    $("#sp_password").append("&nbsp;");
+                }else {
+                    $("#sp_password").empty();
+                    $("#sp_password").append("密码必须6-16位数字字符字母组合");
+                }
+            }
+        });
+
+        $("#email").change(
+            function () {
+                var email = this.value;
+                if ("" == email) {
+                    $("#sp").empty();
+                    $("#sp").append("&nbsp;");
+                    return;
+                }else {
+                    var reg = new RegExp("[\\w\\.\\-]+@([\\w\\-]+\\.)+[\\w\\-]+");
+                    if(!reg.test(email)){
+                        $("#sp").empty();
+                        $("#sp").append("邮箱格式不正确");
+                        return;
+                    }
+                }
+
+                $.ajax({
+                    url: "../User/validateEmail",
+                    data: "email=" + email,
+                    type: "post",
+                    async: false,
+                    success: function (msg) {
+                        $("#sp").empty();
+                        if (msg.code != 200) {
+                            $("#sp").append(msg.msg);
+                        } else {
+                            $("#sp").append("&nbsp;");
+                        }
+                    },
+                    error: function (msg) {
+                        layer.msg("error！", {
+                            icon: 2,
+                            time: 5000
+                        });
+                    }
+
+                });
+            });
+
+        $("#passwordRepeat").change(function () {
+            $("#sp1").empty();
+            var pass = $("#password").val();
+            var passes = $("#passwordRepeat").val();
+            if (pass != passes) {
+                $("#sp1").append("密码不一致");
+            } else {
+                $("#sp1").append("&nbsp;");
+            }
+        });
+    });
+
+
+</script>
+</body>
+</html>

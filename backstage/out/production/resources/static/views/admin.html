@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>应用列表</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/font-awesome.min.css">
+<link rel="stylesheet" href="../plugins/jqgrid/ui.jqgrid-bootstrap.css">
+<link rel="stylesheet" href="../plugins/ztree/css/metroStyle/metroStyle.css">
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/common.css">
+<script src="../libs/jquery.min.js"></script>
+<script src="../plugins/layer/layer.js"></script>
+<script src="../libs/bootstrap.min.js"></script>
+<script src="../libs/vue.min.js"></script>
+<script src="../libs/validator.min.js"></script>
+<script src="../plugins/jqgrid/grid.locale-cn.js"></script>
+<script src="../plugins/jqgrid/jquery.jqGrid.min.js"></script>
+<script src="../plugins/ztree/jquery.ztree.all.min.js"></script>
+<script src="../js/common.js"></script>
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <br/>
+	<div v-show="showList">
+		<div class="grid-btn">
+			<div class="form-group col-sm-2">
+				<input type="text" class="form-control" v-model="q.name" @keyup.enter="query" placeholder="登陆名">
+			</div>
+			<a class="btn btn-default" @click="query">查询</a>
+			<a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			<a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			<a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+		</div>
+	    <table id="jqGrid"></table>
+    </div>
+    
+    <div v-show="!showList" class="panel panel-default">
+		<div class="panel-heading">{{title}}</div>
+		<form class="form-horizontal">
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">登陆名:</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="app.login" placeholder="登陆名"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">密码:</div>
+			   	<div class="col-sm-10">
+			      <input type="password" class="form-control" v-model="app.password" placeholder="密码"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">重复密码:</div>
+			   	<div class="col-sm-10">
+			      <input type="password" class="form-control" v-model="app.repassword" placeholder="重复密码"/>
+			    </div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">身份</div>
+				<label class="radio-inline">
+				  <input type="radio" name="system" value="0" v-model="app.system" checked="checked"/> 普通管理员
+				</label>
+				<label class="radio-inline">
+				  <input type="radio" name="system" value="1" v-model="app.system"/> 系统管理员
+				</label>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label"></div> 
+				<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+				&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload(1)" value="返回"/>
+			</div>
+		</form>
+	</div>
+
+
+
+	<!------------------ 应用详情弹框 ----------------------------->
+	<div class="modal fade" id="modal_app_info">
+		<div class="modal-dialog">
+			<form class="form-horizontal">
+				<div class="modal-content" style="width: 1000px;">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">应用信息</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<div class="col-sm-3 control-label">应用标识：</div>
+							<div class="col-sm-3">
+								<input type="text" v-model="app.id" class="hidden"/>
+								<input type="text" v-model="app.appId" class="no-border" readonly="readonly"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-3 control-label">应用名称：</div>
+							<div class="col-sm-3">
+								<input type="text" v-model="app.name" class="no-border" readonly="readonly"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-3 control-label">应用URL：</div>
+							<div class="col-sm-3">
+								<input type="text" v-model="app.url" class="no-border" readonly="readonly"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-3 control-label">应用状态：</div>
+							<div class="col-sm-3">
+								<p type="text" v-if="app.deleteStatus == 0">正常</p>
+								<p type="text" v-if="app.deleteStatus == -1">禁用</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-3 control-label">应用资源：</div>
+							<div class="col-sm-10">
+								<textarea  v-model="app.resourceXmlFile" readonly="readonly" style="width: 700px;height: 350px;"></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+					</div>
+				</div>
+			</form>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+</div>
+
+<script src="../js/modules/admin.js"></script>
+</body>
+</html>

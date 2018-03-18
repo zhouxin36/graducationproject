@@ -1,0 +1,14 @@
+server:
+  port: 8081
+  context-path: /graducation
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${E_URL1},${E_URL2},${E_URL3}
+  instance:
+    prefer-ip-address: true
+spring:
+  application:
+    name: api
+logging:
+  level: debug
