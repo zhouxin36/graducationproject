@@ -2,8 +2,11 @@
   <library name="Gradle: org.springframework.data:spring-data-redis:1.8.9.RELEASE">
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/springframework/data/spring-data-redis/1.8.9.RELEASE/spring-data-redis-1.8.9.RELEASE.jar!/" />
+      <root url="jar://D:/JavaEE/gradle/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-redis/1.8.9.RELEASE/cc69ad7b0ce12e2dc26e22ebb93caeb2a3ce70b9/spring-data-redis-1.8.9.RELEASE.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://D:/JavaEE/gradle/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-redis/1.8.9.RELEASE/bed2ce19f318dcf5afb77f381114071e829bed37/spring-data-redis-1.8.9.RELEASE-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

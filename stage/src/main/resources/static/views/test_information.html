@@ -130,21 +130,21 @@
                 //     allowedFileExtensions: ["jpg", "png", "gif"],
                 //     uploadUrl: "../User/updateImg"
                 // });
-                var arr = da.split('-');
-                for (var j = 0; j < arr.length; j++) {
-
-                    switch (j) {
-                        case 0:
-                            $("#select_year").val(arr[j]);
-                            break;
-                        case 1:
-                            $("#select_month").val(arr[j]);
-                            break;
-                        case 2:
-                            $("#select_day").val(arr[j]);
-                            break;
-                    }
-                }
+//                var arr = da.split('-');
+//                for (var j = 0; j < arr.length; j++) {
+//
+//                    switch (j) {
+//                        case 0:
+//                            $("#select_year").val(arr[j]);
+//                            break;
+//                        case 1:
+//                            $("#select_month").val(arr[j]);
+//                            break;
+//                        case 2:
+//                            $("#select_day").val(arr[j]);
+//                            break;
+//                    }
+//                }
                 $("#user_name").html(data.name);
                 var memberLevel = "";
                 if (data.memberLevel == 0)

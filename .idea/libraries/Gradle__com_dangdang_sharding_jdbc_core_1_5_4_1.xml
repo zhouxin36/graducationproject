@@ -2,10 +2,12 @@
   <library name="Gradle: com.dangdang:sharding-jdbc-core:1.5.4.1">
     <CLASSES>
       <root url="jar://D:/java/gradle-repo/caches/modules-2/files-2.1/com.dangdang/sharding-jdbc-core/1.5.4.1/213682523ed14300d94c4434cc07befa85fe14e5/sharding-jdbc-core-1.5.4.1.jar!/" />
+      <root url="jar://D:/JavaEE/gradle/.gradle/caches/modules-2/files-2.1/com.dangdang/sharding-jdbc-core/1.5.4.1/213682523ed14300d94c4434cc07befa85fe14e5/sharding-jdbc-core-1.5.4.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
       <root url="jar://D:/java/gradle-repo/caches/modules-2/files-2.1/com.dangdang/sharding-jdbc-core/1.5.4.1/9382d4d0b7812cb83cd231a450a5768b1a3548cb/sharding-jdbc-core-1.5.4.1-sources.jar!/" />
+      <root url="jar://D:/JavaEE/gradle/.gradle/caches/modules-2/files-2.1/com.dangdang/sharding-jdbc-core/1.5.4.1/9382d4d0b7812cb83cd231a450a5768b1a3548cb/sharding-jdbc-core-1.5.4.1-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

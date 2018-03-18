@@ -67,7 +67,8 @@ T.p = url;
 //请求前缀
 var baseURL = "/graducation/";
 
-var fileURL = "http://localhost:10000/graducation/images/";
+var fileURL = "http://localhost:8080/images/";
+// var fileURL = "http://localhost:10000/graducation/images/";
 
 //登录token
 var token = localStorage.getItem("token");
