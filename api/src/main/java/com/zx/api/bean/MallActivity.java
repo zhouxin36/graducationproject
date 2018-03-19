@@ -7,6 +7,8 @@ public class MallActivity {
 
     private String remark;
 
+    private String url;
+
     public String getId() {
         return id;
     }
@@ -31,12 +33,11 @@ public class MallActivity {
         this.remark = remark;
     }
 
-    @Override
-    public String toString() {
-        return "MallActivity{" +
-                "id='" + id + '\'' +
-                ", picId='" + picId + '\'' +
-                ", remark='" + remark + '\'' +
-                '}';
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

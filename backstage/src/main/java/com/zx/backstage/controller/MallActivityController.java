@@ -47,7 +47,7 @@ public class MallActivityController {
 
     @RequestMapping(value = "/add_activity", method = RequestMethod.POST)
     @ResponseBody
-    public ResultDTO add_activity(HttpServletRequest request, String remark)
+    public ResultDTO add_activity(HttpServletRequest request, String remark,String url)
             throws IllegalStateException, IOException {
         logger.info("---->MallActivityController/add_activity; remark:{}", remark);
         MallActivity mallActivity = new MallActivity();
@@ -64,6 +64,7 @@ public class MallActivityController {
                 pic.setId(MyUtils.getUUID());
                 picService.insert(pic);
                 mallActivity.setRemark(remark);
+                mallActivity.setUrl(url);
                 mallActivity.setPicId(pic.getId());
                 mallActivity.setId(activityId);
                 mallActivityService.insert(mallActivity);

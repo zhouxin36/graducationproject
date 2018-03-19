@@ -14,7 +14,6 @@
             <option value="$PROJECT_DIR$/backstage" />
             <option value="$PROJECT_DIR$/config-server" />
             <option value="$PROJECT_DIR$/eurekaserver" />
-            <option value="$PROJECT_DIR$/file" />
             <option value="$PROJECT_DIR$/hystrix-dashboard" />
             <option value="$PROJECT_DIR$/hystrix-turbine" />
             <option value="$PROJECT_DIR$/persistence" />

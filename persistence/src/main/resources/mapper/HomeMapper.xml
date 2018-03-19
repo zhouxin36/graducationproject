@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zx.persistence.dao.MallActivityMapper">
-  <resultMap id="BaseResultMap" type="com.zx.persistence.bean.MallActivity">
+<mapper namespace="com.zx.persistence.dao.HomeMapper">
+  <resultMap id="BaseResultMap" type="com.zx.persistence.bean.Home">
     <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="pic_id" jdbcType="VARCHAR" property="picId" />
-    <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="category_id" jdbcType="VARCHAR" property="categoryId" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, pic_id, remark, url
+    id, category_id, sort, category_name
   </sql>
-  <select id="selectByExample" parameterType="com.zx.persistence.bean.MallActivityExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.zx.persistence.bean.HomeExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from mall_activity
+    from home
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -85,76 +85,76 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from mall_activity
+    from home
     where id = #{id,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from mall_activity
+    delete from home
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.zx.persistence.bean.MallActivityExample">
-    delete from mall_activity
+  <delete id="deleteByExample" parameterType="com.zx.persistence.bean.HomeExample">
+    delete from home
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.zx.persistence.bean.MallActivity">
-    insert into mall_activity (id, pic_id, remark, 
-      url)
-    values (#{id,jdbcType=VARCHAR}, #{picId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
-      #{url,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.zx.persistence.bean.Home">
+    insert into home (id, category_id, sort, 
+      category_name)
+    values (#{id,jdbcType=VARCHAR}, #{categoryId,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, 
+      #{categoryName,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.zx.persistence.bean.MallActivity">
-    insert into mall_activity
+  <insert id="insertSelective" parameterType="com.zx.persistence.bean.Home">
+    insert into home
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="picId != null">
-        pic_id,
+      <if test="categoryId != null">
+        category_id,
       </if>
-      <if test="remark != null">
-        remark,
+      <if test="sort != null">
+        sort,
       </if>
-      <if test="url != null">
-        url,
+      <if test="categoryName != null">
+        category_name,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="picId != null">
-        #{picId,jdbcType=VARCHAR},
+      <if test="categoryId != null">
+        #{categoryId,jdbcType=VARCHAR},
       </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
       </if>
-      <if test="url != null">
-        #{url,jdbcType=VARCHAR},
+      <if test="categoryName != null">
+        #{categoryName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.zx.persistence.bean.MallActivityExample" resultType="java.lang.Long">
-    select count(*) from mall_activity
+  <select id="countByExample" parameterType="com.zx.persistence.bean.HomeExample" resultType="java.lang.Long">
+    select count(*) from home
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update mall_activity
+    update home
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=VARCHAR},
       </if>
-      <if test="record.picId != null">
-        pic_id = #{record.picId,jdbcType=VARCHAR},
+      <if test="record.categoryId != null">
+        category_id = #{record.categoryId,jdbcType=VARCHAR},
       </if>
-      <if test="record.remark != null">
-        remark = #{record.remark,jdbcType=VARCHAR},
+      <if test="record.sort != null">
+        sort = #{record.sort,jdbcType=INTEGER},
       </if>
-      <if test="record.url != null">
-        url = #{record.url,jdbcType=VARCHAR},
+      <if test="record.categoryName != null">
+        category_name = #{record.categoryName,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -162,35 +162,35 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update mall_activity
+    update home
     set id = #{record.id,jdbcType=VARCHAR},
-      pic_id = #{record.picId,jdbcType=VARCHAR},
-      remark = #{record.remark,jdbcType=VARCHAR},
-      url = #{record.url,jdbcType=VARCHAR}
+      category_id = #{record.categoryId,jdbcType=VARCHAR},
+      sort = #{record.sort,jdbcType=INTEGER},
+      category_name = #{record.categoryName,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zx.persistence.bean.MallActivity">
-    update mall_activity
+  <update id="updateByPrimaryKeySelective" parameterType="com.zx.persistence.bean.Home">
+    update home
     <set>
-      <if test="picId != null">
-        pic_id = #{picId,jdbcType=VARCHAR},
+      <if test="categoryId != null">
+        category_id = #{categoryId,jdbcType=VARCHAR},
       </if>
-      <if test="remark != null">
-        remark = #{remark,jdbcType=VARCHAR},
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
       </if>
-      <if test="url != null">
-        url = #{url,jdbcType=VARCHAR},
+      <if test="categoryName != null">
+        category_name = #{categoryName,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zx.persistence.bean.MallActivity">
-    update mall_activity
-    set pic_id = #{picId,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR},
-      url = #{url,jdbcType=VARCHAR}
+  <update id="updateByPrimaryKey" parameterType="com.zx.persistence.bean.Home">
+    update home
+    set category_id = #{categoryId,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      category_name = #{categoryName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -143,7 +143,7 @@ vm = new Vue({
                         downloadUrl: null,
                         width: "120px",
                         key: null
-                }
+                };
                 var url = fileURL + list1[i].path;
                 outImage.downloadUrl = url;
                 // noinspection JSValidateTypes
@@ -157,8 +157,8 @@ vm = new Vue({
                     caption: null,
                     downloadUrl: null,
                     width: "120px",
-                    key: null,
-                }
+                    key: null
+                };
                 var url = fileURL + list2[i].path;
                 outImage.downloadUrl = url;
                 // noinspection JSValidateTypes
@@ -172,8 +172,8 @@ vm = new Vue({
                     caption: null,
                     downloadUrl: null,
                     width: "120px",
-                    key: null,
-                }
+                    key: null
+                };
                 var url = fileURL + list3[i].path;
                 outImage.downloadUrl = url;
                 // noinspection JSValidateTypes
@@ -182,6 +182,15 @@ vm = new Vue({
                 arr3.push(url);
                 arr3_.push(outImage);
             }
+            var div1 = $("<div></div>");
+            div1.addClass("control-label");
+            div1.append("头像图片(一张):");
+            var inp1 = $("<input/>");
+            inp1.attr("id","file-4");
+            inp1.attr("name","file");
+            inp1.attr("type","file");
+
+            $("#image1").append(div1).append(inp1);
             $("#file-4").fileinput({
                 uploadExtraData: {id: id, type: 1},
                 uploadUrl: baseURL + 'upload',
@@ -202,6 +211,15 @@ vm = new Vue({
                 deleteUrl: baseURL + "delete_pic"
             });
 
+            var div2 = $("<div></div>");
+            div2.addClass("control-label");
+            div2.append("显示图片:");
+            var inp2 = $("<input/>");
+            inp2.attr("id","file-zh1");
+            inp2.attr("name","file");
+            inp2.attr("type","file");
+
+            $("#image2").append(div2).append(inp2);
             $("#file-zh1").fileinput({
                 uploadExtraData: {id: id, type: 2},
                 uploadUrl: baseURL + 'upload',
@@ -211,6 +229,16 @@ vm = new Vue({
                 initialPreviewConfig: arr2_,
                 deleteUrl: baseURL + "delete_pic"
             });
+
+            var div3 = $("<div></div>");
+            div3.addClass("control-label");
+            div3.append("详细图片:");
+            var inp3 = $("<input/>");
+            inp3.attr("id","file-zh2");
+            inp3.attr("name","file");
+            inp3.attr("type","file");
+
+            $("#image3").append(div3).append(inp3);
             $("#file-zh2").fileinput({
                 uploadExtraData: {id: id, type: 3},
                 uploadUrl: baseURL + 'upload',
@@ -325,6 +353,9 @@ vm = new Vue({
                 postData: {'name': vm.q.name},
                 page: p
             }).trigger("reloadGrid");
+            $("#image1").empty();
+            $("#image2").empty();
+            $("#image3").empty();
         },
         validator: function () {
             if (isBlank(vm.app.name)) {

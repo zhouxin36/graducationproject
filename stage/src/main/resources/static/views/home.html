@@ -73,247 +73,7 @@
 								div.append(a).append(b);
 							}
 						});
-         //零食板块 （上面的板块）
-		function show_p(msg,p) {
-			//第一部分
-			var div1 = $("<div></div>");
-			div1.addClass("am-container");
-			var div1_1 = $("<div></div>");
-			div1_1.addClass("shopTitle");
-			var h1_1 = $("<h4></h4>");
-			var h1_2 = $("<h3></h3>");
-			var div1_2 = $("<div></div>");
-			div1_2.addClass("today-brands");
-			for (var i = 0; msg.msg1_3.data.pageInfo.list[i] != null; i++) {
-				var a1 = $("<a></a>");
-				var name = msg.msg1_3.data.pageInfo.list[i].name.split('/');
-				a1.append(name[0]);
-				a1.attr("href", "introduction.html?id="+msg.msg1_3.data.pageInfo.list[i].id);
-				div1_2.append(a1);
-			}
-			var sp = $("<span></span>");
-			sp.addClass("more");
-			var a1_1 = $("<a></a>");
-			var i1 = $("<i></i>");
-			i1.addClass("am-icon-angle-right");
-			i1.attr("style", "padding-left: 10px;");
-			sp.append("更多美味").append(i1);
-			h1_1.append(msg.category_list[0].type);
-			h1_2.append("每一个商品都有一个故事");
-			div1_1.append(h1_1).append(h1_2).append(div1_2);
-			div1.append(div1_1);
-			p.append(div1);
 
-			//第二部分
-			var div2 = $("<div></div>");
-			div2.addClass("am-g am-g-fixed floodFour");
-			//第一小部分
-			var div2_1 = $("<div></div>");
-			div2_1.addClass("am-u-sm-5 am-u-md-4 text-one list ");
-			var div2_1_1 = $("<div></div>");
-			div2_1_1.addClass("word");
-			for (var i = 0; msg.msg1_2.data.pageInfo.list[i] != null; i++) {
-				var a2_1_1 = $("<a></a>");
-				a2_1_1.addClass("outer").attr("href", "introduction.html?id="+msg.msg1_2.data.pageInfo.list[i].id);
-				var sp2_1_1 = $("<span></span>");
-				sp2_1_1.addClass("inner");
-				var b2_1_1 = $("<b></b>");
-				b2_1_1.addClass("text");
-				var name = msg.msg1_2.data.pageInfo.list[i].name.split('/');
-				b2_1_1.append(name[0]);
-				//b2_1_1.append(msg.msg1_2.data.pageInfo.list[i].name);
-				sp2_1_1.append(b2_1_1);
-				a2_1_1.append(sp2_1_1);
-				div2_1_1.append(a2_1_1);
-			}
-			var a2_1_2 = $("<a></a>");
-			a2_1_2.attr("href", "#");
-			var div2_1_2 = $("<div></div>");
-			div2_1_2.addClass("outer-con");
-			var div2_1_3 = $("<div></div>");
-			div2_1_3.addClass("title");
-			var div2_1_4 = $("<div></div>");
-			div2_1_4.addClass("sub-title");
-			div2_1_3.append("开抢啦！");
-			div2_1_4.append("零食大礼包");
-			var img2_1 = $("<img/>");
-			img2_1.attr("src", "../images/act1.png");
-			div2_1_2.append(div2_1_3).append(div2_1_4);
-			a2_1_2.append(div2_1_2).append(img2_1);
-			var div2_1_5 = $("<div></div>");
-			div2_1_5.addClass("triangle-topright");
-			div2_1.append(div2_1_1).append(a2_1_2).append(div2_1_5);
-			div2.append(div2_1);
-
-			//第二小部分
-			var div2_2_2 = $("<div></div>");
-			div2_2_2.addClass("am-u-sm-7 am-u-md-4 text-two sug");
-			show_product1(msg.msg1_1.data.pageInfo.list[0],div2_2_2);
-			div2.append(div2_2_2);
-			var div2_2_3 = $("<div></div>");
-			div2_2_3.addClass("am-u-sm-7 am-u-md-4 text-two");
-			show_product1(msg.msg1_1.data.pageInfo.list[1],div2_2_3);
-			div2.append(div2_2_3);
-			var div2_2_4 = $("<div></div>");
-			div2_2_4.addClass("am-u-sm-3 am-u-md-2 text-three big");
-			show_product1(msg.msg1_1.data.pageInfo.list[2],div2_2_4);
-			div2.append(div2_2_4);
-			var div2_2_5 = $("<div></div>");
-			div2_2_5.addClass("am-u-sm-3 am-u-md-2 text-three sug");
-			show_product1(msg.msg1_1.data.pageInfo.list[3],div2_2_5);
-			div2.append(div2_2_5);
-			var div2_2_6 = $("<div></div>");
-			div2_2_6.addClass("am-u-sm-3 am-u-md-2 text-three ");
-			show_product1(msg.msg1_1.data.pageInfo.list[4],div2_2_6);
-			div2.append(div2_2_6);
-			var div2_2_7 = $("<div></div>");
-			div2_2_7.addClass("am-u-sm-3 am-u-md-2 text-three last big");
-			show_product1(msg.msg1_1.data.pageInfo.list[5],div2_2_7);
-			div2.append(div2_2_7);
-
-			//第三部分
-			var div3 = $("<div></div>");
-			div3.addClass("clear");
-
-			p.append(div2).append(div3);
-		}
-
-		function show_p_two(msg,p) {
-			//第一部分
-			var div1 = $("<div></div>");
-			div1.addClass("am-container");
-			var div1_1 = $("<div></div>");
-			div1_1.addClass("shopTitle");
-			var h1_1 = $("<h4></h4>");
-			var h1_2 = $("<h3></h3>");
-			var div1_2 = $("<div></div>");
-			div1_2.addClass("today-brands");
-			for (var i = 0; msg.msg2_3.data.pageInfo.list[i] != null; i++) {
-				var a1 = $("<a></a>");
-				a1.attr("href", "introduction.html?id="+msg.msg2_3.data.pageInfo.list[i].id);
-				var name = msg.msg2_3.data.pageInfo.list[i].name.split('/');
-				a1.append(name[0]);
-				div1_2.append(a1);
-			}
-			var sp = $("<span></span>");
-			sp.addClass("more");
-			var a1_1 = $("<a></a>");
-			var i1 = $("<i></i>");
-			i1.addClass("am-icon-angle-right");
-			i1.attr("style", "padding-left: 10px;");
-			sp.append("更多美味").append(i1);
-			h1_1.append(msg.category_list[1].type);
-			h1_2.append("每一个商品都有一个故事");
-			div1_1.append(h1_1).append(h1_2).append(div1_2);
-			div1.append(div1_1);
-			p.append(div1);
-
-			//第二部分
-			var div2 = $("<div></div>");
-			div2.addClass("am-g am-g-fixed floodFour");
-			//第一小部分
-			var div2_1 = $("<div></div>");
-			div2_1.addClass("am-u-sm-5 am-u-md-4 text-one list ");
-			var div2_1_1 = $("<div></div>");
-			div2_1_1.addClass("word");
-			for (var i = 0; msg.msg2_2.data.pageInfo.list[i] != null; i++) {
-				var a2_1_1 = $("<a></a>");
-				a2_1_1.addClass("outer").attr("href", "introduction.html?id="+msg.msg2_2.data.pageInfo.list[i].id);
-				var sp2_1_1 = $("<span></span>");
-				sp2_1_1.addClass("inner");
-				var b2_1_1 = $("<b></b>");
-				b2_1_1.addClass("text");
-				var name = msg.msg2_2.data.pageInfo.list[i].name.split('/');
-				b2_1_1.append(name[0]);
-				sp2_1_1.append(b2_1_1);
-				a2_1_1.append(sp2_1_1);
-				div2_1_1.append(a2_1_1);
-			}
-			var a2_1_2 = $("<a></a>");
-			a2_1_2.attr("href", "#");
-			var div2_1_2 = $("<div></div>");
-			div2_1_2.addClass("outer-con");
-			var div2_1_3 = $("<div></div>");
-			div2_1_3.addClass("title");
-			var div2_1_4 = $("<div></div>");
-			div2_1_4.addClass("sub-title");
-			div2_1_3.append("开抢啦！");
-			div2_1_4.append("零食大礼包");
-			var img2_1 = $("<img/>");
-			img2_1.attr("src", "../images/act1.png");
-			div2_1_2.append(div2_1_3).append(div2_1_4);
-			a2_1_2.append(div2_1_2).append(img2_1);
-			var div2_1_5 = $("<div></div>");
-			div2_1_5.addClass("triangle-topright");
-			div2_1.append(div2_1_1).append(a2_1_2).append(div2_1_5);
-			div2.append(div2_1);
-
-			//第二小部分
-			var div2_2_2 = $("<div></div>");
-			div2_2_2.addClass("am-u-sm-7 am-u-md-4 text-two sug");
-			show_product1(msg.msg2_1.data.pageInfo.list[0],div2_2_2);
-			div2.append(div2_2_2);
-			var div2_2_3 = $("<div></div>");
-			div2_2_3.addClass("am-u-sm-7 am-u-md-4 text-two");
-			show_product1(msg.msg2_1.data.pageInfo.list[1],div2_2_3);
-			div2.append(div2_2_3);
-			var div2_2_4 = $("<div></div>");
-			div2_2_4.addClass("am-u-sm-3 am-u-md-2 text-three big");
-			show_product1(msg.msg2_1.data.pageInfo.list[2],div2_2_4);
-			div2.append(div2_2_4);
-			var div2_2_5 = $("<div></div>");
-			div2_2_5.addClass("am-u-sm-3 am-u-md-2 text-three sug");
-			show_product1(msg.msg2_1.data.pageInfo.list[3],div2_2_5);
-			div2.append(div2_2_5);
-			var div2_2_6 = $("<div></div>");
-			div2_2_6.addClass("am-u-sm-3 am-u-md-2 text-three ");
-			show_product1(msg.msg2_1.data.pageInfo.list[4],div2_2_6);
-			div2.append(div2_2_6);
-			var div2_2_7 = $("<div></div>");
-			div2_2_7.addClass("am-u-sm-3 am-u-md-2 text-three last big");
-			show_product1(msg.msg2_1.data.pageInfo.list[5],div2_2_7);
-			div2.append(div2_2_7);
-
-			//第三部分
-			var div3 = $("<div></div>");
-			div3.addClass("clear");
-
-			p.append(div2).append(div3);
-		}
-		
-		
-		
-		//加载后生成产品列表函数
-		function show_product1(msg,pl) {
-			if(msg == undefined)
-				return;
-			var name = msg.name.split('/');
-			var div_name = $("<div></div>").addClass("title").append(name[0]);
-			var div_pri = $("<div></div>").addClass("sub-title")
-					.append(msg.price+"元");
-			var i_addcart = $("<i></i>").addClass(
-					"am-icon-shopping-basket am-icon-md  seprate").append("");
-			var a_pic = $("<a></a>").attr("href", "introduction.html?id="+msg.id);
-			var img = $("<img/>");
-			$.ajax({
-				url:"../Pic/selectPicByProductType",
-				data:"id="+msg.id+"&type="+1,
-				type:"post",
-				success:function(ms){
-					if(ms.code == 200)
-						img.attr("src", fileURL+ms.data.pic_list[0].path);
-					else 
-						img.attr("src", fileURL+"no_img.jpg");
-				},
-				error:function(msg){
-					img.attr("src", fileURL+"no_img.jpg");
-				}
-			});
-			a_pic.append(img);
-			var div_outer = $("<div></div>").addClass("outer-con").append(
-					div_name).append(div_pri);
-			pl.append(div_outer).append(a_pic);
-		}
 		//热门活动
 		function hot_activity() {
 			var div_mian = $("#hot_activity");
@@ -793,9 +553,9 @@
                         data:"id="+list[i].picId,
                         type: "post",
                         async: false,
-                        success: function (msg) {
-                            li += '<li><img style="width: 954px;height: 430px;" src="'+fileURL+ msg.data.pic.path+'" />' +
-                            '</li>';
+                        success: function (msg2) {
+                            li += '<li><a href="'+list[i].url+'"><img style="width: 954px;height: 430px;" src="'+fileURL+ msg2.data.pic.path+'" />' +
+                            '</a></li>';
                         }
                     });
                 }
@@ -938,6 +698,248 @@
         ul.append(li);
 
 
+    }
+
+    //零食板块 （上面的板块）
+    function show_p(msg,p) {
+        //第一部分
+        var div1 = $("<div></div>");
+        div1.addClass("am-container");
+        var div1_1 = $("<div></div>");
+        div1_1.addClass("shopTitle");
+        var h1_1 = $("<h4></h4>");
+        var h1_2 = $("<h3></h3>");
+        var div1_2 = $("<div></div>");
+        div1_2.addClass("today-brands");
+        for (var i = 0; msg.msg1_3.data.pageInfo.list[i] != null; i++) {
+            var a1 = $("<a></a>");
+            var name = msg.msg1_3.data.pageInfo.list[i].name.split('/');
+            a1.append(name[0]);
+            a1.attr("href", "introduction.html?id="+msg.msg1_3.data.pageInfo.list[i].id);
+            div1_2.append(a1);
+        }
+        var sp = $("<span></span>");
+        sp.addClass("more");
+        var a1_1 = $("<a></a>");
+        var i1 = $("<i></i>");
+        i1.addClass("am-icon-angle-right");
+        i1.attr("style", "padding-left: 10px;");
+        sp.append("更多美味").append(i1);
+        h1_1.append(msg.category_list[0].type);
+        h1_2.append("每一个商品都有一个故事");
+        div1_1.append(h1_1).append(h1_2).append(div1_2);
+        div1.append(div1_1);
+        p.append(div1);
+
+        //第二部分
+        var div2 = $("<div></div>");
+        div2.addClass("am-g am-g-fixed floodFour");
+        //第一小部分
+        var div2_1 = $("<div></div>");
+        div2_1.addClass("am-u-sm-5 am-u-md-4 text-one list ");
+        var div2_1_1 = $("<div></div>");
+        div2_1_1.addClass("word");
+        for (var i = 0; msg.msg1_2.data.pageInfo.list[i] != null; i++) {
+            var a2_1_1 = $("<a></a>");
+            a2_1_1.addClass("outer").attr("href", "introduction.html?id="+msg.msg1_2.data.pageInfo.list[i].id);
+            var sp2_1_1 = $("<span></span>");
+            sp2_1_1.addClass("inner");
+            var b2_1_1 = $("<b></b>");
+            b2_1_1.addClass("text");
+            var name = msg.msg1_2.data.pageInfo.list[i].name.split('/');
+            b2_1_1.append(name[0]);
+            //b2_1_1.append(msg.msg1_2.data.pageInfo.list[i].name);
+            sp2_1_1.append(b2_1_1);
+            a2_1_1.append(sp2_1_1);
+            div2_1_1.append(a2_1_1);
+        }
+        var a2_1_2 = $("<a></a>");
+        a2_1_2.attr("href", "#");
+        var div2_1_2 = $("<div></div>");
+        div2_1_2.addClass("outer-con");
+        var div2_1_3 = $("<div></div>");
+        div2_1_3.addClass("title");
+        var div2_1_4 = $("<div></div>");
+        div2_1_4.addClass("sub-title");
+        div2_1_3.append("开抢啦！");
+        div2_1_4.append("零食大礼包");
+        var img2_1 = $("<img/>");
+        img2_1.attr("src", "../images/act1.png");
+        div2_1_2.append(div2_1_3).append(div2_1_4);
+        a2_1_2.append(div2_1_2).append(img2_1);
+        var div2_1_5 = $("<div></div>");
+        div2_1_5.addClass("triangle-topright");
+        div2_1.append(div2_1_1).append(a2_1_2).append(div2_1_5);
+        div2.append(div2_1);
+
+        //第二小部分
+        var div2_2_2 = $("<div></div>");
+        div2_2_2.addClass("am-u-sm-7 am-u-md-4 text-two sug");
+        show_product1(msg.msg1_1.data.pageInfo.list[0],div2_2_2);
+        div2.append(div2_2_2);
+        var div2_2_3 = $("<div></div>");
+        div2_2_3.addClass("am-u-sm-7 am-u-md-4 text-two");
+        show_product1(msg.msg1_1.data.pageInfo.list[1],div2_2_3);
+        div2.append(div2_2_3);
+        var div2_2_4 = $("<div></div>");
+        div2_2_4.addClass("am-u-sm-3 am-u-md-2 text-three big");
+        show_product1(msg.msg1_1.data.pageInfo.list[2],div2_2_4);
+        div2.append(div2_2_4);
+        var div2_2_5 = $("<div></div>");
+        div2_2_5.addClass("am-u-sm-3 am-u-md-2 text-three sug");
+        show_product1(msg.msg1_1.data.pageInfo.list[3],div2_2_5);
+        div2.append(div2_2_5);
+        var div2_2_6 = $("<div></div>");
+        div2_2_6.addClass("am-u-sm-3 am-u-md-2 text-three ");
+        show_product1(msg.msg1_1.data.pageInfo.list[4],div2_2_6);
+        div2.append(div2_2_6);
+        var div2_2_7 = $("<div></div>");
+        div2_2_7.addClass("am-u-sm-3 am-u-md-2 text-three last big");
+        show_product1(msg.msg1_1.data.pageInfo.list[5],div2_2_7);
+        div2.append(div2_2_7);
+
+        //第三部分
+        var div3 = $("<div></div>");
+        div3.addClass("clear");
+
+        p.append(div2).append(div3);
+    }
+
+    function show_p_two(msg,p) {
+        //第一部分
+        var div1 = $("<div></div>");
+        div1.addClass("am-container");
+        var div1_1 = $("<div></div>");
+        div1_1.addClass("shopTitle");
+        var h1_1 = $("<h4></h4>");
+        var h1_2 = $("<h3></h3>");
+        var div1_2 = $("<div></div>");
+        div1_2.addClass("today-brands");
+        for (var i = 0; msg.msg2_3.data.pageInfo.list[i] != null; i++) {
+            var a1 = $("<a></a>");
+            a1.attr("href", "introduction.html?id="+msg.msg2_3.data.pageInfo.list[i].id);
+            var name = msg.msg2_3.data.pageInfo.list[i].name.split('/');
+            a1.append(name[0]);
+            div1_2.append(a1);
+        }
+        var sp = $("<span></span>");
+        sp.addClass("more");
+        var a1_1 = $("<a></a>");
+        var i1 = $("<i></i>");
+        i1.addClass("am-icon-angle-right");
+        i1.attr("style", "padding-left: 10px;");
+        sp.append("更多美味").append(i1);
+        h1_1.append(msg.category_list[1].type);
+        h1_2.append("每一个商品都有一个故事");
+        div1_1.append(h1_1).append(h1_2).append(div1_2);
+        div1.append(div1_1);
+        p.append(div1);
+
+        //第二部分
+        var div2 = $("<div></div>");
+        div2.addClass("am-g am-g-fixed floodFour");
+        //第一小部分
+        var div2_1 = $("<div></div>");
+        div2_1.addClass("am-u-sm-5 am-u-md-4 text-one list ");
+        var div2_1_1 = $("<div></div>");
+        div2_1_1.addClass("word");
+        for (var i = 0; msg.msg2_2.data.pageInfo.list[i] != null; i++) {
+            var a2_1_1 = $("<a></a>");
+            a2_1_1.addClass("outer").attr("href", "introduction.html?id="+msg.msg2_2.data.pageInfo.list[i].id);
+            var sp2_1_1 = $("<span></span>");
+            sp2_1_1.addClass("inner");
+            var b2_1_1 = $("<b></b>");
+            b2_1_1.addClass("text");
+            var name = msg.msg2_2.data.pageInfo.list[i].name.split('/');
+            b2_1_1.append(name[0]);
+            sp2_1_1.append(b2_1_1);
+            a2_1_1.append(sp2_1_1);
+            div2_1_1.append(a2_1_1);
+        }
+        var a2_1_2 = $("<a></a>");
+        a2_1_2.attr("href", "#");
+        var div2_1_2 = $("<div></div>");
+        div2_1_2.addClass("outer-con");
+        var div2_1_3 = $("<div></div>");
+        div2_1_3.addClass("title");
+        var div2_1_4 = $("<div></div>");
+        div2_1_4.addClass("sub-title");
+        div2_1_3.append("开抢啦！");
+        div2_1_4.append("零食大礼包");
+        var img2_1 = $("<img/>");
+        img2_1.attr("src", "../images/act1.png");
+        div2_1_2.append(div2_1_3).append(div2_1_4);
+        a2_1_2.append(div2_1_2).append(img2_1);
+        var div2_1_5 = $("<div></div>");
+        div2_1_5.addClass("triangle-topright");
+        div2_1.append(div2_1_1).append(a2_1_2).append(div2_1_5);
+        div2.append(div2_1);
+
+        //第二小部分
+        var div2_2_2 = $("<div></div>");
+        div2_2_2.addClass("am-u-sm-7 am-u-md-4 text-two sug");
+        show_product1(msg.msg2_1.data.pageInfo.list[0],div2_2_2);
+        div2.append(div2_2_2);
+        var div2_2_3 = $("<div></div>");
+        div2_2_3.addClass("am-u-sm-7 am-u-md-4 text-two");
+        show_product1(msg.msg2_1.data.pageInfo.list[1],div2_2_3);
+        div2.append(div2_2_3);
+        var div2_2_4 = $("<div></div>");
+        div2_2_4.addClass("am-u-sm-3 am-u-md-2 text-three big");
+        show_product1(msg.msg2_1.data.pageInfo.list[2],div2_2_4);
+        div2.append(div2_2_4);
+        var div2_2_5 = $("<div></div>");
+        div2_2_5.addClass("am-u-sm-3 am-u-md-2 text-three sug");
+        show_product1(msg.msg2_1.data.pageInfo.list[3],div2_2_5);
+        div2.append(div2_2_5);
+        var div2_2_6 = $("<div></div>");
+        div2_2_6.addClass("am-u-sm-3 am-u-md-2 text-three ");
+        show_product1(msg.msg2_1.data.pageInfo.list[4],div2_2_6);
+        div2.append(div2_2_6);
+        var div2_2_7 = $("<div></div>");
+        div2_2_7.addClass("am-u-sm-3 am-u-md-2 text-three last big");
+        show_product1(msg.msg2_1.data.pageInfo.list[5],div2_2_7);
+        div2.append(div2_2_7);
+
+        //第三部分
+        var div3 = $("<div></div>");
+        div3.addClass("clear");
+
+        p.append(div2).append(div3);
+    }
+
+
+
+    //加载后生成产品列表函数
+    function show_product1(msg,pl) {
+        if(msg == undefined)
+            return;
+        var name = msg.name.split('/');
+        var div_name = $("<div></div>").addClass("title").append(name[0]);
+        var div_pri = $("<div></div>").addClass("sub-title")
+            .append(msg.price+"元");
+        var i_addcart = $("<i></i>").addClass(
+            "am-icon-shopping-basket am-icon-md  seprate").append("");
+        var a_pic = $("<a></a>").attr("href", "introduction.html?id="+msg.id);
+        var img = $("<img/>");
+        $.ajax({
+            url:"../Pic/selectPicByProductType",
+            data:"id="+msg.id+"&type="+1,
+            type:"post",
+            success:function(ms){
+                if(ms.code == 200)
+                    img.attr("src", fileURL+ms.data.pic_list[0].path);
+                else
+                    img.attr("src", fileURL+"no_img.jpg");
+            },
+            error:function(msg){
+                img.attr("src", fileURL+"no_img.jpg");
+            }
+        });
+        a_pic.append(img);
+        var div_outer = $("<div></div>").addClass("outer-con").append(
+            div_name).append(div_pri);
+        pl.append(div_outer).append(a_pic);
     }
 </script>
 </html>

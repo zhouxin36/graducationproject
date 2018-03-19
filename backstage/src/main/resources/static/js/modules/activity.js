@@ -23,7 +23,8 @@ $(function () {
                     return   "<image src='"+fileURL+url_image+"' style='width: 355px;height: 160px;'/>";
                 }
 			},
-            { label: '详细介绍', name: 'remark', width: 60, sortable:false}
+            { label: '详细介绍', name: 'remark', width: 60, sortable:false},
+            { label: 'url', name: 'url', width: 130, sortable:false}
         ],
 		viewrecords: true,
         height: screen.height * 0.55,
@@ -83,6 +84,9 @@ var vm = new Vue({
 			vm.title = "新增";
 			vm.app = {deleteStatus:0};
 
+			var div = $("<div class=\"col-sm-2 control-label\" >图片:</div>");
+			var inp = $("<input class=\"col-sm-10\" id=\"file-4\" name=\"file\" type=\"file\">");
+			$("#image1").append(div).append(inp);
             $("#file-4").fileinput({
                 overwriteInitial: true,
                 maxFileSize: 15000,
@@ -118,6 +122,7 @@ var vm = new Vue({
 		},
 		saveOrUpdate: function () {
             $("#form_activity").submit();
+            $("#image1").empty();
             // $.ajax({
 			// 	type: "POST",
 			//     url: baseURL + url,
@@ -154,6 +159,7 @@ var vm = new Vue({
                 postData:{'name': vm.q.name},
                 page:p
             }).trigger("reloadGrid");
+            $("#image1").empty();
 		},
         validator: function () {
 

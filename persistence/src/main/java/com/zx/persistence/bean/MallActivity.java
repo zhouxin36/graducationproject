@@ -7,6 +7,8 @@ public class MallActivity {
 
     private String remark;
 
+    private String url;
+
     public String getId() {
         return id;
     }
@@ -29,5 +31,13 @@ public class MallActivity {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
