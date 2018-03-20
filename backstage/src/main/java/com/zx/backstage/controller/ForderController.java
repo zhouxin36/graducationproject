@@ -74,7 +74,7 @@ public class ForderController {
             pageUtil = new PageUtils(feedbacks, (int) total, query.getLimit(), query.getPage());
             return R.ok().put("page", pageUtil);
         } catch (Exception e) {
-            logger.error("ForderController/productList; e:{},pageUtil:{}", e.getMessage(), pageUtil);
+            logger.error("ForderController/productList; e:{},pageUtil:{}", e, pageUtil);
             return R.error("系统错误，请联系管理员！");
 
         }
@@ -112,7 +112,7 @@ public class ForderController {
                 return msg;
             }
         } catch (Exception e) {
-            logger.error("ForderController/report_chart; e:{},map:{}", e.getMessage(), map);
+            logger.error("ForderController/report_chart; e:{},map:{}", e, map);
             return ResultDTO.error("系统错误，请联系管理员！");
         }
     }
@@ -125,7 +125,10 @@ public class ForderController {
         Map<String, Object> map = new HashMap<>();
         try {
             Forder forder = forderService.selectByPrimaryKey(id);
-            UserAddress userAddress = userAddressService.selectByPrimaryKey(forder.getAddressId());
+            UserAddress userAddress = null;
+            if(forder.getAddressId() != null) {
+                userAddress = userAddressService.selectByPrimaryKey(forder.getAddressId());
+            }
             SorderExample sorderExample = new SorderExample();
             SorderExample.Criteria criteria = sorderExample.createCriteria();
             criteria.andForderIdEqualTo(forder.getId());
@@ -139,7 +142,7 @@ public class ForderController {
             ok.setData(map);
             return ok;
         } catch (Exception e) {
-            logger.error("ForderController/requestForder; e:{},map:{}", e.getMessage(), map);
+            logger.error("ForderController/requestForder; e:{},map:{}", e, map);
             return ResultDTO.error("系统错误，请联系管理员！");
         }
     }
@@ -158,7 +161,7 @@ public class ForderController {
             } else
                 return ResultDTO.ok();
         } catch (Exception e) {
-            logger.error("ForderController/forderDeliver; e:{},forder:{}", e.getMessage(), forder);
+            logger.error("ForderController/forderDeliver; e:{},forder:{}", e, forder);
             return ResultDTO.error("系统错误，请联系管理员！");
         }
     }

@@ -74,7 +74,7 @@ public class ProductController {
             pageUtil = new PageUtils(products, (int) total, query.getLimit(), query.getPage());
             return R.ok().put("page", pageUtil);
         }catch (Exception e){
-            logger.error("ProductController/login; e:{},pageUtil:{}",e.getMessage(),pageUtil);
+            logger.error("ProductController/login; e:{},pageUtil:{}",e,pageUtil);
             return R.error("系统错误，请联系管理员！");
         }
 	}
@@ -98,7 +98,7 @@ public class ProductController {
                 return R.ok().put("list", categories);
             }
         }catch (Exception e){
-            logger.error("ProductController/productSelectCategory; e:{},categories:{}",e.getMessage(),categories);
+            logger.error("ProductController/productSelectCategory; e:{},categories:{}",e,categories);
             return R.error("系统错误，请联系管理员！");
         }
 	}
@@ -202,7 +202,7 @@ public class ProductController {
 					stream.write(bytes);
 					stream.close();
 				}catch (Exception e) {
-					return "You failed to upload " + i + " =>" + e.getMessage();
+					return "You failed to upload " + i + " =>" + e;
 				}
 			} else {
 				return "You failed to upload " + i + " becausethe file was empty.";

@@ -45,7 +45,7 @@ public class FeedbackController {
             map.put("page", pageUtil);
             return R.ok().put("page", pageUtil);
         } catch (Exception e) {
-            logger.error("FeedbackController/feedback_request; e:{},pageUtil:{}", e.getMessage(), pageUtil);
+            logger.error("FeedbackController/feedback_request; e:{},pageUtil:{}", e, pageUtil);
             return R.error("系统错误，请联系管理员！");
         }
     }
@@ -61,7 +61,7 @@ public class FeedbackController {
             } else
                 return ResultDTO.ok("删除成功");
         } catch (Exception e) {
-            logger.error("FeedbackController/feedback_delete; e:{},admin:{}", e.getMessage(), id);
+            logger.error("FeedbackController/feedback_delete; e:{},admin:{}", e, id);
             return ResultDTO.error("系统错误，请联系管理员！");
         }
     }

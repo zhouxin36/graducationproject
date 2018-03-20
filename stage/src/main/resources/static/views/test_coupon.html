@@ -30,12 +30,12 @@ $(function(){
 			 	   var div_c_type_one = $("<div></div>").addClass("c-type");
 			 	   var div_c_clas_one =  $("<div></div>").addClass("c-class").append("<strong>购物券</strong>");
 			 	   var div_c_price_one = $("<div></div>").addClass("c-price").append("<strong>￥8</strong>");
-			 	  var div_c_price_two = $("<div></div>").addClass("c-limit").append("只能LJD使用");
-			        var div_c_time_one = $("<div></div>").addClass("c-time").append("<span>使用期限</span>").append("2015-12-21--2015-12-31");
+			 	  var div_c_price_two = $("<div></div>").addClass("c-limit").append("只能自己使用");
+			        var div_c_time_one = $("<div></div>").addClass("c-time").append("<span>使用期限</span>");
 			        var div_c_type_top_one = $("<div></div>").addClass("c-type-top");
 			        var div_c_type_bottom_one = $("<div></div>").addClass("c-type-bottom");
 			       
-			         var span_number = $("<span class='txt'>35730144</span>").append(list[i].id);
+			         var span_number = $("<span class='txt'></span>").append(list[i].id);
 			        div_c_type_one.append(div_c_clas_one).append(div_c_price_one).append(div_c_price_two)
 			        .append(div_c_time_one).append(div_c_type_top_one).append(div_c_type_bottom_one);
 			       
@@ -92,7 +92,7 @@ $(function(){
 
 							<ul class="am-avg-sm-2 am-tabs-nav am-nav am-nav-tabs">
 								<li class="am-active"><a href="#tab1">可用优惠券</a></li>
-								<li><a href="#tab2" id="tab2">已用/过期优惠券</a></li>
+								<li><a href="#tab2" id="tab2">已用优惠券</a></li>
 
 							</ul>
 

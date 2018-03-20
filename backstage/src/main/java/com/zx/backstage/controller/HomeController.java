@@ -48,7 +48,7 @@ public class HomeController {
             } else
                 return R.error("列表为空");
         } catch (Exception e) {
-            logger.error("HomeController/homeList; e:{},pageUtil:{}", e.getMessage(), pageUtil);
+            logger.error("HomeController/homeList; e:{},pageUtil:{}", e, pageUtil);
             return R.error("系统错误，请联系管理员！");
         }
     }
@@ -66,7 +66,7 @@ public class HomeController {
             else
                 return ResultDTO.error("添加失败");
         } catch (Exception e) {
-            logger.error("HomeController/homeAdd; e:{},home:{}", e.getMessage(), home);
+            logger.error("HomeController/homeAdd; e:{},home:{}", e, home);
             return ResultDTO.error("系统错误，请联系管理员！");
         }
     }
@@ -82,7 +82,7 @@ public class HomeController {
             else
                 return ResultDTO.error("删除失败");
         } catch (Exception e) {
-            logger.error("HomeController/homeAdd; e:{},id:{}", e.getMessage(), id);
+            logger.error("HomeController/homeAdd; e:{},id:{}", e, id);
             return ResultDTO.error("系统错误，请联系管理员！");
         }
     }

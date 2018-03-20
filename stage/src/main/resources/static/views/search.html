@@ -274,14 +274,14 @@
         //     ul.append(numLi);
         // });
         for (var i = 1; i <= msg.data.totalPage; i++) {
-            var numLi = $("<li></li>").append(
-                $("<a></a>").append(msg.data.pn).attr("href", "#"));
+            var numLi = $("<li id='"+i+"'></li>").append(
+                $("<a></a>").append(i).attr("href", "#"));
             if (msg.data.pn == i) {
                 numLi.addClass("active");
             }
             numLi.click(function () {
-                $("#page_message").val(msg.data.pn);
-                to_page(msg.data.pn);
+                $("#page_message").val($(this).attr("id"));
+                to_page($(this).attr("id"));
             });
             ul.append(numLi);
         }

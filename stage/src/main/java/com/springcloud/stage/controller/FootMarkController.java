@@ -57,13 +57,18 @@ public class FootMarkController {
 	@ResponseBody
 	@RequestMapping("/saveFootMark")
 	public ResultDTO saveFootMark(String productId,HttpServletRequest request) {
-		Footmark footmark = new Footmark();
-		footmark.setProductId(productId);
-		footmark.setUserId(getUserId(request));
-		footmark.setVisitTime(LocalDateTime.now());
-		footmark.setId(MyUtils.getUUID());
-		service.insert(footmark);
-		return ResultDTO.ok();
+	    FootmarkExample footmarkExample = new FootmarkExample();
+        FootmarkExample.Criteria criteria = footmarkExample.createCriteria();
+        criteria.andProductIdEqualTo(productId);
+        if(service.selectByExample(footmarkExample) == null) {
+            Footmark footmark = new Footmark();
+            footmark.setProductId(productId);
+            footmark.setUserId(getUserId(request));
+            footmark.setVisitTime(LocalDateTime.now());
+            footmark.setId(MyUtils.getUUID());
+            service.insert(footmark);
+        }
+        return ResultDTO.ok();
 	}
 
 	@ResponseBody
@@ -105,8 +110,11 @@ public class FootMarkController {
 	public ResultDTO getTodayFootMark(HttpServletRequest request) {
         FootmarkExample example = new FootmarkExample();
         FootmarkExample.Criteria criteria = example.createCriteria();
-        criteria.andVisitTimeGreaterThanOrEqualTo(new Date());
-        criteria.andVisitTimeLessThanOrEqualTo(new Date());
+		Date date = new Date();
+		date.setHours(0);
+		date.setMinutes(0);
+		date.setSeconds(0);
+		criteria.andVisitTimeGreaterThan(date);
         String userId = getUserId(request);
         if (userId != null) {
             criteria.andUserIdEqualTo(userId);

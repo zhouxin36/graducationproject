@@ -45,7 +45,7 @@ public class CategoryController {
                 return R.error("添加失败");
             }
         } catch (Exception e) {
-            logger.error("CategoryController/categoryAdd; e:{},category:{}", e.getMessage(), category);
+            logger.error("CategoryController/categoryAdd; e:{},category:{}", e, category);
             return R.error("系统错误，请联系管理员！");
         }
     }
@@ -64,7 +64,7 @@ public class CategoryController {
                 return R.error();
             }
         } catch (Exception e) {
-            logger.error("CategoryController/categoryList; e:{},list:{}", e.getMessage(), list);
+            logger.error("CategoryController/categoryList; e:{},list:{}", e, list);
             return R.error("系统错误，请联系管理员！");
         }
 
@@ -86,7 +86,7 @@ public class CategoryController {
                 return R.error("删除失败");
             }
         } catch (Exception e) {
-            logger.error("CategoryController/categoryDelete; e:{},categories:{}", e.getMessage(), categories);
+            logger.error("CategoryController/categoryDelete; e:{},categories:{}", e, categories);
             return R.error("系统错误，请联系管理员！");
         }
 
@@ -108,7 +108,7 @@ public class CategoryController {
                 return R.error("更新失败");
             }
         } catch (Exception e) {
-            logger.error("CategoryController/categoryUpdate; e:{},categories:{}", e.getMessage(), categories);
+            logger.error("CategoryController/categoryUpdate; e:{},categories:{}", e, categories);
             return R.error("系统错误，请联系管理员！");
         }
 
@@ -128,7 +128,7 @@ public class CategoryController {
                 return R.error("查找失败");
             }
         } catch (Exception e) {
-            logger.error("CategoryController/categoryUpdate; e:{},category:{}", e.getMessage(), category);
+            logger.error("CategoryController/categoryUpdate; e:{},category:{}", e, category);
             return R.error("系统错误，请联系管理员！");
         }
     }

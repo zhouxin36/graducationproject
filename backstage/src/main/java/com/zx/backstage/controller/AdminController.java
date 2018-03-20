@@ -37,7 +37,7 @@ public class AdminController {
             request.getSession().invalidate();
 
         } catch (Exception e) {
-            logger.error("AdminController/exit; Exception:{}", e.getMessage());
+            logger.error("AdminController/exit; Exception:{}", e);
             return ResultDTO.error("系统错误，请联系管理员！");
         }
         return ResultDTO.ok();
@@ -59,7 +59,7 @@ public class AdminController {
                 return ResultDTO.buildSuccessData(map);
             }
         } catch (Exception e) {
-            logger.error("AdminController/checkLogin; e:{},admin:{}", e.getMessage(), admin);
+            logger.error("AdminController/checkLogin; e:{},admin:{}", e, admin);
             return ResultDTO.error("系统错误，请联系管理员！");
         }
 
@@ -79,7 +79,7 @@ public class AdminController {
 
             }
         } catch (Exception e) {
-            logger.error("AdminController/queryAdmin; e:{},admin:{}", e.getMessage(), admin);
+            logger.error("AdminController/queryAdmin; e:{},admin:{}", e, admin);
             return R.error("系统错误，请联系管理员！");
         }
 
@@ -105,7 +105,7 @@ public class AdminController {
                 return ResultDTO.ok();
             }
         } catch (Exception e) {
-            logger.error("AdminController/login; e:{},list:{}", e.getMessage(), list);
+            logger.error("AdminController/login; e:{},list:{}", e, list);
             return ResultDTO.error("系统错误，请联系管理员！");
         }
 
@@ -129,7 +129,7 @@ public class AdminController {
             } else
                 return R.error("列表为空");
         } catch (Exception e) {
-            logger.error("AdminController/adminList; e:{},pageUtil:{}", e.getMessage(), pageUtil);
+            logger.error("AdminController/adminList; e:{},pageUtil:{}", e, pageUtil);
             return R.error("系统错误，请联系管理员！");
         }
     }
@@ -148,7 +148,7 @@ public class AdminController {
             else
                 return ResultDTO.error("添加失败");
         } catch (Exception e) {
-            logger.error("AdminController/adminAdd; e:{},admin:{}", e.getMessage(), admin);
+            logger.error("AdminController/adminAdd; e:{},admin:{}", e, admin);
             return ResultDTO.error("系统错误，请联系管理员！");
         }
     }
@@ -164,7 +164,7 @@ public class AdminController {
             else
                 return ResultDTO.error("删除失败");
         } catch (Exception e) {
-            logger.error("AdminController/adminDelete; e:{},id:{}", e.getMessage(), id);
+            logger.error("AdminController/adminDelete; e:{},id:{}", e, id);
             return ResultDTO.error("系统错误，请联系管理员！");
         }
     }
@@ -181,7 +181,7 @@ public class AdminController {
             else
                 return ResultDTO.error("更新失败");
         } catch (Exception e) {
-            logger.error("AdminController/updateAdminPassword; e:{},admin:{}", e.getMessage(), admin);
+            logger.error("AdminController/updateAdminPassword; e:{},admin:{}", e, admin);
             return ResultDTO.error("系统错误，请联系管理员！");
         }
     }

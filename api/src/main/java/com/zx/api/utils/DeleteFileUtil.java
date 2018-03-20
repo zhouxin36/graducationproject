@@ -1,5 +1,8 @@
 package com.zx.api.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 
 /**
@@ -8,6 +11,7 @@ import java.io.File;
  */
 public class DeleteFileUtil {
 
+    private static Logger logger = LoggerFactory.getLogger(DeleteFileUtil.class);
     /**
      * 删除文件，可以是文件或文件夹
      *
@@ -17,9 +21,9 @@ public class DeleteFileUtil {
      */
     public static boolean delete(String path,String fileName) {
         File file = new File(path,fileName);
-        System.out.println(path+fileName);
+        logger.info(path+fileName);
         if (!file.exists()) {
-            System.out.println("删除文件失败:" + fileName + "不存在！");
+            logger.info("删除文件失败:" + fileName + "不存在！");
             return false;
         } else {
             return deleteFile(path,fileName);
@@ -38,14 +42,14 @@ public class DeleteFileUtil {
         // 如果文件路径所对应的文件存在，并且是一个文件，则直接删除
         if (file.exists() && file.isFile()) {
             if (file.delete()) {
-                System.out.println("删除单个文件" + fileName + "成功！");
+                logger.info("删除单个文件" + fileName + "成功！");
                 return true;
             } else {
-                System.out.println("删除单个文件" + fileName + "失败！");
+                logger.info("删除单个文件" + fileName + "失败！");
                 return false;
             }
         } else {
-            System.out.println("删除单个文件失败：" + fileName + "不存在！");
+            logger.info("删除单个文件失败：" + fileName + "不存在！");
             return false;
         }
     }

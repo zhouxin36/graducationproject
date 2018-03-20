@@ -1,5 +1,8 @@
 package com.zx.api.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Date;
 import java.util.Properties;
 
@@ -18,6 +21,8 @@ import javax.mail.internet.MimeMessage;
 /**
  */
 public class SendMailUtil {
+
+	private static Logger logger = LoggerFactory.getLogger(SendMailUtil.class);
 
 	public static final String HOST = "smtp.163.com";
 	public static final String PROTOCOL = "smtp";
@@ -45,7 +50,7 @@ public class SendMailUtil {
 	public static void send(String receiver, String content) {
 		Session session = getSession();
 		try {
-			System.out.println("-------发送中-------");
+            logger.info("-------发送中-------");
 			Message msg = new MimeMessage(session);
 			Address address =new InternetAddress(SENDER);
 			msg.setFrom(address);
@@ -58,11 +63,11 @@ public class SendMailUtil {
 			msg.setContent(content, "text/html;charset=utf-8");
 			msg.saveChanges();
 			Transport.send(msg);
-			System.out.println("-------发送完成-------");
+            logger.info("-------发送完成-------");
 		} catch (AddressException e) {
-			e.printStackTrace();
+            logger.error("SendMailUtil/send; Exception:{}", e);
 		} catch (MessagingException e) {
-			e.printStackTrace();
+            logger.error("SendMailUtil/send; Exception:{}", e);
 		}
 	}
 }

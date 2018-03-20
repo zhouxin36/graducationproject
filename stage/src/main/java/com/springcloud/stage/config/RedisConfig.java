@@ -1,4 +1,4 @@
-package com.zx.backstage.config;
+package com.springcloud.stage.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

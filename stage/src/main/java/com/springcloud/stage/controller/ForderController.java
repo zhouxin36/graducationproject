@@ -40,7 +40,10 @@ public class ForderController {
 	@RequestMapping("/request_forder")
 	public ResultDTO requestForder(String id) {
 		Forder forder = forderService.selectByPrimaryKey(id);
-		UserAddress userAddress = userAddressService.selectByPrimaryKey(forder.getAddressId());
+        UserAddress userAddress = null;
+		if(forder.getAddressId() != null) {
+            userAddress = userAddressService.selectByPrimaryKey(forder.getAddressId());
+        }
 		SorderExample sorderExample= new SorderExample();
         SorderExample.Criteria criteria = sorderExample.createCriteria();
         criteria.andForderIdEqualTo(forder.getId());

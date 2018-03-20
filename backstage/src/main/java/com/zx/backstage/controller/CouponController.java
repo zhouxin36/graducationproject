@@ -37,7 +37,7 @@ public class CouponController {
             } else
                 return ResultDTO.ok();
         } catch (Exception e) {
-            logger.error("CouponController/sendCoupon; e:{},coupon:{}", e.getMessage(), coupon);
+            logger.error("CouponController/sendCoupon; e:{},coupon:{}", e, coupon);
             return ResultDTO.error("系统错误，请联系管理员！");
         }
     }

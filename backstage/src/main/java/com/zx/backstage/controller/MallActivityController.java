@@ -75,7 +75,7 @@ public class MallActivityController {
             }
             return ResultDTO.error();
         } catch (Exception e) {
-            logger.error("MallActivityController/add_activity; e:{},mallActivity:{},pic:{}", e.getMessage(), mallActivity, pic);
+            logger.error("MallActivityController/add_activity; e:{},mallActivity:{},pic:{}", e, mallActivity, pic);
             return ResultDTO.error("系统错误，请联系管理员！");
         }
 
@@ -97,7 +97,7 @@ public class MallActivityController {
                 return R.ok().put("page", pageUtil);
             }
         } catch (Exception e) {
-            logger.error("MallActivityController/activity_list; e:{},list:{}", e.getMessage(), pageUtil);
+            logger.error("MallActivityController/activity_list; e:{},list:{}", e, pageUtil);
             return R.error("系统错误，请联系管理员！");
 
         }
@@ -120,7 +120,7 @@ public class MallActivityController {
                 return ResultDTO.error();
             }
         } catch (Exception e) {
-            logger.error("MallActivityController/find_img_activity; e:{},map:{}", e.getMessage(), map);
+            logger.error("MallActivityController/find_img_activity; e:{},map:{}", e, map);
             return ResultDTO.error("系统错误，请联系管理员！");
 
         }
@@ -141,7 +141,7 @@ public class MallActivityController {
             picService.deleteByPrimaryKey(mallActivity.getPicId());
             return ResultDTO.ok();
         } catch (Exception e) {
-            logger.error("MallActivityController/activity_delete; e:{},mallActivity:{}", e.getMessage(), mallActivity);
+            logger.error("MallActivityController/activity_delete; e:{},mallActivity:{}", e, mallActivity);
             return ResultDTO.error("系统错误，请联系管理员！");
         }
     }
