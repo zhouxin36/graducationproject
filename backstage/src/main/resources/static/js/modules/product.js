@@ -214,7 +214,7 @@ vm = new Vue({
             var div2 = $("<div></div>");
             div2.addClass("control-label");
             div2.append("显示图片:");
-            var inp2 = $("<input/>");
+            var inp2 = $("<input multiple/>");
             inp2.attr("id","file-zh1");
             inp2.attr("name","file");
             inp2.attr("type","file");
@@ -233,20 +233,20 @@ vm = new Vue({
             var div3 = $("<div></div>");
             div3.addClass("control-label");
             div3.append("详细图片:");
-            var inp3 = $("<input/>");
+            var inp3 = $("<input multiple/>");
             inp3.attr("id","file-zh2");
             inp3.attr("name","file");
             inp3.attr("type","file");
 
             $("#image3").append(div3).append(inp3);
             $("#file-zh2").fileinput({
-                uploadExtraData: {id: id, type: 3},
-                uploadUrl: baseURL + 'upload',
-                allowedFileExtensions: ['jpg', 'png', 'gif', 'jpeg'],
                 initialPreview: arr3,
                 initialPreviewAsData: true,
                 initialPreviewConfig: arr3_,
-                deleteUrl: baseURL + "delete_pic"
+                deleteUrl: baseURL + "delete_pic",
+                uploadUrl: baseURL + 'upload',
+                allowedFileExtensions: ['jpg', 'png', 'gif', 'jpeg'],
+                uploadExtraData: {id: id, type: 3}
             });
         },
         upload_image: function () {
@@ -305,6 +305,7 @@ vm = new Vue({
             }
             vm.app.addDate = null;
             vm.app.lastTime = null;
+            vm.app.open = null;
             var url = vm.app.id == null ? "product_add" : "update_product";
             $.ajax({
                 type: "POST",
@@ -350,7 +351,7 @@ vm = new Vue({
             vm.showList = false;
             vm.showImage = false;
             $("#jqGrid").jqGrid('setGridParam', {
-                postData: {'name': vm.q.name},
+                postData: {'name': vm.q.name,'type':vm.q.type},
                 page: p
             }).trigger("reloadGrid");
             $("#image1").empty();

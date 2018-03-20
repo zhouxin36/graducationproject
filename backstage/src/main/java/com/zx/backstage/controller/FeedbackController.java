@@ -22,7 +22,7 @@ import java.util.Map;
 @Controller
 public class FeedbackController {
 
-    Logger logger = LoggerFactory.getLogger(FeedbackController.class);
+    private Logger logger = LoggerFactory.getLogger(FeedbackController.class);
 
 
     @Autowired

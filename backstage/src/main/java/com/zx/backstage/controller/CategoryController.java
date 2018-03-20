@@ -22,7 +22,7 @@ import java.util.List;
 @Controller
 public class CategoryController {
 
-    Logger logger = LoggerFactory.getLogger(CategoryController.class);
+    private Logger logger = LoggerFactory.getLogger(CategoryController.class);
 
     @Autowired
     CategoryService categoryService;

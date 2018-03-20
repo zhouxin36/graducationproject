@@ -26,7 +26,7 @@ import java.util.*;
 
 @Controller
 public class ForderController {
-    Logger logger = LoggerFactory.getLogger(ForderController.class);
+    private Logger logger = LoggerFactory.getLogger(ForderController.class);
 
     @Autowired
     ForderService forderService;

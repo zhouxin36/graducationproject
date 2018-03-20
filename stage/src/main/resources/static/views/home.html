@@ -544,7 +544,7 @@
             success:function(msg){
                 //轮播
                 var list = msg.data.activity_list;
-                for(var i = 0; msg.data.category_list[i] != null;i++){
+                for(var i = 0; msg.data.category_list[i] != null && i<10;i++){
                     category_list(msg.data.category_list[i]);
                 }
                 for(var i = 0;i<list.length;i++){
@@ -570,10 +570,9 @@
                         $(this).children(".top").attr("style","display:none;");
                     });
                 });
-                // slider.addSlide(li,0);
                 //商品展示
-                // show_p(msg.data,$("#f1"));
-                // show_p_two(msg.data,$("#f2"));
+                for(var i = 0;i<msg.data.home_list.length;i++)
+                    show_p(msg.data.home_list[i].categoryName,msg.data.home[i],$("#shopmain"));
             },
             error:function(){
             }
@@ -598,7 +597,7 @@
         h.addClass("category-name b-category-name");
         var i = $("<i></i>");
         var img = $("<img/>");
-        img.attr("src", "../images/cake.png");
+        img.attr("src", "../images/1521537252(1).jpg");
         var a = $("<a></a>");
         a.addClass("ml-22");
         a.attr("title", msg.type);
@@ -701,8 +700,9 @@
     }
 
     //零食板块 （上面的板块）
-    function show_p(msg,p) {
+    function show_p(name2,msg,p) {
         //第一部分
+		var divnew = $("<div></div>");
         var div1 = $("<div></div>");
         div1.addClass("am-container");
         var div1_1 = $("<div></div>");
@@ -711,13 +711,13 @@
         var h1_2 = $("<h3></h3>");
         var div1_2 = $("<div></div>");
         div1_2.addClass("today-brands");
-        for (var i = 0; msg.msg1_3.data.pageInfo.list[i] != null; i++) {
-            var a1 = $("<a></a>");
-            var name = msg.msg1_3.data.pageInfo.list[i].name.split('/');
-            a1.append(name[0]);
-            a1.attr("href", "introduction.html?id="+msg.msg1_3.data.pageInfo.list[i].id);
-            div1_2.append(a1);
-        }
+        // for (var i = 0; msg[i] != null; i++) {
+        //     var a1 = $("<a></a>");
+        //     var name = msg[i].name.split('/');
+        //     a1.append(name[0]);
+        //     a1.attr("href", "introduction.html?id="+msg[i].id);
+        //     div1_2.append(a1);
+        // }
         var sp = $("<span></span>");
         sp.addClass("more");
         var a1_1 = $("<a></a>");
@@ -725,11 +725,11 @@
         i1.addClass("am-icon-angle-right");
         i1.attr("style", "padding-left: 10px;");
         sp.append("更多美味").append(i1);
-        h1_1.append(msg.category_list[0].type);
+        h1_1.append(name2);
         h1_2.append("每一个商品都有一个故事");
         div1_1.append(h1_1).append(h1_2).append(div1_2);
         div1.append(div1_1);
-        p.append(div1);
+        divnew.append(div1);
 
         //第二部分
         var div2 = $("<div></div>");
@@ -739,20 +739,20 @@
         div2_1.addClass("am-u-sm-5 am-u-md-4 text-one list ");
         var div2_1_1 = $("<div></div>");
         div2_1_1.addClass("word");
-        for (var i = 0; msg.msg1_2.data.pageInfo.list[i] != null; i++) {
-            var a2_1_1 = $("<a></a>");
-            a2_1_1.addClass("outer").attr("href", "introduction.html?id="+msg.msg1_2.data.pageInfo.list[i].id);
-            var sp2_1_1 = $("<span></span>");
-            sp2_1_1.addClass("inner");
-            var b2_1_1 = $("<b></b>");
-            b2_1_1.addClass("text");
-            var name = msg.msg1_2.data.pageInfo.list[i].name.split('/');
-            b2_1_1.append(name[0]);
-            //b2_1_1.append(msg.msg1_2.data.pageInfo.list[i].name);
-            sp2_1_1.append(b2_1_1);
-            a2_1_1.append(sp2_1_1);
-            div2_1_1.append(a2_1_1);
-        }
+        // for (var i = 0; msg[i] != null; i++) {
+        //     var a2_1_1 = $("<a></a>");
+        //     a2_1_1.addClass("outer").attr("href", "introduction.html?id="+msg[i].id);
+        //     var sp2_1_1 = $("<span></span>");
+        //     sp2_1_1.addClass("inner");
+        //     var b2_1_1 = $("<b></b>");
+        //     b2_1_1.addClass("text");
+        //     var name = msg[i].name.split('/');
+        //     b2_1_1.append(name[0]);
+        //     //b2_1_1.append(msg.msg1_2.data.pageInfo.list[i].name);
+        //     sp2_1_1.append(b2_1_1);
+        //     a2_1_1.append(sp2_1_1);
+        //     div2_1_1.append(a2_1_1);
+        // }
         var a2_1_2 = $("<a></a>");
         a2_1_2.attr("href", "#");
         var div2_1_2 = $("<div></div>");
@@ -762,7 +762,7 @@
         var div2_1_4 = $("<div></div>");
         div2_1_4.addClass("sub-title");
         div2_1_3.append("开抢啦！");
-        div2_1_4.append("零食大礼包");
+        // div2_1_4.append("零食大礼包");
         var img2_1 = $("<img/>");
         img2_1.attr("src", "../images/act1.png");
         div2_1_2.append(div2_1_3).append(div2_1_4);
@@ -773,140 +773,52 @@
         div2.append(div2_1);
 
         //第二小部分
-        var div2_2_2 = $("<div></div>");
-        div2_2_2.addClass("am-u-sm-7 am-u-md-4 text-two sug");
-        show_product1(msg.msg1_1.data.pageInfo.list[0],div2_2_2);
-        div2.append(div2_2_2);
-        var div2_2_3 = $("<div></div>");
-        div2_2_3.addClass("am-u-sm-7 am-u-md-4 text-two");
-        show_product1(msg.msg1_1.data.pageInfo.list[1],div2_2_3);
-        div2.append(div2_2_3);
-        var div2_2_4 = $("<div></div>");
-        div2_2_4.addClass("am-u-sm-3 am-u-md-2 text-three big");
-        show_product1(msg.msg1_1.data.pageInfo.list[2],div2_2_4);
-        div2.append(div2_2_4);
-        var div2_2_5 = $("<div></div>");
-        div2_2_5.addClass("am-u-sm-3 am-u-md-2 text-three sug");
-        show_product1(msg.msg1_1.data.pageInfo.list[3],div2_2_5);
-        div2.append(div2_2_5);
-        var div2_2_6 = $("<div></div>");
-        div2_2_6.addClass("am-u-sm-3 am-u-md-2 text-three ");
-        show_product1(msg.msg1_1.data.pageInfo.list[4],div2_2_6);
-        div2.append(div2_2_6);
-        var div2_2_7 = $("<div></div>");
-        div2_2_7.addClass("am-u-sm-3 am-u-md-2 text-three last big");
-        show_product1(msg.msg1_1.data.pageInfo.list[5],div2_2_7);
-        div2.append(div2_2_7);
+        if(msg[0] != null) {
+            var div2_2_2 = $("<div></div>");
+            div2_2_2.addClass("am-u-sm-7 am-u-md-4 text-two sug");
+            show_product1(msg[0], div2_2_2);
+            div2.append(div2_2_2);
+        }
+        if(msg[1] != null) {
+            var div2_2_3 = $("<div></div>");
+            div2_2_3.addClass("am-u-sm-7 am-u-md-4 text-two");
+            show_product1(msg[1], div2_2_3);
+            div2.append(div2_2_3);
+        }
+        if(msg[2] != null) {
+            var div2_2_4 = $("<div></div>");
+            div2_2_4.addClass("am-u-sm-3 am-u-md-2 text-three big");
+            show_product1(msg[2], div2_2_4);
+            div2.append(div2_2_4);
+        }
+        if(msg[3] != null) {
+            var div2_2_5 = $("<div></div>");
+            div2_2_5.addClass("am-u-sm-3 am-u-md-2 text-three sug");
+            show_product1(msg[3], div2_2_5);
+            div2.append(div2_2_5);
+        }
+        if(msg[4] != null) {
+            var div2_2_6 = $("<div></div>");
+            div2_2_6.addClass("am-u-sm-3 am-u-md-2 text-three ");
+            show_product1(msg[4], div2_2_6);
+            div2.append(div2_2_6);
+        }
+        if(msg[5] != null) {
+            var div2_2_7 = $("<div></div>");
+            div2_2_7.addClass("am-u-sm-3 am-u-md-2 text-three last big");
+            show_product1(msg[5], div2_2_7);
+            div2.append(div2_2_7);
+        }
 
         //第三部分
         var div3 = $("<div></div>");
         div3.addClass("clear");
 
-        p.append(div2).append(div3);
+        divnew.append(div2).append(div3);
+        p.append(divnew);
     }
 
-    function show_p_two(msg,p) {
-        //第一部分
-        var div1 = $("<div></div>");
-        div1.addClass("am-container");
-        var div1_1 = $("<div></div>");
-        div1_1.addClass("shopTitle");
-        var h1_1 = $("<h4></h4>");
-        var h1_2 = $("<h3></h3>");
-        var div1_2 = $("<div></div>");
-        div1_2.addClass("today-brands");
-        for (var i = 0; msg.msg2_3.data.pageInfo.list[i] != null; i++) {
-            var a1 = $("<a></a>");
-            a1.attr("href", "introduction.html?id="+msg.msg2_3.data.pageInfo.list[i].id);
-            var name = msg.msg2_3.data.pageInfo.list[i].name.split('/');
-            a1.append(name[0]);
-            div1_2.append(a1);
-        }
-        var sp = $("<span></span>");
-        sp.addClass("more");
-        var a1_1 = $("<a></a>");
-        var i1 = $("<i></i>");
-        i1.addClass("am-icon-angle-right");
-        i1.attr("style", "padding-left: 10px;");
-        sp.append("更多美味").append(i1);
-        h1_1.append(msg.category_list[1].type);
-        h1_2.append("每一个商品都有一个故事");
-        div1_1.append(h1_1).append(h1_2).append(div1_2);
-        div1.append(div1_1);
-        p.append(div1);
 
-        //第二部分
-        var div2 = $("<div></div>");
-        div2.addClass("am-g am-g-fixed floodFour");
-        //第一小部分
-        var div2_1 = $("<div></div>");
-        div2_1.addClass("am-u-sm-5 am-u-md-4 text-one list ");
-        var div2_1_1 = $("<div></div>");
-        div2_1_1.addClass("word");
-        for (var i = 0; msg.msg2_2.data.pageInfo.list[i] != null; i++) {
-            var a2_1_1 = $("<a></a>");
-            a2_1_1.addClass("outer").attr("href", "introduction.html?id="+msg.msg2_2.data.pageInfo.list[i].id);
-            var sp2_1_1 = $("<span></span>");
-            sp2_1_1.addClass("inner");
-            var b2_1_1 = $("<b></b>");
-            b2_1_1.addClass("text");
-            var name = msg.msg2_2.data.pageInfo.list[i].name.split('/');
-            b2_1_1.append(name[0]);
-            sp2_1_1.append(b2_1_1);
-            a2_1_1.append(sp2_1_1);
-            div2_1_1.append(a2_1_1);
-        }
-        var a2_1_2 = $("<a></a>");
-        a2_1_2.attr("href", "#");
-        var div2_1_2 = $("<div></div>");
-        div2_1_2.addClass("outer-con");
-        var div2_1_3 = $("<div></div>");
-        div2_1_3.addClass("title");
-        var div2_1_4 = $("<div></div>");
-        div2_1_4.addClass("sub-title");
-        div2_1_3.append("开抢啦！");
-        div2_1_4.append("零食大礼包");
-        var img2_1 = $("<img/>");
-        img2_1.attr("src", "../images/act1.png");
-        div2_1_2.append(div2_1_3).append(div2_1_4);
-        a2_1_2.append(div2_1_2).append(img2_1);
-        var div2_1_5 = $("<div></div>");
-        div2_1_5.addClass("triangle-topright");
-        div2_1.append(div2_1_1).append(a2_1_2).append(div2_1_5);
-        div2.append(div2_1);
-
-        //第二小部分
-        var div2_2_2 = $("<div></div>");
-        div2_2_2.addClass("am-u-sm-7 am-u-md-4 text-two sug");
-        show_product1(msg.msg2_1.data.pageInfo.list[0],div2_2_2);
-        div2.append(div2_2_2);
-        var div2_2_3 = $("<div></div>");
-        div2_2_3.addClass("am-u-sm-7 am-u-md-4 text-two");
-        show_product1(msg.msg2_1.data.pageInfo.list[1],div2_2_3);
-        div2.append(div2_2_3);
-        var div2_2_4 = $("<div></div>");
-        div2_2_4.addClass("am-u-sm-3 am-u-md-2 text-three big");
-        show_product1(msg.msg2_1.data.pageInfo.list[2],div2_2_4);
-        div2.append(div2_2_4);
-        var div2_2_5 = $("<div></div>");
-        div2_2_5.addClass("am-u-sm-3 am-u-md-2 text-three sug");
-        show_product1(msg.msg2_1.data.pageInfo.list[3],div2_2_5);
-        div2.append(div2_2_5);
-        var div2_2_6 = $("<div></div>");
-        div2_2_6.addClass("am-u-sm-3 am-u-md-2 text-three ");
-        show_product1(msg.msg2_1.data.pageInfo.list[4],div2_2_6);
-        div2.append(div2_2_6);
-        var div2_2_7 = $("<div></div>");
-        div2_2_7.addClass("am-u-sm-3 am-u-md-2 text-three last big");
-        show_product1(msg.msg2_1.data.pageInfo.list[5],div2_2_7);
-        div2.append(div2_2_7);
-
-        //第三部分
-        var div3 = $("<div></div>");
-        div3.addClass("clear");
-
-        p.append(div2).append(div3);
-    }
 
 
 

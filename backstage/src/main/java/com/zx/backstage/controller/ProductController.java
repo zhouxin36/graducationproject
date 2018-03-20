@@ -37,7 +37,7 @@ import java.util.Map;
 @Controller
 public class ProductController {
 
-	Logger logger = LoggerFactory.getLogger(ProductController.class);
+	private Logger logger = LoggerFactory.getLogger(ProductController.class);
 
 	@Autowired
 	PicService picService;
@@ -67,6 +67,8 @@ public class ProductController {
             ProductExample.Criteria criteria = productExample.createCriteria();
             if (!MyUtils.isBlank((String) query.get("name")))
                 criteria.andNameLike("%" + (String) query.get("name") + "%");
+			if (!MyUtils.isBlank((String) query.get("type")))
+				criteria.andCategoryIdEqualTo((String) query.get("type"));
             List<Product> products = productService.selectByExample(productExample);
             long total = productService.countByExample(productExample);
             pageUtil = new PageUtils(products, (int) total, query.getLimit(), query.getPage());

@@ -4,13 +4,11 @@ $(function () {
         datatype: "json",
         colModel: [			
 			{ label: 'ID', name: 'id', index: "id", width: 130, key: true ,sortable:false},
-			{ label: '类型', name: 'type', width: 75, sortable:false,sortable:false},
+			{ label: '类型', name: 'type', width: 75, sortable:false,sortable:false}
         ],
 		viewrecords: true,
         height: screen.height * 0.55,
-        rowNum: 10,
-		rowList : [10,30,50],
-        rownumbers: true, 
+        rownumbers: true,
         rownumWidth: 25, 
         autowidth:true,
         multiselect: true,

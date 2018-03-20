@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class CouponController {
 
-    Logger logger = LoggerFactory.getLogger(CouponController.class);
+    private Logger logger = LoggerFactory.getLogger(CouponController.class);
 
     @Autowired
     CouponService couponService;

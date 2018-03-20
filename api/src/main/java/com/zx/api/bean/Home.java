@@ -40,4 +40,14 @@ public class Home {
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
+
+    @Override
+    public String toString() {
+        return "Home{" +
+                "id='" + id + '\'' +
+                ", categoryId='" + categoryId + '\'' +
+                ", sort=" + sort +
+                ", categoryName='" + categoryName + '\'' +
+                '}';
+    }
 }

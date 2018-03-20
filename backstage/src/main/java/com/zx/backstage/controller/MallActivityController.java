@@ -35,7 +35,7 @@ import java.util.Map;
 @Controller
 public class MallActivityController {
 
-    Logger logger = LoggerFactory.getLogger(MallActivityController.class);
+    private Logger logger = LoggerFactory.getLogger(MallActivityController.class);
     @Autowired
     MallActivityService mallActivityService;
 

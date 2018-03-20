@@ -40,4 +40,14 @@ public class MallActivity {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    @Override
+    public String toString() {
+        return "MallActivity{" +
+                "id='" + id + '\'' +
+                ", picId='" + picId + '\'' +
+                ", remark='" + remark + '\'' +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

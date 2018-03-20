@@ -25,7 +25,7 @@ import java.util.Map;
 @Controller
 public class AdminController {
 
-    Logger logger = LoggerFactory.getLogger(AdminController.class);
+    private Logger logger = LoggerFactory.getLogger(AdminController.class);
     @Autowired
     AdminService adminService;
 

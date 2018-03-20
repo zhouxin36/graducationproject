@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>应用列表</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" href="../plugins/jqgrid/ui.jqgrid-bootstrap.css">
+    <link rel="stylesheet" href="../plugins/ztree/css/metroStyle/metroStyle.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <script src="../libs/jquery.min.js"></script>
+    <script src="../plugins/layer/layer.js"></script>
+    <script src="../libs/bootstrap.min.js"></script>
+    <script src="../libs/vue.min.js"></script>
+    <script src="../libs/validator.min.js"></script>
+    <script src="../plugins/jqgrid/grid.locale-cn.js"></script>
+    <script src="../plugins/jqgrid/jquery.jqGrid.min.js"></script>
+    <script src="../plugins/ztree/jquery.ztree.all.min.js"></script>
+    <script src="../js/common.js"></script>
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <br/>
+    <div style="width: 10px;float: left;">&nbsp;</div>
+    <div v-show="showList">
+        <div class="grid-btn">
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+        </div>
+        <table id="jqGrid"></table>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-2 control-label">商品排序</div>
+                <div class="col-sm-10">
+                    <select v-model="app.sort" class="form-control">
+                        <option  value="0" selected="selected">添加时间降序</option>
+                        <option  value="1">添加时间升序</option>
+                        <option  value="2">总销量升序</option>
+                        <option  value="3">总销量降序</option>
+                        <option  value="4">价格升序</option>
+                        <option  value="5">价格降序</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">商品类型</div>
+                <div class="col-sm-10">
+                    <select v-model="app.categoryId" class="form-control">
+                        <option  v-for="category in list_category" :value="category.id">{{category.type}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload(1)" value="返回"/>
+            </div>
+        </form>
+    </div>
+
+
+    <!------------------ 应用详情弹框 ----------------------------->
+    <div class="modal fade" id="modal_app_info">
+        <div class="modal-dialog">
+            <form class="form-horizontal">
+                <div class="modal-content" style="width: 1000px;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">应用信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"
+                                   style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">应用标识:</label>
+                            <div class="col-sm-6">
+                                <input type="text" v-model="app.id" class="hidden"/>
+                                <input type="text" v-model="app.appId" class="form-control no-border"
+                                       readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"
+                                   style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">应用名称:</label>
+                            <div class="col-sm-6">
+                                <input type="text" v-model="app.name" class="form-control no-border"
+                                       readonly="readonly"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+</div>
+
+<script src="../js/modules/home.js"></script>
+</body>
+</html>

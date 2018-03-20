@@ -146,17 +146,17 @@ public class UserController {
         else if(MyUtils.isPhone(user.getEmail()))
             criteria.andPhoneEqualTo(user.getEmail());
         else
-            return ResultDTO.error("ç”¨æˆ·ä¸å­˜åœ¨æˆ–å¯†ç é”™è¯¯");
+            return ResultDTO.error("ÓÃ»§²»´æÔÚ»òÃÜÂë´íÎó");
         criteria.andPasswordEqualTo(MyUtils.md5Passwrod(user.getPassword()));
         System.out.println("email:"+user.getEmail());
         System.out.println("password:"+user.getPassword());
         List<User> list = service.selectByExample(example);
         System.out.println(list);
         if(list.size()==0){
-            return ResultDTO.error("ç”¨æˆ·ä¸å­˜åœ¨æˆ–å¯†ç é”™è¯¯");
+            return ResultDTO.error("ÓÃ»§²»´æÔÚ»òÃÜÂë´íÎó");
         }else {
             if(list.get(0).getIsabled() == 0) {
-                return ResultDTO.error("ç”¨æˆ·è¢«ç¦ç”¨");
+                return ResultDTO.error("ÓÃ»§±»½ûÓÃ");
             }
             HttpSession  session = request.getSession();
             session.setAttribute("email", list.get(0).getEmail());
@@ -211,10 +211,10 @@ public class UserController {
             } else {
                 request.getSession().setAttribute("find_email_user", list.get(0));
 //					System.out.println(list.get(0).getEmail()+list.get(0).getName());
-                return ResultDTO.error("é‚®ç®±å­˜åœ¨");
+                return ResultDTO.error("ÓÊÏä´æÔÚ");
             }
         } else {
-            return ResultDTO.error("é‚®ç®±æ ¼å¼é”™è¯¯");
+            return ResultDTO.error("ÓÊÏä¸ñÊ½´íÎó");
         }
     }
 
@@ -250,7 +250,7 @@ public class UserController {
         System.out.println(list);
 
         StringBuffer content = new StringBuffer("<h2>DGUT</h2>");
-        content.append("æ¬¢è¿æ³¨å†Œå¤©çŒ«ä¼šå‘˜<br>ç‚¹å‡»<a href='http://localhost:8301/graducation/User/user_activity/"+list.get(0).getId()+"/"+MyUtils.md5Passwrod(user.getEmail())+"'>æ­¤å¤„é“¾æ¥</a>æ¿€æ´»è´¦å·");
+        content.append("»¶Ó­×¢²áÌìÃ¨»áÔ±<br>µã»÷<a href='http://localhost:8301/graducation/User/user_activity/"+list.get(0).getId()+"/"+MyUtils.md5Passwrod(user.getEmail())+"'>´Ë´¦Á´½Ó</a>¼¤»îÕËºÅ");
         SendMailUtil.send(email, content.toString());
         if(i==1) {
             return ResultDTO.ok();
@@ -278,7 +278,7 @@ public class UserController {
     @RequestMapping("/sendEmail")
     public ResultDTO sendEmail(String email,HttpServletRequest request) {
         StringBuffer content = new StringBuffer("<h2>five group</h2>");
-        content.append("<a href = 'http://localhost:8301/graducation/views/change_password.html"+"'>ç‚¹å‡»æ­¤å¤„ä¿®æ”¹å¯†ç </a>");
+        content.append("<a href = 'http://localhost:8301/graducation/views/change_password.html"+"'>µã»÷´Ë´¦ĞŞ¸ÄÃÜÂë</a>");
         SendMailUtil.send(email, content.toString());
         return null;
 

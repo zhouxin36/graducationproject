@@ -1,62 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>应用列表</title>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-<link rel="stylesheet" href="../css/bootstrap.min.css">
-<link rel="stylesheet" href="../css/font-awesome.min.css">
-<link rel="stylesheet" href="../plugins/jqgrid/ui.jqgrid-bootstrap.css">
-<link rel="stylesheet" href="../plugins/ztree/css/metroStyle/metroStyle.css">
-<link rel="stylesheet" href="../css/main.css">
-<link rel="stylesheet" href="../css/common.css">
-<link href="../css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
-<script src="../libs/jquery.min.js"></script>
-<script src="../plugins/layer/layer.js"></script>
-<script src="../libs/bootstrap.min.js"></script>
-<script src="../libs/vue.min.js"></script>
-<script src="../libs/validator.min.js"></script>
-<script src="../plugins/jqgrid/grid.locale-cn.js"></script>
-<script src="../plugins/jqgrid/jquery.jqGrid.min.js"></script>
-<script src="../plugins/ztree/jquery.ztree.all.min.js"></script>
-<script src="../js/common.js"></script>
-<script src="../libs/fileinput.js" type="text/javascript"></script>
+    <title>应用列表</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" href="../plugins/jqgrid/ui.jqgrid-bootstrap.css">
+    <link rel="stylesheet" href="../plugins/ztree/css/metroStyle/metroStyle.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link href="../css/fileinput.min.css" media="all" rel="stylesheet" type="text/css"/>
+    <script src="../libs/jquery.min.js"></script>
+    <script src="../plugins/layer/layer.js"></script>
+    <script src="../libs/bootstrap.min.js"></script>
+    <script src="../libs/vue.min.js"></script>
+    <script src="../libs/validator.min.js"></script>
+    <script src="../plugins/jqgrid/grid.locale-cn.js"></script>
+    <script src="../plugins/jqgrid/jquery.jqGrid.min.js"></script>
+    <script src="../plugins/ztree/jquery.ztree.all.min.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../libs/fileinput.js" type="text/javascript"></script>
 </head>
 <body>
 <div id="rrapp" v-cloak>
-	<br/>
-	<div v-show="showup">
-		<div class="grid-btn">
-			<div class="form-group col-sm-2">
-				<input type="text" class="form-control" v-model="q.name" @keyup.enter="query" placeholder="商品名称">
-			</div>
-			<a class="btn btn-default" @click="query">查询</a>
-			<a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-			<a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+    <br/>
+    <div v-show="showup">
+        <div class="grid-btn">
+            <div class="form-group col-sm-2">
+                <input type="text" class="form-control" v-model="q.name" @keyup.enter="query" placeholder="商品名称">
+            </div>
+            <div class="col-sm-2">
+                <select v-model="q.type" class="form-control">
+                    <option v-for="category in list_category" :value="category.id">{{category.type}}</option>
+                </select>
+            </div>
+            <a class="btn btn-default" @click="query">查询</a>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
             <a class="btn btn-primary" @click="upload_img"><i class="fa fa-pencil-square-o"></i>&nbsp;修改图片</a>
-			<a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
-			<a class="btn btn-primary" @click="product_open"><i class="fa fa-pencil-square-o"></i>&nbsp;上架</a>
-			<a class="btn btn-primary" @click="product_down"><i class="fa fa-pencil-square-o"></i>&nbsp;下架</a>
-		</div>
-	    <table id="jqGrid"></table>
-	    <div id="jqGridPager"></div>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+            <a class="btn btn-primary" @click="product_open"><i class="fa fa-pencil-square-o"></i>&nbsp;上架</a>
+            <a class="btn btn-primary" @click="product_down"><i class="fa fa-pencil-square-o"></i>&nbsp;下架</a>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
     </div>
     <div v-show="showList" class="panel panel-default">
-		<div class="panel-heading">{{title}}</div>
-		<form class="form-horizontal">
-			<div class="form-group">
-			   	<div class="col-sm-2 control-label">商品名称</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="app.name" placeholder="商品名称"/>
-			    </div>
-			</div>
-			<div class="form-group">
-			   	<div class="col-sm-2 control-label">商品单价</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="app.price" placeholder="商品单价"/>
-			    </div>
-			</div>
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-2 control-label">商品名称</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="app.name" placeholder="商品名称"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">商品单价</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="app.price" placeholder="商品单价"/>
+                </div>
+            </div>
             <div class="form-group">
                 <div class="col-sm-2 control-label">商品单位</div>
                 <div class="col-sm-10">
@@ -66,168 +71,193 @@
             <div class="form-group">
                 <div class="col-sm-2 control-label">商品类型</div>
                 <div class="col-sm-10">
-                    <select v-model="app.categoryId">
+                    <select v-model="app.categoryId" class="form-control">
                         <option v-for="category in list_category" :value="category.id">{{category.type}}</option>
                     </select>
                 </div>
             </div>
-			<div class="form-group">
-				<div class="col-sm-2 control-label">商品库存</div>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" v-model="app.stock" placeholder="商品库存"/>
-				</div>
-			</div>
-			<div class="form-group">
-			   	<div class="col-sm-2 control-label">商品简介</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="app.remark" placeholder="商品简介"/>
-			    </div>
-			</div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">商品库存</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="app.stock" placeholder="商品库存"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">商品简介</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="app.remark" placeholder="商品简介"/>
+                </div>
+            </div>
             <div class="form-group">
                 <div class="col-sm-2 control-label">商品详细介绍</div>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" v-model="app.xremark" placeholder="商品详细介绍"/>
                 </div>
             </div>
-			<div class="form-group">
-				<div class="col-sm-2 control-label"></div>
-				<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
-				&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload(1)" value="返回"/>
-			</div>
-		</form>
-	</div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload(1)" value="返回"/>
+            </div>
+        </form>
+    </div>
 
-	<div v-show="showImage" class="panel panel-default">
-		<div class="panel-heading">商品图片:{{title}}</div>
+    <div v-show="showImage" class="panel panel-default">
+        <div class="panel-heading">商品图片:{{title}}</div>
         <form enctype="multipart/form-data">
-            <hr  style="height:5px;border:none;border-top:5px ridge green;"/>
+            <hr style="height:5px;border:none;border-top:5px ridge green;"/>
             <div class="form-group" style="font-size: larger;text-align: center;font-weight: bolder;" id="image1">
                 <!--<div class="control-label" >头像图片(一张):</div>-->
                 <!--<input id="file-4" name="file" type="file">-->
             </div>
-            <hr  style="height:5px;border:none;border-top:5px ridge green;"/>
+            <hr style="height:5px;border:none;border-top:5px ridge green;"/>
             <div class="form-group" style="font-size: larger;text-align: center;font-weight: bolder;" id="image2">
                 <!--<div class="control-label">显示图片:</div>-->
                 <!--<input id="file-zh1" name="file" type="file" multiple>-->
             </div>
-            <hr  style="height:5px;border:none;border-top:5px ridge green;"/>
+            <hr style="height:5px;border:none;border-top:5px ridge green;"/>
             <div class="form-group" style="font-size: larger;text-align: center;font-weight: bolder;" id="image3">
                 <!--<div class="control-label">详细图片:</div>-->
                 <!--<input id="file-zh2" name="file" type="file" multiple>-->
             </div>
-            <hr  style="height:5px;border:none;border-top:5px ridge green;"/>
-			<div class="form-group">
-				<div class="col-sm-2 control-label"></div>
-				<input type="button" class="btn btn-warning" @click="reload(1)" value="返回"/>
-			</div>
-           <!-- <div class="form-group">
+            <hr style="height:5px;border:none;border-top:5px ridge green;"/>
+            <div class="form-group">
                 <div class="col-sm-2 control-label"></div>
-                <input type="button" class="btn btn-primary" @click="upload_image" value="确定"/>
-                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload(1)" value="返回"/>
-            </div>-->
+                <input type="button" class="btn btn-warning" @click="reload(1)" value="返回"/>
+            </div>
+            <!-- <div class="form-group">
+                 <div class="col-sm-2 control-label"></div>
+                 <input type="button" class="btn btn-primary" @click="upload_image" value="确定"/>
+                 &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload(1)" value="返回"/>
+             </div>-->
         </form>
-	</div>
-	<!------------------ 应用详情弹框 ----------------------------->
-	<div class="modal fade" id="modal_app_info">
-		<div class="modal-dialog">
-			<form class="form-horizontal">
-				<div class="modal-content" style="width: 1000px;">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title">应用信息</h4>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">商品名称:</label>
-							<div class="col-sm-6">
-								<input type="text" v-model="app.id" class="hidden"/>
-								<input type="text" v-model="app.name" class="form-control no-border" readonly="readonly"/>
-							</div>
-						</div>
-						<div class="form-group">
-                            <label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">商品单价:</label>
-							<div class="col-sm-6">
-								<input type="text" v-model="app.price" class="form-control no-border" readonly="readonly"/>
-							</div>
-						</div>
-						<div class="form-group">
-                            <label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">单位:</label>
-							<div class="col-sm-6">
-								<input type="text" v-model="app.spec" class="form-control no-border" readonly="readonly"/>
-							</div>
-						</div>
+    </div>
+    <!------------------ 应用详情弹框 ----------------------------->
+    <div class="modal fade" id="modal_app_info">
+        <div class="modal-dialog">
+            <form class="form-horizontal">
+                <div class="modal-content" style="width: 1000px;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">应用信息</h4>
+                    </div>
+                    <div class="modal-body">
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">商品库存:</label>
+                            <label class="col-sm-4 control-label"
+                                   style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">商品名称:</label>
                             <div class="col-sm-6">
-                                <input type="text" v-model="app.stock" class="form-control no-border" readonly="readonly"/>
-                            </div>
-                        </div>
-						<div class="form-group">
-                            <label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">商品添加日期:</label>
-							<div class="col-sm-6">
-								<input type="text" v-model="app.addDate" class="form-control no-border" readonly="readonly"/>
-							</div>
-						</div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">上次修改的时间:</label>
-                            <div class="col-sm-6">
-                                <input type="text" v-model="app.lastTime" class="form-control no-border" readonly="readonly"/>
+                                <input type="text" v-model="app.id" class="hidden"/>
+                                <input type="text" v-model="app.name" class="form-control no-border"
+                                       readonly="readonly"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">类型:</label>
+                            <label class="col-sm-4 control-label"
+                                   style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">商品单价:</label>
                             <div class="col-sm-6">
-                                <input type="text" v-model="category" class="form-control no-border" readonly="readonly"/>
+                                <input type="text" v-model="app.price" class="form-control no-border"
+                                       readonly="readonly"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">上次修改记录的管理员:</label>
+                            <label class="col-sm-4 control-label"
+                                   style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">单位:</label>
                             <div class="col-sm-6">
-                                <input type="text" v-model="app.lastAdminId" class="form-control no-border" readonly="readonly"/>
+                                <input type="text" v-model="app.spec" class="form-control no-border"
+                                       readonly="readonly"/>
                             </div>
                         </div>
-						<div class="form-group">
-                            <label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">总销量:</label>
-							<div class="col-sm-6">
-								<input type="text" v-model="app.sale" class="form-control no-border" readonly="readonly"/>
-							</div>
-						</div>
-						<div class="form-group">
-                            <label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">月销量:</label>
-							<div class="col-sm-6">
-								<input type="text" v-model="app.monthSale" class="form-control no-border" readonly="readonly"/>
-							</div>
-						</div>
-						<div class="form-group">
-                            <label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">商品简介:</label>
-							<div class="col-sm-6">
-								<input type="text" v-model="app.remark" class="form-control no-border" readonly="readonly"/>
-							</div>
-						</div>
-						<div class="form-group">
-                            <label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">应用状态:</label>
-							<div class="col-sm-6">
-                                <input type="text" v-model="app.open" class="form-control no-border" readonly="readonly"/>
-							</div>
-						</div>
-						<div class="form-group">
-                            <label class="col-sm-4 control-label" style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">商品详细介绍:</label>
-							<div class="col-sm-10" style="float: right;">
-								<textarea  v-model="app.xremark" class="form-control no-border" readonly="readonly" style="width: 700px;height: 350px;"></textarea>
-							</div>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
-					</div>
-				</div>
-			</form>
-			<!-- /.modal-content -->
-		</div>
-		<!-- /.modal-dialog -->
-	</div>
-	<!-- /.modal -->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"
+                                   style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">商品库存:</label>
+                            <div class="col-sm-6">
+                                <input type="text" v-model="app.stock" class="form-control no-border"
+                                       readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"
+                                   style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">商品添加日期:</label>
+                            <div class="col-sm-6">
+                                <input type="text" v-model="app.addDate" class="form-control no-border"
+                                       readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"
+                                   style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">上次修改的时间:</label>
+                            <div class="col-sm-6">
+                                <input type="text" v-model="app.lastTime" class="form-control no-border"
+                                       readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"
+                                   style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">类型:</label>
+                            <div class="col-sm-6">
+                                <input type="text" v-model="category" class="form-control no-border"
+                                       readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"
+                                   style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">上次修改记录的管理员:</label>
+                            <div class="col-sm-6">
+                                <input type="text" v-model="app.lastAdminId" class="form-control no-border"
+                                       readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"
+                                   style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">总销量:</label>
+                            <div class="col-sm-6">
+                                <input type="text" v-model="app.sale" class="form-control no-border"
+                                       readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"
+                                   style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">月销量:</label>
+                            <div class="col-sm-6">
+                                <input type="text" v-model="app.monthSale" class="form-control no-border"
+                                       readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"
+                                   style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">商品简介:</label>
+                            <div class="col-sm-6">
+                                <input type="text" v-model="app.remark" class="form-control no-border"
+                                       readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"
+                                   style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">应用状态:</label>
+                            <div class="col-sm-6">
+                                <input type="text" v-model="app.open" class="form-control no-border"
+                                       readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"
+                                   style="padding-top: 5px; text-align: right; font-size: 18px; font-family: 楷体;">商品详细介绍:</label>
+                            <div class="col-sm-6">
+                                <input v-model="app.xremark" class="form-control no-border" readonly="readonly"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+                    </div>
+                </div>
+            </form>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
 </div>
 <script src="../js/modules/product.js"></script>
 </body>

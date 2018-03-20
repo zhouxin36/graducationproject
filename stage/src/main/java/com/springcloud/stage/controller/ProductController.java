@@ -1,6 +1,7 @@
 package com.springcloud.stage.controller;
 
 import com.springcloud.stage.service.CategoryService;
+import com.springcloud.stage.service.HomeService;
 import com.springcloud.stage.service.MallActivityService;
 import com.springcloud.stage.service.ProductService;
 import com.zx.api.bean.*;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +28,17 @@ public class ProductController {
 	@Autowired
 	ProductService productService;
 
-	@ResponseBody
+    @Autowired
+    MallActivityService mallActivityService;
+
+    @Autowired
+    CategoryService categoryService;
+
+    @Autowired
+    HomeService homeService;
+
+
+    @ResponseBody
 	@RequestMapping("/selectProductDes")
 	private ResultDTO selectProductDes() {
 
@@ -147,30 +159,49 @@ public class ProductController {
         }
 	}
 
-	@Autowired
-    MallActivityService mallActivityService;
-
-	@Autowired
-    CategoryService categoryService;
 
 	@ResponseBody
 	@RequestMapping("/home_message")
 	public ResultDTO home_message() {
 		List<MallActivity> list = mallActivityService.selectByExample(new MallActivityExample());
 		List<Category> list2 = categoryService.selectByExample(new CategoryExample());
-//		Msg msg1_1 = productService.selectProductsByCategory(1, 1);
-//		Msg msg1_2 = productService.selectProductsByCategory(1, 2);
-//		Msg msg1_3 = productService.selectProductsByCategory(1, 3);
-//		Msg msg2_1 = productService.selectProductsByCategory(2, 1);
-//		Msg msg2_2 = productService.selectProductsByCategory(2, 2);
-//		Msg msg2_3 = productService.selectProductsByCategory(2, 3);
+		List<Home> list1 = homeService.selectByExample(new HomeExample());
         Map<String,Object> map = new HashMap<>();
+        List<List<Product>> lists = new ArrayList<>();
+
+        for (int i = 0; i<list1.size();i++) {
+            Home home = list1.get(i);
+            ProductExample productExample = new ProductExample();
+            productExample.setStartRow(0);
+            productExample.setPageSize(6);
+            if(home.getSort() == 0){
+                productExample.setOrderByClause("add_date desc");
+            }
+            if(home.getSort() == 1){
+                productExample.setOrderByClause("add_date asc");
+            }
+            if(home.getSort() == 2){
+                productExample.setOrderByClause("sale asc");
+            }
+            if(home.getSort() == 3){
+                productExample.setOrderByClause("sale desc");
+            }
+            if(home.getSort() == 4){
+                productExample.setOrderByClause("price asc");
+            }
+            if(home.getSort() == 5){
+                productExample.setOrderByClause("price desc");
+            }
+            ProductExample.Criteria criteria = productExample.createCriteria();
+            criteria.andCategoryIdEqualTo(home.getCategoryId());
+            List<Product> products = productService.selectByExample(productExample);
+            lists.add(products);
+            map.put("home",lists);
+        }
         map.put("activity_list", list);
         map.put("category_list", list2);
+        map.put("home_list", list1);
         return ResultDTO.buildSuccessData(map);
-//		return ResultDTO.success().add("activity_list", list).add("category_list", list2).add("msg1_1", msg1_1)
-//				.add("msg1_2", msg1_2).add("msg1_3", msg1_3).add("msg2_1", msg2_1).add("msg2_2", msg2_2)
-//				.add("msg2_3", msg2_3);
 	}
 
 	@ResponseBody
