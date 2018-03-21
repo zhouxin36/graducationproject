@@ -141,6 +141,16 @@ var vm = new Vue({
             if (id == null) {
                 return;
             }
+            var id = $("#jqGrid").jqGrid('getGridParam','selrow');//根据点击行获得点击行的id（id为jsonReader: {id: "id" },）
+            var rowData = $("#jqGrid").jqGrid("getRowData",id);//根据上面的id获得本行的所有数据
+            var val= rowData.status;
+            if(val != "待发货"){
+                layer.msg("不是待发货状态!!", {
+                    icon : 2,
+                    time : 1000
+                });
+                return;
+            }
 
             confirm('确定要发货吗', function () {
                 $.get(baseURL + "forder_deliver?id=" + id, function (r) {
