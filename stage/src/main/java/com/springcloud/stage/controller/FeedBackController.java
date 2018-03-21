@@ -34,8 +34,6 @@ public class FeedBackController {
 	public ResultDTO SubmitFeedBack(Feedback feedback, HttpServletRequest request) {
 		feedback.setUserId(getUserId(request));
 		feedback.setId(MyUtils.getUUID());
-		System.out.println(feedback.getComment());
-		System.out.println(feedback.getQq());
 		service.insert(feedback);
 		return ResultDTO.ok();
 	}

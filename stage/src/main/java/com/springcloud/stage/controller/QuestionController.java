@@ -54,7 +54,6 @@ public class QuestionController {
     public ResultDTO insertUserQuestion(SafeQuestion safeQuestion ,HttpServletRequest request) {
         safeQuestion.setUserId(getUserId(request));
         safeQuestion.setId(MyUtils.getUUID());
-        System.out.println(safeQuestion);
         int flag = service.insert(safeQuestion);
         if(flag==0){
             return ResultDTO.error();
@@ -66,7 +65,6 @@ public class QuestionController {
     @RequestMapping("/updateUserQuestion")
     public ResultDTO updateUserQuestion(SafeQuestion safeQuestion, HttpServletRequest request) {
         safeQuestion.setUserId(getUserId(request));
-        System.out.println(safeQuestion);
         int flag  = service.updateByPrimaryKey(safeQuestion);
         if(flag == 0)
             return ResultDTO.error();

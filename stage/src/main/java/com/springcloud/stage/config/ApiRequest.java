@@ -1,5 +1,9 @@
 package com.springcloud.stage.config;
 
+import com.springcloud.stage.controller.UserController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -10,6 +14,7 @@ import java.util.Map;
  * Http 请求工具类
  */
 public class ApiRequest {
+    private static Logger logger = LoggerFactory.getLogger(UserController.class);
     /**
      * Get 请求
      *
@@ -46,8 +51,7 @@ public class ApiRequest {
             response.setBody(body);
 
         } catch (Exception e) {
-            System.out.println("发送GET请求出现异常!" + e);
-            e.printStackTrace();
+            logger.error("发送GET请求出现异常!" + e);
         }
 
         return response;
@@ -96,15 +100,14 @@ public class ApiRequest {
             response.setBody(body);
 
         } catch (Exception e) {
-            System.out.println("发送POST请求出现异常!" + e);
-            e.printStackTrace();
+            logger.error("发送POST请求出现异常!" + e);
         } finally {
             try {
                 if (pw != null) {
                     pw.close();
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("sendPost"+e);
             }
         }
         return response;
@@ -121,14 +124,14 @@ public class ApiRequest {
                 content += line;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("readString"+e);
         } finally {
             try {
                 if (br != null) {
                     br.close();
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("readString"+e);
             }
         }
         return content;

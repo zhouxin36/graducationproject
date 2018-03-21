@@ -1,9 +1,6 @@
 package com.zx.persistence;
 
-import com.zx.api.utils.MD5Util;
 import com.zx.api.utils.MyUtils;
-import com.zx.persistence.bean.CategoryExample;
-import com.zx.persistence.bean.Coupon;
 import com.zx.persistence.bean.User;
 import com.zx.persistence.bean.UserExample;
 import com.zx.persistence.dao.UserMapper;
@@ -18,7 +15,6 @@ import org.springframework.util.IdGenerator;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -27,6 +23,7 @@ public class PersistenceApplicationTests {
     @Autowired
     IdGenerator idGenerator;
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     UserMapper mapper;
 
@@ -81,6 +78,6 @@ public class PersistenceApplicationTests {
     @Test
     public void test3(){
         User user = mapper.selectByPrimaryKey("3ff39b3fc51157fe7c68083f813da716");
-        System.out.println(user.getBirthday());
+        logger.info(user.getBirthday()+"");
     }
 }

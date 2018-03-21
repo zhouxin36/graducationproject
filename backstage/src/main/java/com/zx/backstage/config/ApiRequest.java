@@ -1,5 +1,9 @@
 package com.zx.backstage.config;
 
+import com.zx.backstage.controller.MallActivityController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -10,6 +14,7 @@ import java.util.Map;
  * Http 请求工具类
  */
 public class ApiRequest {
+    private static Logger logger = LoggerFactory.getLogger(MallActivityController.class);
     /**
      * Get 请求
      *
@@ -46,7 +51,7 @@ public class ApiRequest {
             response.setBody(body);
 
         } catch (Exception e) {
-            System.out.println("发送GET请求出现异常!" + e);
+            logger.error("发送GET请求出现异常!" + e);
             e.printStackTrace();
         }
 
@@ -96,7 +101,7 @@ public class ApiRequest {
             response.setBody(body);
 
         } catch (Exception e) {
-            System.out.println("发送POST请求出现异常!" + e);
+            logger.error("发送POST请求出现异常!" + e);
             e.printStackTrace();
         } finally {
             try {
@@ -128,7 +133,7 @@ public class ApiRequest {
                     br.close();
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("readString"+e);
             }
         }
         return content;

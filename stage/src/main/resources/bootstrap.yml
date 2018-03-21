@@ -19,3 +19,4 @@ spring:
         serviceId: config-server
         enabled: true
       name: stage
+feign.hystrix.enabled: true

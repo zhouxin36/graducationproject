@@ -148,10 +148,7 @@ public class UserController {
         else
             return ResultDTO.error("用户不存在或密码错误");
         criteria.andPasswordEqualTo(MyUtils.md5Passwrod(user.getPassword()));
-        System.out.println("email:"+user.getEmail());
-        System.out.println("password:"+user.getPassword());
         List<User> list = service.selectByExample(example);
-        System.out.println(list);
         if(list.size()==0){
             return ResultDTO.error("用户不存在或密码错误");
         }else {
@@ -210,7 +207,6 @@ public class UserController {
                 return ResultDTO.ok();
             } else {
                 request.getSession().setAttribute("find_email_user", list.get(0));
-//					System.out.println(list.get(0).getEmail()+list.get(0).getName());
                 return ResultDTO.error("邮箱存在");
             }
         } else {
@@ -244,10 +240,7 @@ public class UserController {
         UserExample.Criteria criteria=example.createCriteria();
         criteria.andEmailEqualTo(email);
         criteria.andPasswordEqualTo(MyUtils.md5Passwrod(pString));
-        System.out.println("email:"+email);
-        System.out.println("password:"+pString);
         List<User> list = userService.selectByExample(example);
-        System.out.println(list);
 
         StringBuffer content = new StringBuffer("<h2>DGUT</h2>");
         content.append("欢迎注册天猫会员<br>点击<a href='http://localhost:8301/graducation/User/user_activity/"+list.get(0).getId()+"/"+MyUtils.md5Passwrod(user.getEmail())+"'>此处链接</a>激活账号");

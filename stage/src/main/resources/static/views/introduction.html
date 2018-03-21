@@ -290,19 +290,23 @@
                         });
                     }
                 });
-            var remark = msg.data.product.remark.split('/');
-            var xremark = msg.data.product.xremark.split('/');
-            for (var i = 0; remark[i] != null; i++) {
-                var li_tittle = $("<li></li>");
-                li_tittle.append(remark[i]);
-                $("#J_AttrUL").append(li_tittle);
+            if(msg.data.product.remark != null){
+                var remark = msg.data.product.remark.split('/');
+                for (var i = 0; remark[i] != null; i++) {
+                    var li_tittle = $("<li></li>");
+                    li_tittle.append(remark[i]);
+                    $("#J_AttrUL").append(li_tittle);
+                }
             }
-            for (var i = 0; xremark[i] != null; i++) {
-                var li_tittle = $("<li></li>");
-                li_tittle.append(xremark[i]);
-                $("#J_AttrUL").append(li_tittle);
-            }
+            if(msg.data.product.xremark != null ) {
+                var xremark = msg.data.product.xremark.split('/');
 
+                for (var i = 0; xremark[i] != null; i++) {
+                    var li_tittle = $("<li></li>");
+                    li_tittle.append(xremark[i]);
+                    $("#J_AttrUL").append(li_tittle);
+                }
+            }
             $("#c1").append(msg.data.product.name);
             $("#c3").append(msg.data.product.price);
             $("#c5").append(msg.data.product.sale);

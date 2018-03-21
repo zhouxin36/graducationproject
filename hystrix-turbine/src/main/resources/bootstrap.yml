@@ -15,5 +15,5 @@ turbine:
   instanceUrlSuffix: graducation/hystrix.stream
   aggregator:
     clusterConfig: default
-  appConfig: backstage
+  appConfig: backstage,stage
   cluster-name-expression: "'default'"

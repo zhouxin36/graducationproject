@@ -49,12 +49,10 @@ public class MallActivityController {
 		Pic pic = picService.selectByPrimaryKey(id);
         Map<String,Object> map = new HashMap<>();
 		if (pic != null) {
-			System.out.println(pic.getPath());
 			map.put("pic", pic);
 			map.put("p", path);
 			return ResultDTO.buildSuccessData(map);
 		} else {
-			System.out.println("error");
 			map.put("p", path);
             ResultDTO resultDTO = ResultDTO.error();
             resultDTO.setData(map);

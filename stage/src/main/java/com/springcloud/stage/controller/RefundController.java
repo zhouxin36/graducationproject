@@ -49,7 +49,6 @@ public class RefundController {
 		if(list.size()!=0 && list.get(0)!=null){
 			return ResultDTO.error();
 		}
-		System.out.println(refund);
 		refundService.insert(refund);
 		return ResultDTO.ok();
 	}

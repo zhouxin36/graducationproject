@@ -31,7 +31,7 @@
                 var list = msg.data.list;
                 //for(var i = 6 ;  i < (6+list.length) ;i++){
                 $.each(list, function (index, item) {
-                    $.post("../Product/SelectProductById", "id=" + item.productId, function (msg, status) {
+                    $.post("../Product/SelectProductById", "id=" + item, function (msg, status) {
                         var product = msg.data.product;
                         var div_goods_pic = $("<div></div>").addClass("goods-pic");
 
@@ -40,7 +40,7 @@
                             type: "post",
                             dataType: "json",
                             url: "../Pic/selectPicByProductType",
-                            data: "id=" + item.productId + "&type=1",
+                            data: "id=" + item + "&type=1",
                             async: false,
                             success: function (msg) {
                                 if (msg.code == 200) {
@@ -96,10 +96,10 @@
 
             function build_today_foot(msg) {
                 $("#box").empty();
-                var list = msg.data.list;
+                var list = msg.data.set;
 
                 $.each(list, function (index, item) {
-                    $.post("../Product/SelectProductById", "id=" + item.productId, function (msg, status) {
+                    $.post("../Product/SelectProductById", "id=" + item, function (msg, status) {
                         var i = index + 1;
                         var product = msg.data.product;
                         var div_goods_pic = $("<div></div>").addClass("goods-pic");
@@ -110,7 +110,7 @@
                             type: "post",
                             dataType: "json",
                             url: "../Pic/selectPicByProductType",
-                            data: "id=" + item.productId + "&type=1",
+                            data: "id=" + item + "&type=1",
                             async: false,
                             success: function (msg) {
                                 if (msg.code == 200) {

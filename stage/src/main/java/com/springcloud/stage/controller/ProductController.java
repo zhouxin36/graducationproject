@@ -272,7 +272,7 @@ public class ProductController {
 	public ResultDTO guessyoulike(String type) {
         Map<String, Object> map = new HashMap<>();
         try {
-            logger.info("---->ProductController/guessyoulike，type:{}",type);
+            logger.info("---->ProductController/guessyoulike,type:{}",type);
             ProductExample productExample = new ProductExample();
             ProductExample.Criteria criteria = productExample.createCriteria();
             criteria.andCategoryIdEqualTo(type);

@@ -20,116 +20,119 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/FootMark")
 public class FootMarkController {
 
-	@Autowired
-	private FootmarkService service;
+    @Autowired
+    private FootmarkService service;
 
 
-	private String getUserId(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String user_id = -100+"";
-		if (session.getAttribute("user_id") != null)
-			user_id = (String) session.getAttribute("user_id");
-		return user_id;
-	}
-	@ResponseBody
-	@RequestMapping("/checkTodayFootMark")
-	public ResultDTO checkTodayFootMark(String productId, HttpServletRequest request) {
-		int flag;
-		FootmarkExample example = new FootmarkExample();
-		FootmarkExample.Criteria criteria = example.createCriteria();
-		criteria.andProductIdEqualTo(productId);
-		criteria.andVisitTimeEqualTo(new Date());
-		criteria.andUserIdEqualTo(getUserId(request));
-		List<Footmark> list = service.selectByExample(example);
-		if (list.size() == 0)
-			flag = 0;
-		else
-			flag = 1;
+    private String getUserId(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String user_id = -100 + "";
+        if (session.getAttribute("user_id") != null)
+            user_id = (String) session.getAttribute("user_id");
+        return user_id;
+    }
+
+    @ResponseBody
+    @RequestMapping("/checkTodayFootMark")
+    public ResultDTO checkTodayFootMark(String productId, HttpServletRequest request) {
+        int flag;
+        FootmarkExample example = new FootmarkExample();
+        FootmarkExample.Criteria criteria = example.createCriteria();
+        criteria.andProductIdEqualTo(productId);
+        criteria.andVisitTimeEqualTo(new Date());
+        criteria.andUserIdEqualTo(getUserId(request));
+        List<Footmark> list = service.selectByExample(example);
+        if (list.size() == 0)
+            flag = 0;
+        else
+            flag = 1;
 
 
-		if(flag==0){
-			return ResultDTO.ok();
-		}else{
-			return ResultDTO.error();
-		}
-	}
+        if (flag == 0) {
+            return ResultDTO.ok();
+        } else {
+            return ResultDTO.error();
+        }
+    }
 
-	@ResponseBody
-	@RequestMapping("/saveFootMark")
-	public ResultDTO saveFootMark(String productId,HttpServletRequest request) {
-	    FootmarkExample footmarkExample = new FootmarkExample();
+    @ResponseBody
+    @RequestMapping("/saveFootMark")
+    public ResultDTO saveFootMark(String productId, HttpServletRequest request) {
+        FootmarkExample footmarkExample = new FootmarkExample();
         FootmarkExample.Criteria criteria = footmarkExample.createCriteria();
         criteria.andProductIdEqualTo(productId);
-        if(service.selectByExample(footmarkExample) == null) {
-            Footmark footmark = new Footmark();
-            footmark.setProductId(productId);
-            footmark.setUserId(getUserId(request));
-            footmark.setVisitTime(LocalDateTime.now());
-            footmark.setId(MyUtils.getUUID());
-            service.insert(footmark);
-        }
+        Footmark footmark = new Footmark();
+        footmark.setProductId(productId);
+        footmark.setUserId(getUserId(request));
+        footmark.setVisitTime(LocalDateTime.now());
+        footmark.setId(MyUtils.getUUID());
+        service.insert(footmark);
         return ResultDTO.ok();
-	}
+    }
 
-	@ResponseBody
-	@RequestMapping("/getPassWeekFootMark")
-	public ResultDTO getPassWeekFootMark(HttpServletRequest request){
-		Date dNow = new Date();
-		Date dBefore;
-		Date d_seven;
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(dNow);
-		calendar.add(Calendar.DAY_OF_MONTH, -1);
-		dBefore = calendar.getTime();
-		calendar.add(Calendar.DAY_OF_MONTH, -7);
-		d_seven = calendar.getTime();
+    @ResponseBody
+    @RequestMapping("/getPassWeekFootMark")
+    public ResultDTO getPassWeekFootMark(HttpServletRequest request) {
+        Date dNow = new Date();
+        Date dBefore;
+        Date d_seven;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dNow);
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        dBefore = calendar.getTime();
+        calendar.add(Calendar.DAY_OF_MONTH, -7);
+        d_seven = calendar.getTime();
         String userId = getUserId(request);
         FootmarkExample example = new FootmarkExample();
         FootmarkExample.Criteria criteria = example.createCriteria();
+        Date date = new Date();
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setSeconds(0);
         criteria.andVisitTimeGreaterThanOrEqualTo(d_seven);
-        criteria.andVisitTimeLessThanOrEqualTo(dBefore);
+        criteria.andVisitTimeLessThanOrEqualTo(date);
         if (userId != null) {
             criteria.andUserIdEqualTo(userId);
         }
         List<Footmark> list = service.selectByExample(example);
-		List<Footmark> list2 = new ArrayList<Footmark>();
-		if(list.size()!=0){
-			for(int i = 0 ;i < 4 && i< list.size();i++)
-				list2.add(list.get(i));
-            Map<String,Object> map = new HashMap<>();
-			map.put("list", list2);
-			return ResultDTO.buildSuccessData(map);
+        Set<String> set = new HashSet<>();
+        if (list.size() != 0) {
+            for (int i = 0; i < 4 && i < list.size(); i++)
+                set.add(list.get(i).getProductId());
+            Map<String, Object> map = new HashMap<>();
+            map.put("list", set);
+            return ResultDTO.buildSuccessData(map);
 
-		}
-		return ResultDTO.error();
-	}
+        }
+        return ResultDTO.error();
+    }
 
 
-	@ResponseBody
-	@RequestMapping("/getTodayFootMark")
-	public ResultDTO getTodayFootMark(HttpServletRequest request) {
+    @ResponseBody
+    @RequestMapping("/getTodayFootMark")
+    public ResultDTO getTodayFootMark(HttpServletRequest request) {
         FootmarkExample example = new FootmarkExample();
         FootmarkExample.Criteria criteria = example.createCriteria();
-		Date date = new Date();
-		date.setHours(0);
-		date.setMinutes(0);
-		date.setSeconds(0);
-		criteria.andVisitTimeGreaterThan(date);
+        Date date = new Date();
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setSeconds(0);
+        criteria.andVisitTimeGreaterThan(date);
         String userId = getUserId(request);
         if (userId != null) {
             criteria.andUserIdEqualTo(userId);
         }
         List<Footmark> list = service.selectByExample(example);
-		List<Footmark> list2 = new ArrayList<Footmark>();
-		if(list.size()!=0){
-			for(int i = 0 ;i < 4 && i< list.size();i++)
-				list2.add(list.get(i));
-            Map<String,Object> map = new HashMap<>();
-			map.put("list", list2);
-			return ResultDTO.buildSuccessData(map);
+        Set<String> set = new HashSet<>();
+        if (list.size() != 0) {
+            for (int i = 0; i < 4 && i < list.size(); i++)
+                set.add(list.get(i).getProductId());
+            Map<String, Object> map = new HashMap<>();
+            map.put("set", set);
+            return ResultDTO.buildSuccessData(map);
 
-		}
-		return ResultDTO.error();
-	}
+        }
+        return ResultDTO.error();
+    }
 
 }

@@ -54,8 +54,6 @@ public class MallActivityController {
         Pic pic = new Pic();
         try {
             List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
-            String path = FILE_BASE_URL;
-            System.out.println(path);
             BufferedOutputStream stream = null;
             if (!files.get(0).isEmpty()) {
                 String activityId = MyUtils.getUUID();

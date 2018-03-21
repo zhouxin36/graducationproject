@@ -124,7 +124,6 @@ public class DepositController {
 		deposit.setId(MyUtils.getUUID());
 		depositService.insert(deposit);
 		User user=userService.selectByPrimaryKey(user_id);
-		System.out.println(user);
 		user.setAccountBalance(user.getAccountBalance().add(new BigDecimal(100000)));
 		userService.updateByPrimaryKeySelective(user);
 		return "success";
@@ -171,7 +170,6 @@ public class DepositController {
             deposit.setId(MyUtils.getUUID());
             depositService.insert(deposit);
             User user=userService.selectByPrimaryKey(userId[0]);
-            System.out.println(user);
             user.setAccountBalance(user.getAccountBalance().add(new BigDecimal(total_amount)));
             userService.updateByPrimaryKeySelective(user);
             out.println("trade_no:"+trade_no+"<br/>out_trade_no:"+out_trade_no+"<br/>total_amount:"+total_amount);

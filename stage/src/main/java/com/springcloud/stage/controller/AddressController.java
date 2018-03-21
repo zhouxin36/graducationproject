@@ -7,6 +7,8 @@ import com.zx.api.bean.UserAddress;
 import com.zx.api.bean.UserAddressExample;
 import com.zx.api.dto.ResultDTO;
 import com.zx.api.utils.MyUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,8 @@ import java.util.Map;
 @RequestMapping("/Address")
 public class AddressController {
 
+    Logger logger = LoggerFactory.getLogger(UserController.class);
+
 	@Autowired
 	UserAddressService service;
 
@@ -40,7 +44,6 @@ public class AddressController {
 	@ResponseBody
 	@RequestMapping("/updateAddressById")
 	public ResultDTO updateAddressById(UserAddress address) {
-		System.out.println(address);
 		if(MyUtils.isEquals(address.getAddress(),"--") || MyUtils.isEquals(address.getAddress(),"")){
 		    address.setAddress(null);
         }
@@ -54,7 +57,6 @@ public class AddressController {
 	@ResponseBody
 	@RequestMapping("/insertAddress")
 	public ResultDTO insertAddress(UserAddress address, HttpServletRequest request) {
-		System.out.println("in the insertAddress");
 		address.setId(MyUtils.getUUID());
 		address.setSelected(0);
 		address.setAddDate(LocalDateTime.now());
@@ -81,7 +83,6 @@ public class AddressController {
 	@ResponseBody
 	@RequestMapping("/deleteAddressById")
 	public ResultDTO deleteAddressById(String id) {
-		System.out.println("deleteAddressById  id:" + id);
 		int flag = service.deleteByPrimaryKey(id);
 		if (flag == 0) {
 			return ResultDTO.error();
@@ -95,7 +96,6 @@ public class AddressController {
 
 		User user = new User();
 		user.setId(getUserId(request));
-		System.out.println(user);
 		UserAddressExample userAddressExample = new UserAddressExample();
         UserAddressExample.Criteria criteria = userAddressExample.createCriteria();
         criteria.andUserIdEqualTo(user.getId());
@@ -123,7 +123,6 @@ public class AddressController {
         entityAndExample.setExample(example);
         entityAndExample.setEntity(a);
         int count= service.updateByExampleSelective(entityAndExample);
-        System.out.println("count:"+count);
         a.setId(id);
         a.setSelected(1);
         int i = service.updateByPrimaryKeySelective(a);

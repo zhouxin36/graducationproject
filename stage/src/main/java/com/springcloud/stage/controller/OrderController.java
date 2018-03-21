@@ -68,10 +68,6 @@ public class OrderController {
 	@ResponseBody
 	@RequestMapping("/addSorderToForder")
 	public ResultDTO addSorderToForder(HttpServletRequest request, String[] id,Integer [] setting){
-        for (String i:
-             id) {
-            System.out.println(i);
-        }
         String userId = getUserId(request);
         SorderExample sorderExample = new SorderExample();
         SorderExample.Criteria criteria = sorderExample.createCriteria();
@@ -324,7 +320,6 @@ public class OrderController {
 	@ResponseBody
 	@RequestMapping("/getOrderById")
 	public ResultDTO getOrderById(int number, HttpServletRequest request) {
-		System.out.println("number"+number);
 		List<Forder> listForders;
 		
 		String id = (String) request.getSession().getAttribute("user_id");
@@ -353,19 +348,5 @@ public class OrderController {
              map.put("list", listForders);
              return ResultDTO.buildSuccessData(map);
          }
-		/*List<List<Sorder>> bigList = new ArrayList<List<Sorder>>();
-		     for(Forder forder : listForders){
-		    	 List<Sorder>  list = sorderService.selectSorderByForder(forder.getId());
-		          if(list.size()!=0)  
-		    	 bigList.add(list);
-		     }
-		
-		
-		System.out.println("size:"+bigList.size());
-		if(bigList.size()!=0)
-         return Msg.success().add("order", bigList);
-		else {
-			return Msg.error();
-		}*/
 	}
 }

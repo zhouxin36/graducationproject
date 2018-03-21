@@ -21,3 +21,4 @@ spring:
         serviceId: config-server
         enabled: true
       name: backstage
+feign.hystrix.enabled: true
