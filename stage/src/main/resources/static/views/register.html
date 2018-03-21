@@ -134,6 +134,12 @@
             sp.append("邮箱不能为空");
             return;
         }
+        if (email == "邮箱存在") {
+            i++;
+            sp.empty();
+            sp.append("邮箱存在");
+            return;
+        }
         if (phone == "") {
             i++;
             sp_phone.empty();

@@ -114,9 +114,10 @@ public class DepositController {
 	}
 
 	@RequestMapping("callBack")
-	public String callBack(HttpSession session) {
+	public String callBack(HttpSession session,HttpServletRequest request) {
 		Deposit deposit=new Deposit();
-		String user_id =(String) session.getAttribute("user_id");
+
+		String user_id =getUserId(request);
 		deposit.setUserId(user_id);
 		deposit.setIssuccess(1);
 		deposit.setRechargeDate(LocalDateTime.now());
@@ -126,7 +127,7 @@ public class DepositController {
 		User user=userService.selectByPrimaryKey(user_id);
 		user.setAccountBalance(user.getAccountBalance().add(new BigDecimal(100000)));
 		userService.updateByPrimaryKeySelective(user);
-		return "success";
+		return "redirect:../views/success.html";
 	}
 
     @GetMapping("/return_url")

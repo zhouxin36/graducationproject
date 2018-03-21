@@ -223,8 +223,11 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping("/zhuce")
-    public ResultDTO zhuce(User user) {
+    public ResultDTO zhuce(HttpServletRequest request,User user) {
         String email = user.getEmail();
+        if(validateEmail(email,request).getCode() !=200){
+            return ResultDTO.error("邮箱已存在");
+        }
         user.setAccountSecurity(60);
         //Long balanceLong = (long) 0;
         user.setAccountBalance(new BigDecimal(0.00));

@@ -712,11 +712,11 @@ function build_order(number/*msg*/){
     			 type:"post",
     			 data:jsonstr,
     			 success:function(){
-    				 $("#myModal1").modal("hide");
     				 layer.msg("评价成功!!", {
   						icon : 6,
   						time : 2000
   					});
+                     $("#myModal1").modal("hide");
                      $("#jsp").load("test_order.html",function(data,status){
                      });
     			 },
