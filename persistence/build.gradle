@@ -41,4 +41,3 @@ repositories {
         compile ('org.springframework.cloud:spring-cloud-starter-config')
     }
 }
-

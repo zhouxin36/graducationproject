@@ -309,7 +309,7 @@ public class OrderController {
         criteria.andUserIdEqualTo(user.getId());
         criteria.andIsbalancedEqualTo(0);
         List<Sorder> list =  sorderService.selectByExample(example);
-        if(list.size()!=0){
+        if(list != null){
             Map<String,Object> map = new HashMap<>();
             map.put("list", list);
 			return ResultDTO.buildSuccessData(map);

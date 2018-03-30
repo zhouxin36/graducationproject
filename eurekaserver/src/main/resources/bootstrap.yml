@@ -6,6 +6,9 @@ server:
   port: 8761
   context-path: /graducation
 eureka:
+  server:
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 4000
   instance:
     prefer-ip-address: true
     ip-address: 47.106.89.153
@@ -20,7 +23,8 @@ security:
   user:
     name: root
     password: 123456
-
+logging:
+  level: debug
 ---
 
 spring:
@@ -31,6 +35,9 @@ server:
   port: 8762
   context-path: /graducation
 eureka:
+  server:
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 4000
   instance:
     prefer-ip-address: true
     ip-address: 47.106.89.153
@@ -45,7 +52,8 @@ security:
   user:
     name: root
     password: 123456
-
+logging:
+  level: debug
 
 ---
 
@@ -57,6 +65,9 @@ server:
   port: 8763
   context-path: /graducation
 eureka:
+  server:
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 4000
   instance:
     prefer-ip-address: true
     ip-address: 47.106.89.153
