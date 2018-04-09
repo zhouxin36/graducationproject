@@ -11,7 +11,7 @@ eureka:
     eviction-interval-timer-in-ms: 4000
   instance:
     prefer-ip-address: true
-    ip-address: 47.106.89.153
+#    ip-address: 47.106.89.153
   client:
     healthcheck:
       enabled: true
@@ -40,7 +40,7 @@ eureka:
     eviction-interval-timer-in-ms: 4000
   instance:
     prefer-ip-address: true
-    ip-address: 47.106.89.153
+#    ip-address: 47.106.89.153
   client:
     healthcheck:
       enabled: true
@@ -70,7 +70,7 @@ eureka:
     eviction-interval-timer-in-ms: 4000
   instance:
     prefer-ip-address: true
-    ip-address: 47.106.89.153
+#    ip-address: 47.106.89.153
   client:
     healthcheck:
       enabled: true

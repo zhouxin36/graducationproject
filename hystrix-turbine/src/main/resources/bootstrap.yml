@@ -7,6 +7,7 @@ eureka:
       defaultZone: ${E_URL1},${E_URL2},${E_URL3}
   instance:
     prefer-ip-address: true
+#    ip-address: 47.106.89.153
 #    home-page-url-path: /
 spring:
   application:

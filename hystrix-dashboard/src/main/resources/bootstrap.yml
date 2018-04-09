@@ -1,0 +1,13 @@
+server:
+  port: 8081
+  context-path: /graducation
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${E_URL1},${E_URL2},${E_URL3}
+  instance:
+    prefer-ip-address: true
+#    ip-address: 47.106.89.153
+spring:
+  application:
+    name: hystrix-dashboard
