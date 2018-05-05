@@ -567,8 +567,8 @@
 					var aaa = item.number*product.price;
 					em5.append(Math.round(item.number*product.price * 10) / 10);
 				 all += item.number*product.price;
-					$("#J_ActualFee").html(all );
-					$("#al_m").val(all);
+					$("#J_ActualFee").html(Math.round(all * 10) / 10);
+					$("#al_m").val(Math.round(all * 10) / 10);
 				 div5.append(em5);
 					li5.append(div5);
 

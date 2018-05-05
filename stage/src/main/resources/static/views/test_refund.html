@@ -51,8 +51,8 @@
                             + item.name + "</td><td>"
                             + item.price + "</td><td>"
                             + item.number + "</td><td>"
-                            + parseInt(item.price) * parseInt(item.number) + "</td></tr>";
-                        allmoney += parseInt(item.price) * parseInt(item.number);
+                            +  Math.round(item.number*item.price * 10) / 10+ "</td></tr>";
+                        allmoney += Math.round(item.number*item.price * 10) / 10;
                     });
                     $("#refund-money").val(allmoney);
                     $("#tbody").html(all);

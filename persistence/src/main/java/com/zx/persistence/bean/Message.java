@@ -5,6 +5,8 @@ public class Message {
 
     private String message;
 
+    private String userId;
+
     public String getId() {
         return id;
     }
@@ -19,5 +21,13 @@ public class Message {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

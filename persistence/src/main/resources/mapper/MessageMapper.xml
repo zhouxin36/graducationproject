@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.zx.persistence.bean.Message">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -64,7 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, message
+    id, message, user_id
   </sql>
   <select id="selectByExample" parameterType="com.zx.persistence.bean.MessageExample" resultMap="BaseResultMap">
     select
@@ -97,8 +98,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.zx.persistence.bean.Message">
-    insert into message (id, message)
-    values (#{id,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR})
+    insert into message (id, message, user_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.zx.persistence.bean.Message">
     insert into message
@@ -109,6 +112,9 @@
       <if test="message != null">
         message,
       </if>
+      <if test="userId != null">
+        user_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -116,6 +122,9 @@
       </if>
       <if test="message != null">
         #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -134,6 +143,9 @@
       <if test="record.message != null">
         message = #{record.message,jdbcType=VARCHAR},
       </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -142,7 +154,8 @@
   <update id="updateByExample" parameterType="map">
     update message
     set id = #{record.id,jdbcType=VARCHAR},
-      message = #{record.message,jdbcType=VARCHAR}
+      message = #{record.message,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -153,12 +166,16 @@
       <if test="message != null">
         message = #{message,jdbcType=VARCHAR},
       </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zx.persistence.bean.Message">
     update message
-    set message = #{message,jdbcType=VARCHAR}
+    set message = #{message,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

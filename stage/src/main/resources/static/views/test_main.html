@@ -1,474 +1,477 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0">
-		<title>主界面</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0">
+    <title>主界面</title>
 
-		<!--<link href="../css/admin.css" rel="stylesheet" type="text/css">-->
-		<link href="../css/amazeui.min.css" rel="stylesheet" type="text/css">
-        <link href="../css/blstyle.css" rel="stylesheet" type="text/css">
-        	<link href="../css/addstyle.css" rel="stylesheet" type="text/css">
-        <link href="../css/infstyle.css" rel="stylesheet" type="text/css">
-        <link href="../css/cmstyle.css" rel="stylesheet" type="text/css">
-        <link href="../css/colstyle.css" rel="stylesheet" type="text/css">
-        	<link href="../css/newstyle.css" rel="stylesheet" type="text/css">
-        <link href="../css/orstyle.css" rel="stylesheet" type="text/css">
-        <link href="../css/bostyle.css" rel="stylesheet" type="text/css">
-        <link href="../css/cpstyle.css" rel="stylesheet" type="text/css">
-        <link href="../css/lostyle.css" rel="stylesheet" type="text/css">
-             <link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
- 
- <link rel="stylesheet" href="../css/layer.css">
-        	<link href="../css/personal.css" rel="stylesheet" type="text/css">
-        <link href="../css/footstyle.css" rel="stylesheet" type="text/css">
-		<link href="../css/refstyle.css" rel="stylesheet" type="text/css">
-		<link href="../css/personal.css" rel="stylesheet" type="text/css">
-		<link href="../css/addstyle.css" rel="stylesheet" type="text/css">
-		<script src="../js/jquery.min.js" type="text/javascript"></script>
-		<script src="../js/amazeui.min.js"></script>
-<script type="text/javascript" src="../js/layer.js"></script>
+    <!--<link href="../css/admin.css" rel="stylesheet" type="text/css">-->
+    <link href="../css/amazeui.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/blstyle.css" rel="stylesheet" type="text/css">
+    <link href="../css/addstyle.css" rel="stylesheet" type="text/css">
+    <link href="../css/infstyle.css" rel="stylesheet" type="text/css">
+    <link href="../css/cmstyle.css" rel="stylesheet" type="text/css">
+    <link href="../css/colstyle.css" rel="stylesheet" type="text/css">
+    <link href="../css/newstyle.css" rel="stylesheet" type="text/css">
+    <link href="../css/orstyle.css" rel="stylesheet" type="text/css">
+    <link href="../css/bostyle.css" rel="stylesheet" type="text/css">
+    <link href="../css/cpstyle.css" rel="stylesheet" type="text/css">
+    <link href="../css/lostyle.css" rel="stylesheet" type="text/css">
+    <link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
-<script type="text/javascript" src="../js/jquery.cityselect.js"></script>
-<script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-<script src="../js/echarts.min.js"></script>
-<script src="../js/common.js"></script>
+    <link rel="stylesheet" href="../css/layer.css">
+    <link href="../css/personal.css" rel="stylesheet" type="text/css">
+    <link href="../css/footstyle.css" rel="stylesheet" type="text/css">
+    <link href="../css/refstyle.css" rel="stylesheet" type="text/css">
+    <link href="../css/personal.css" rel="stylesheet" type="text/css">
+    <link href="../css/addstyle.css" rel="stylesheet" type="text/css">
+    <script src="../js/jquery.min.js" type="text/javascript"></script>
+    <script src="../js/amazeui.min.js"></script>
+    <script type="text/javascript" src="../js/layer.js"></script>
 
-	</head>
+    <script type="text/javascript" src="../js/jquery.cityselect.js"></script>
+    <script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="../js/echarts.min.js"></script>
+    <script src="../js/common.js"></script>
+
+</head>
 <script type="text/javascript">
-            $(function(){
-	   
-            	//页面一加载，检查URL是否有action
-            	 var action = GetQueryString("action");
-            	 if(action !=null && action.toString().length>1)
-            	 {
-            		 
-            		 $("#jsp").load("test_"+action+".html",function(data,status){
- 						
- 					});
-            	 }
-            	 
-            	 
-            	 
-            	
-            	//页面一加载，判断用户是否登录，根据结果改变左上角的样式
-          	  $.post("../User/check_login",function(msg,status){
-          		  if(msg.code==200){
-          			  //登录成功
-          			  //alert(msg.data.name);
-          			  var a  = $("<a></a>").attr("href","#").addClass("h").append("欢迎你! "+msg.data.name);
+    $(function () {
 
-						var logout  = $("<a></a>").attr("href" , "#").append("&nbsp;  &nbsp;  退出登录");
-						var div = $("#login_status");
-						div.append(a).append(logout);
-						
-						//点击退出登录
-						 logout.click(function(){
-							/*  if(confirm("确定退出登录?")){
-								 $.post("../User/logout",function(data){
-							           $(location).prop("href","home.html");
-						              });
-								
-								} */
-							 layer.msg('确定退出登录?', {
-								  time: 0 //不自动关闭
-								  ,btn: ['确定', '取消']
-								  ,yes: function(index){
-									  $.post("../User/logout",function(data){
-								           $(location).prop("href","home.html");
-							              });
-									  layer.close(index);
-								  }
-								});
-						 });
+        //页面一加载，检查URL是否有action
+        var action = GetQueryString("action");
+        if (action != null && action.toString().length > 1) {
 
-                      //改变购物车的数字
-                      $.post("../Order/getSorderById",function(data,status){
-                          if(data.code == 200) {
-                              $("#J_MiniCartNum").html(data.data.list.length);
-                              $("#shop_cart_number").html(data.data.list.length);
-                          }else {
-                              $("#J_MiniCartNum").html(0);
-                              $("#shop_cart_number").html(0);
-                          }
+            $("#jsp").load("test_" + action + ".html", function (data, status) {
 
-                      });
-         		       
-          		  }else{
-          			  //登录失败
-          			 
-          			  var a = $("<a></a>").attr("href","login.html").addClass("h").append("亲，请登录  ");
-          			  var b = $("<a></a>").attr("href","register.html").append("免费注册");
-          		       var div = $("#login_status");
-          		     layer.msg("您还没有登录，马上为您跳转到登录界面！", {
-     					icon : 5,
-     					time : 3000
-     				});
-          		   setTimeout(function(){
-          			 $(location).prop('href', 'login.html');
-						},3000);
-          		       div.append(a).append(b);
-          		  }
-          	});
-            	
-            	
-            	
-            	
-            	
-            	
-            	//获得URL的参数
-            	
-            function GetQueryString(name)
-                {
-           var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-           var r = window.location.search.substr(1).match(reg);
-          if(r!=null)return  unescape(r[2]); return null;
+            });
         }
-            	
-});
+
+
+        //页面一加载，判断用户是否登录，根据结果改变左上角的样式
+        $.post("../User/check_login", function (msg, status) {
+            if (msg.code == 200) {
+                //登录成功
+                //alert(msg.data.name);
+                var a = $("<a></a>").attr("href", "#").addClass("h").append("欢迎你! " + msg.data.name);
+
+                var logout = $("<a></a>").attr("href", "#").append("&nbsp;  &nbsp;  退出登录");
+                var div = $("#login_status");
+                div.append(a).append(logout);
+
+                //点击退出登录
+                logout.click(function () {
+                    /*  if(confirm("确定退出登录?")){
+                         $.post("../User/logout",function(data){
+                               $(location).prop("href","home.html");
+                              });
+
+                        } */
+                    layer.msg('确定退出登录?', {
+                        time: 0 //不自动关闭
+                        , btn: ['确定', '取消']
+                        , yes: function (index) {
+                            $.post("../User/logout", function (data) {
+                                $(location).prop("href", "home.html");
+                            });
+                            layer.close(index);
+                        }
+                    });
+                });
+
+                //改变购物车的数字
+                $.post("../Order/getSorderById", function (data, status) {
+                    if (data.code == 200) {
+                        $("#J_MiniCartNum").html(data.data.list.length);
+                        $("#shop_cart_number").html(data.data.list.length);
+                    } else {
+                        $("#J_MiniCartNum").html(0);
+                        $("#shop_cart_number").html(0);
+                    }
+
+                });
+
+            } else {
+                //登录失败
+
+                var a = $("<a></a>").attr("href", "login.html").addClass("h").append("亲，请登录  ");
+                var b = $("<a></a>").attr("href", "register.html").append("免费注册");
+                var div = $("#login_status");
+                layer.msg("您还没有登录，马上为您跳转到登录界面！", {
+                    icon: 5,
+                    time: 3000
+                });
+                setTimeout(function () {
+                    $(location).prop('href', 'login.html');
+                }, 3000);
+                div.append(a).append(b);
+            }
+        });
+
+
+        //获得URL的参数
+
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]);
+            return null;
+        }
+
+    });
 
 </script>
-	<body>
-	
-		<!--顶部导航条 -->
-		<div class="am-container header">
-			<ul class="message-l">
-				<div class="topMessage">
-					<div class="menu-hd" id="login_status">
-						<!-- <a href="#"  class="h">亲，请登录</a>
-							<a href="#" >免费注册</a> -->
-					</div>
-				</div>
-			</ul>
-			<ul class="message-r">
-				<div class="topMessage home">
-					<div class="menu-hd">
-						<a href="home.html" target="_top" class="h">商城首页</a>
-					</div>
-				</div>
-				<div class="topMessage my-shangcheng">
-					<div class="menu-hd MyShangcheng">
-						<a href="test_main.html" target="_top"><i
-							class="am-icon-user am-icon-fw"></i>个人中心</a>
-					</div>
-				</div>
-				<div class="topMessage mini-cart">
-					<div class="menu-hd">
-						<a id="mc-menu-hd" href="shopcart.html" target="_top"><i
-							class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong
-							id="J_MiniCartNum" class="h">0</strong></a>
-					</div>
-				</div>
-				<div class="topMessage favorite">
-					<!-- <div class="menu-hd"><a href="test_collection.html" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div> -->
-			</ul>
-		</div>
+<body>
 
-					
+<!--顶部导航条 -->
+<div class="am-container header">
+    <ul class="message-l">
+        <div class="topMessage">
+            <div class="menu-hd" id="login_status">
+                <!-- <a href="#"  class="h">亲，请登录</a>
+                    <a href="#" >免费注册</a> -->
+            </div>
+        </div>
+    </ul>
+    <ul class="message-r">
+        <div class="topMessage home">
+            <div class="menu-hd">
+                <a href="home.html" target="_top" class="h">商城首页</a>
+            </div>
+        </div>
+        <div class="topMessage my-shangcheng">
+            <div class="menu-hd MyShangcheng">
+                <a href="test_main.html" target="_top"><i
+                        class="am-icon-user am-icon-fw"></i>个人中心</a>
+            </div>
+        </div>
+        <div class="topMessage mini-cart">
+            <div class="menu-hd">
+                <a id="mc-menu-hd" href="shopcart.html" target="_top"><i
+                        class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong
+                        id="J_MiniCartNum" class="h">0</strong></a>
+            </div>
+        </div>
+        <div class="topMessage favorite">
+            <!-- <div class="menu-hd"><a href="test_collection.html" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div> -->
+    </ul>
+</div>
 
-			</article>
-		</header>
 
-		<div class="nav-table">
-			<div class="long-title"><span class="all-goods">全部分类</span></div>
-			<div class="nav-cont">
+</article>
+</header>
 
-				<div class="nav-extra">
-					<i class="am-icon-user-secret am-icon-md nav-user"></i><b></b>
-						<a href="test_main.html"  target="_blank">个人中心 </a>
-					<i class="am-icon-angle-right" style="padding-left: 10px;"></i>
-				</div>
-			</div>
-		</div>
-		<b class="line"></b>
+<div class="nav-table">
+    <div class="long-title"><span class="all-goods">全部分类</span></div>
+    <div class="nav-cont">
 
-		<div class="center">
-			<div class="col-main">
-				<div class="main-wrap">
+        <div class="nav-extra">
+            <i class="am-icon-user-secret am-icon-md nav-user"></i><b></b>
+            <a href="test_main.html" target="_blank">个人中心 </a>
+            <i class="am-icon-angle-right" style="padding-left: 10px;"></i>
+        </div>
+    </div>
+</div>
+<b class="line"></b>
 
-					<div class="user-address">
-						<!--标题 -->
-                    <div id="jsp"  style='  position:relative; left:-130px;'></div>
-                     <div id="jsp2"  style='  position:relative; left:-130px;'></div>
-						<div class="am-cf am-padding">
-							<div class="am-fl am-cf"></div>
-						</div>
-						
-						<ul class="am-avg-sm-1 am-avg-md-3 am-thumbnails">
+<div class="center">
+    <div class="col-main">
+        <div class="main-wrap">
 
-						<!-- 	<li class="user-addresslist defaultAddr">
-								
-								<div class="new-addr-btn">
-					
-								</div>
-							</li>
+            <div class="user-address">
+                <!--标题 -->
+                <div id="jsp" style='  position:relative; left:-130px;'></div>
+                <div id="jsp2" style='  position:relative; left:-130px;'></div>
+                <div class="am-cf am-padding">
+                    <div class="am-fl am-cf"></div>
+                </div>
 
-							<li class="user-addresslist">
-								
-								
-								
-								<div class="new-addr-btn">
-									
-									<span class="new-addr-bar">|</span>
-									
-								</div>
-							</li>
-							<li class="user-addresslist">
-					
-								
-								
-								<div class="new-addr-btn">
-									
-								</div>
-							</li> -->
-						</ul>
-						<div class="clear"></div>
-						<a class="new-abtn-type" data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0}">添加新地址</a>
-						<!--例子-->
-						<div class="am-modal am-modal-no-btn" id="doc-modal-1">
+                <ul class="am-avg-sm-1 am-avg-md-3 am-thumbnails">
 
-							<div class="add-dress">
+                    <!-- 	<li class="user-addresslist defaultAddr">
 
-								<!--标题 -->
-								<div class="am-cf am-padding">
-									<div class="am-fl am-cf"></div>
-								</div>
-								
+                            <div class="new-addr-btn">
 
-								<div class="am-u-md-12 am-u-lg-8" style="margin-top: 20px;">
-									<form class="am-form am-form-horizontal">
+                            </div>
+                        </li>
 
-										
+                        <li class="user-addresslist">
 
-										
 
-										
-										<div class="am-form-group">
-											<div class="am-u-sm-9 am-u-sm-push-3">
-												
-						
-											</div>
-										</div>
-									</form>
-								</div>
 
-							</div>
+                            <div class="new-addr-btn">
 
-						</div>
+                                <span class="new-addr-bar">|</span>
 
-					</div>
+                            </div>
+                        </li>
+                        <li class="user-addresslist">
 
-					<script type="text/javascript">
-						$(document).ready(function() {	
-							$("#comment").click(function() {
-								//class="active"
-								var a = $(this);
-								$(".menu").find("li").each(function (){
-									$(this).attr("class",null);
-								});
-								a.parent().addClass("active");
-								$("#jsp").load("test_comment.html",function(data,status){
-									
-								});});
-							$("#refund").click(function() {
-								var a = $(this);
-								$(".menu").find("li").each(function (){
-									$(this).attr("class",null);
-								});
-								a.parent().addClass("active");
-								$("#jsp").load("test_refund.html",function(data,status){
-									
-								});});
-							
-								$("#order").click(function() {
-									var a = $(this);
-									$(".menu").find("li").each(function (){
-										$(this).attr("class",null);
-									});
-									a.parent().addClass("active");
-								$("#jsp").load("test_order.html",function(data,status){
-									
-								});});
-							
-								
-								$("#address").click(function() {
-									var a = $(this);
-									$(".menu").find("li").each(function (){
-										$(this).attr("class",null);
-									});
-									a.parent().addClass("active");
-									$("#jsp").load("test_address.html",function(data,status){
-										
-									});
-								});
-							$("#question").click(function() {
-								var a = $(this);
-								$(".menu").find("li").each(function (){
-									$(this).attr("class",null);
-								});
-								a.parent().addClass("active");
-								$("#jsp").load("test_question.html",function(data,status){
-									
-								});
-							});
-							
-							$("#foot").click(function() {
-								var a = $(this);
-								$(".menu").find("li").each(function (){
-									$(this).attr("class",null);
-								});
-								a.parent().addClass("active");
-								$("#jsp").load("test_foot.html",function(data,status){
-									
-								});
-							});
-							
-								$("#coupon").click(function() {
-									var a = $(this);
-									$(".menu").find("li").each(function (){
-										$(this).attr("class",null);
-									});
-									a.parent().addClass("active");
-								$("#jsp").load("test_coupon.html",function(data,status){
-									
-								});
-							});
-                            $("#information").click(function() {
-                            	var a = $(this);
-								$(".menu").find("li").each(function (){
-									$(this).attr("class",null);
-								});
-								a.parent().addClass("active");
-								$("#jsp").load("test_information.html",function(data,status){
-									
-								});
-							});
-                            
-                            $("#collection").click(function() {
-                            	var a = $(this);
-								$(".menu").find("li").each(function (){
-									$(this).attr("class",null);
-								});
-								a.parent().addClass("active");
-								$("#jsp").load("test_collection.html",function(data,status){
-									
-								});
-							});
-                            $("#news").click(function() {
-                            	var a = $(this);
-								$(".menu").find("li").each(function (){
-									$(this).attr("class",null);
-								});
-								a.parent().addClass("active");
-								$("#jsp").load("test_news.html",function(data,status){
-									
-								});
-							});
-								$("#change").click(function() {
-									var a = $(this);
-									$(".menu").find("li").each(function (){
-										$(this).attr("class",null);
-									});
-									a.parent().addClass("active");
-								$("#jsp").load("test_change.html",function(data,status){
-									
-								});
-							});
-     							$("#test_bill").click(function() {
-     								var a = $(this);
-    								$(".menu").find("li").each(function (){
-    									$(this).attr("class",null);
-    								});
-    								a.parent().addClass("active");
-								$("#jsp").load("test_bill.html",function(data,status){
-									
-								});
-							});
-     							$("#test_recharge").click(function(){
-     								var a = $(this);
-    								$(".menu").find("li").each(function (){
-    									$(this).attr("class",null);
-    								});
-    								a.parent().addClass("active");
-									$("#jsp").load("test_pay.html",
-											function(data, status) {
 
-											});
-								});
-					
-							$(".new-option-r").click(function() {
-								var a = $(this);
-								$(".menu").find("li").each(function (){
-									$(this).attr("class",null);
-								});
-								a.parent().addClass("active");
-								$(this).parent('.user-addresslist').addClass("defaultAddr").siblings().removeClass("defaultAddr");
-							});
-							
-							var $ww = $(window).width();
-							if($ww>640) {
-								$("#doc-modal-1").removeClass("am-modal am-modal-no-btn")
-							}
-							
-						})
-					</script>
 
-					<div class="clear"></div>
+                            <div class="new-addr-btn">
 
-				</div>
-				
-			</div>
+                            </div>
+                        </li> -->
+                </ul>
+                <div class="clear"></div>
+                <a class="new-abtn-type" data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0}">添加新地址</a>
+                <!--例子-->
+                <div class="am-modal am-modal-no-btn" id="doc-modal-1">
 
-			<aside class="menu">
-				<ul>
-				<br>
-					<li class="">
-						<b style="font-size: 30px;color: gray;">个人中心</b>
-					</li>
-					<br>
-					<li class="">
-						<b style="font-size: 20px;color: silver;">个人资料</b>
-						<ul>
-							<li> <a id="information">个人信息</a></li>
-							<li> <a id="question" >安全设置</a></li>
-							<li> <a id="address">收货地址</a></li>
-						</ul>
-					</li>
-					<li class="">
-						<b style="font-size: 20px;color: silver;">我的交易</b>
-						<ul>
-							<li><a id="order">订单管理</a></li>
-							
-							<li> <a id="change">退款售后</a></li>
-						</ul>
-					</li>
-					<li class="">
-						<b style="font-size: 20px;color: silver;">我的资产</b>
-						<ul>
-							<!--<li> <a id="coupon">优惠券 </a></li>-->
-						
-							<li> <a id="test_bill" >账单明细</a></li>
-							
-							<li> <a id="test_recharge" >充值</a></li>
-							
-						</ul>
-					</li>
+                    <div class="add-dress">
 
-					<li class="">
-						<b style="font-size: 20px;color: silver;">我的小窝</b>
-						<ul>
-							<!-- <li> <a id="collection">收藏</a></li> -->
-							<li> <a id="foot">足迹</a></li>
-							<li> <a id="comment">评价</a></li>
-							<!-- <li> <a id="news">消息</a></li> -->
-						</ul>
-					</li>
+                        <!--标题 -->
+                        <div class="am-cf am-padding">
+                            <div class="am-fl am-cf"></div>
+                        </div>
 
-				</ul>
 
-			</aside>
-		</div>
+                        <div class="am-u-md-12 am-u-lg-8" style="margin-top: 20px;">
+                            <form class="am-form am-form-horizontal">
 
-	</body>
+
+                                <div class="am-form-group">
+                                    <div class="am-u-sm-9 am-u-sm-push-3">
+
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#comment").click(function () {
+                        //class="active"
+                        var a = $(this);
+                        $(".menu").find("li").each(function () {
+                            $(this).attr("class", null);
+                        });
+                        a.parent().addClass("active");
+                        $("#jsp").load("test_comment.html", function (data, status) {
+
+                        });
+                    });
+                    $("#refund").click(function () {
+                        var a = $(this);
+                        $(".menu").find("li").each(function () {
+                            $(this).attr("class", null);
+                        });
+                        a.parent().addClass("active");
+                        $("#jsp").load("test_refund.html", function (data, status) {
+
+                        });
+                    });
+                    $("#message").click(function () {
+                        var a = $(this);
+                        $(".menu").find("li").each(function () {
+                            $(this).attr("class", null);
+                        });
+                        a.parent().addClass("active");
+                        $("#jsp").load("message.html", function (data, status) {
+
+                        });
+                    });
+
+
+                    $("#order").click(function () {
+                        var a = $(this);
+                        $(".menu").find("li").each(function () {
+                            $(this).attr("class", null);
+                        });
+                        a.parent().addClass("active");
+                        $("#jsp").load("test_order.html", function (data, status) {
+
+                        });
+                    });
+
+
+                    $("#address").click(function () {
+                        var a = $(this);
+                        $(".menu").find("li").each(function () {
+                            $(this).attr("class", null);
+                        });
+                        a.parent().addClass("active");
+                        $("#jsp").load("test_address.html", function (data, status) {
+
+                        });
+                    });
+                    $("#question").click(function () {
+                        var a = $(this);
+                        $(".menu").find("li").each(function () {
+                            $(this).attr("class", null);
+                        });
+                        a.parent().addClass("active");
+                        $("#jsp").load("test_question.html", function (data, status) {
+
+                        });
+                    });
+
+                    $("#foot").click(function () {
+                        var a = $(this);
+                        $(".menu").find("li").each(function () {
+                            $(this).attr("class", null);
+                        });
+                        a.parent().addClass("active");
+                        $("#jsp").load("test_foot.html", function (data, status) {
+
+                        });
+                    });
+
+                    $("#coupon").click(function () {
+                        var a = $(this);
+                        $(".menu").find("li").each(function () {
+                            $(this).attr("class", null);
+                        });
+                        a.parent().addClass("active");
+                        $("#jsp").load("test_coupon.html", function (data, status) {
+
+                        });
+                    });
+                    $("#information").click(function () {
+                        var a = $(this);
+                        $(".menu").find("li").each(function () {
+                            $(this).attr("class", null);
+                        });
+                        a.parent().addClass("active");
+                        $("#jsp").load("test_information.html", function (data, status) {
+
+                        });
+                    });
+
+                    $("#collection").click(function () {
+                        var a = $(this);
+                        $(".menu").find("li").each(function () {
+                            $(this).attr("class", null);
+                        });
+                        a.parent().addClass("active");
+                        $("#jsp").load("test_collection.html", function (data, status) {
+
+                        });
+                    });
+                    $("#news").click(function () {
+                        var a = $(this);
+                        $(".menu").find("li").each(function () {
+                            $(this).attr("class", null);
+                        });
+                        a.parent().addClass("active");
+                        $("#jsp").load("test_news.html", function (data, status) {
+
+                        });
+                    });
+                    $("#change").click(function () {
+                        var a = $(this);
+                        $(".menu").find("li").each(function () {
+                            $(this).attr("class", null);
+                        });
+                        a.parent().addClass("active");
+                        $("#jsp").load("test_change.html", function (data, status) {
+
+                        });
+                    });
+                    $("#test_bill").click(function () {
+                        var a = $(this);
+                        $(".menu").find("li").each(function () {
+                            $(this).attr("class", null);
+                        });
+                        a.parent().addClass("active");
+                        $("#jsp").load("test_bill.html", function (data, status) {
+
+                        });
+                    });
+                    $("#test_recharge").click(function () {
+                        var a = $(this);
+                        $(".menu").find("li").each(function () {
+                            $(this).attr("class", null);
+                        });
+                        a.parent().addClass("active");
+                        $("#jsp").load("test_pay.html",
+                            function (data, status) {
+
+                            });
+                    });
+
+                    $(".new-option-r").click(function () {
+                        var a = $(this);
+                        $(".menu").find("li").each(function () {
+                            $(this).attr("class", null);
+                        });
+                        a.parent().addClass("active");
+                        $(this).parent('.user-addresslist').addClass("defaultAddr").siblings().removeClass("defaultAddr");
+                    });
+
+                    var $ww = $(window).width();
+                    if ($ww > 640) {
+                        $("#doc-modal-1").removeClass("am-modal am-modal-no-btn")
+                    }
+
+                })
+            </script>
+
+            <div class="clear"></div>
+
+        </div>
+
+    </div>
+
+    <aside class="menu">
+        <ul>
+            <br>
+            <li class="">
+                <b style="font-size: 30px;color: gray;">个人中心</b>
+            </li>
+            <br>
+            <li class="">
+                <b style="font-size: 20px;color: silver;">个人资料</b>
+                <ul>
+                    <li><a id="information">个人信息</a></li>
+                    <li><a id="question">安全设置</a></li>
+                    <li><a id="address">收货地址</a></li>
+                    <li><a id="message">站内信</a></li>
+                </ul>
+            </li>
+            <li class="">
+                <b style="font-size: 20px;color: silver;">我的交易</b>
+                <ul>
+                    <li><a id="order">订单管理</a></li>
+
+                    <li><a id="change">退款售后</a></li>
+                </ul>
+            </li>
+            <li class="">
+                <b style="font-size: 20px;color: silver;">我的资产</b>
+                <ul>
+                    <!--<li> <a id="coupon">优惠券 </a></li>-->
+
+                    <li><a id="test_bill">账单明细</a></li>
+
+                    <li><a id="test_recharge">充值</a></li>
+
+                </ul>
+            </li>
+
+            <li class="">
+                <b style="font-size: 20px;color: silver;">我的小窝</b>
+                <ul>
+                    <!-- <li> <a id="collection">收藏</a></li> -->
+                    <li><a id="foot">足迹</a></li>
+                    <li><a id="comment">评价</a></li>
+                    <!-- <li> <a id="news">消息</a></li> -->
+                </ul>
+            </li>
+
+        </ul>
+
+    </aside>
+</div>
+
+</body>
 
 </html>

@@ -39,6 +39,9 @@ public class DepositController {
     @Autowired
     CouponService couponService;
 
+    @Autowired
+    MessageService messageService;
+
 	
 	@Autowired
 	UserService userService;
@@ -126,6 +129,11 @@ public class DepositController {
 		depositService.insert(deposit);
 		User user=userService.selectByPrimaryKey(user_id);
 		user.setAccountBalance(user.getAccountBalance().add(new BigDecimal(100000)));
+        Message message = new Message();
+        message.setId(MyUtils.getUUID());
+        message.setUserId(user.getId());
+        message.setMessage("网银充值成功，金额"+100000+"元");
+        messageService.insert(message);
 		userService.updateByPrimaryKeySelective(user);
 		return "redirect:../views/success.html";
 	}
@@ -172,6 +180,11 @@ public class DepositController {
             depositService.insert(deposit);
             User user=userService.selectByPrimaryKey(userId[0]);
             user.setAccountBalance(user.getAccountBalance().add(new BigDecimal(total_amount)));
+            Message message = new Message();
+            message.setId(MyUtils.getUUID());
+            message.setUserId(user.getId());
+            message.setMessage("支付宝充值成功，金额"+total_amount+"元");
+            messageService.insert(message);
             userService.updateByPrimaryKeySelective(user);
             out.println("trade_no:"+trade_no+"<br/>out_trade_no:"+out_trade_no+"<br/>total_amount:"+total_amount);
         }else {

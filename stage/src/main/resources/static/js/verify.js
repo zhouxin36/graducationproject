@@ -1,9 +1,9 @@
 /*! Verify-v0.1.0 MIT License by 大熊*/
-var image = ['http://pic7.photophoto.cn/20080407/0034034859692813_b.jpg',
-			'http://img1.3lian.com/2015/a1/91/d/243.jpg',
-			'http://img1.3lian.com/2015/a1/91/d/242.jpg',
-			'http://img1.3lian.com/2015/a1/91/d/241.jpg',
-			'http://img1.3lian.com/2015/a1/91/d/240.jpg'];
+var image = ['http://pic1.win4000.com/wallpaper/6/5875f4d035919.jpg',
+			'http://pic1.win4000.com/wallpaper/6/5875f4c220b09.jpg',
+			'http://pic1.win4000.com/wallpaper/6/5875f4c5efba6.jpg',
+			'http://pic1.win4000.com/wallpaper/6/5875f4c93f290.jpg',
+			'http://pic1.win4000.com/wallpaper/6/5875f4ccd9d1a.jpg'];
 
 var fortString = '天地玄黄宇宙洪荒日月盈昃辰宿列张'+
 				 '寒来暑往秋收冬藏闰余成岁律吕调阳'+

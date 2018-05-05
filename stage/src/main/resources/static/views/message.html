@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>站内信</title>
+    <script type="text/javascript">
+        $(function () {
+            $.post("../Message/messageList", function (msg) {
+                if (msg.code == 200) {
+                    var list = msg.data;
+                    $.each(list, function (index, item) {
+                        var tr = $("<tr></tr>");
+                        var td1 = $("<td></td>");
+                        var td2 = $("<td></td>");
+                        var btn = $("<button>删除</button>");
+                        btn.addClass("btn btn-danger delete");
+                        btn.click(function () {
+                            deleteMessage($(this), $(this).attr("id"));
+                        });
+                        btn.attr("id",item.id);
+                        td1.append(item.message);
+                        td2.append(btn);
+                        tr.append(td1).append(td2);
+
+                        $("#tbody").append(tr);
+                    });
+                }
+            });
+
+
+        });
+
+
+        function deleteMessage(ele, id) {
+            layer.confirm('确定删除吗？', function (index) {
+                $(ele).parent().parent().remove();
+                $.ajax({
+                    url: "../Message/messageDelete",
+                    data: "id=" + id,
+                    type: "post",
+                    success: function (msg) {
+                        layer.msg('操作成功!', {
+                            icon: 1,
+                            time: 2000
+                        });
+                    },
+                    error: function () {
+                        layer.msg('操作失败!', {
+                            icon: 2,
+                            time: 2000
+                        });
+                    }
+                });
+            });
+        }
+
+    </script>
+</head>
+<body>
+
+<div class="center">
+    <div class="col-main">
+        <div class="main-wrap">
+
+            <div class="user-order">
+
+                <!--标题 -->
+                <div class="am-cf am-padding">
+                    <div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">站内信</strong> /
+                        <small>message</small>
+                    </div>
+                </div>
+                <hr/>
+
+                <div class="am-tabs am-tabs-d2 am-margin" data-am-tabs>
+
+                    <ul class="am-avg-sm-2 am-tabs-nav am-nav am-nav-tabs">
+                        <li class="am-active"><a href="#tab12">站内信</a></li>
+
+
+                    </ul>
+                    <table class="table table-striped">
+                        <tr>
+                            <th>信息</th>
+                            <th>操作</th>
+                        </tr>
+                        <tbody id="tbody"></tbody>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

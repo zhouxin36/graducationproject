@@ -5,6 +5,8 @@ public class Message {
 
     private String message;
 
+    private String userId;
+
     public String getId() {
         return id;
     }
@@ -21,11 +23,11 @@ public class Message {
         this.message = message;
     }
 
-    @Override
-    public String toString() {
-        return "Message{" +
-                "id='" + id + '\'' +
-                ", message='" + message + '\'' +
-                '}';
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }
